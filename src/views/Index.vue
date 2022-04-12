@@ -33,7 +33,7 @@ export default {
     background-image: url("@/static/images/bg.png");
     background-size: 120% 100%;
     background-repeat: no-repeat;
-    animation: animatedBackground 50s linear infinite reverse;
+    // animation: animatedBackground 50s linear infinite reverse;
 
     @keyframes animatedBackground {
         from {

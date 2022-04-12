@@ -7,6 +7,36 @@
             <div class="halo_2"></div>
             <!-- 光圈 -->
             <div class="aperture"></div>
+            <svg
+                id="circle_line_1"
+                width="1700"
+                height="1700"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="860"
+                    cy="860"
+                    r="720"
+                    stroke="#58638d"
+                    stroke-width="1"
+                    fill="transparent"
+                />
+            </svg>
+            <svg
+                id="circle_line_2"
+                width="2000"
+                height="2000"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="1000"
+                    cy="1000"
+                    r="920"
+                    stroke="#58638d"
+                    stroke-width="1"
+                    fill="transparent"
+                />
+            </svg>
         </div>
         <!-- 24节气背景图 -->
         <div class="solar_terms">
@@ -75,9 +105,10 @@
                 :class="`sub_item${index + 1}`"
                 v-for="(item, index) in sub_title_datas"
                 :key="index"
-                @click="OpenSubTitleContent(index)"
             >
-                <div class="title">{{ item.title }}</div>
+                <div class="title" @click="OpenSubTitleContent(index)">
+                    {{ item.title }}
+                </div>
                 <div
                     v-for="(v, k) of 9"
                     :key="k"
@@ -267,31 +298,30 @@ export default {
         //#region 执行背景动画
         // halo_1动画
         anime({
-            targets: document.querySelector(".halo_1"),
-            rotate: -360,
-            duration: 60000,
-            easing: "linear",
-            loop: true,
+            // targets: document.querySelector(".halo_1"),
+            // rotate: -360,
+            // duration: 60000,
+            // easing: "linear",
+            // loop: true,
         });
         // halo_2动画
         anime({
-            targets: document.querySelector(".halo_2"),
-            rotate: 360,
-            duration: 60000,
-            easing: "linear",
-            loop: true,
+            // targets: document.querySelector(".halo_2"),
+            // rotate: 360,
+            // duration: 60000,
+            // easing: "linear",
+            // loop: true,
         });
         // aperture动画
-        anime
-            .timeline({
-                targets: document.querySelector(".aperture"),
-                loop: true,
-            })
-            .add({
-                rotate: 360,
-                duration: 60000,
-                easing: "linear",
-            });
+        anime.timeline({
+            targets: document.querySelector(".aperture"),
+            loop: true,
+        });
+        // .add({
+        //     rotate: 360,
+        //     duration: 60000,
+        //     easing: "linear",
+        // });
         // solar_terms动画
         anime
             .timeline({
@@ -498,7 +528,7 @@ export default {
 
             for (let i = 0; i < 6; i++) {
                 sub_title_datas.push({
-                    title: `二级标题${i}`,
+                    title: `二级标题${i + 1}`,
                 });
             }
 
@@ -636,6 +666,9 @@ export default {
                     scale: 1,
                     duration: 300, // 持续时间
                     loop: 1,
+                    complete: function () {
+                        that.sub_title_selete_index = null;
+                    },
                 });
             }
 
@@ -712,7 +745,7 @@ export default {
             height: 2300px;
             position: absolute;
             top: -55.5%;
-            left: -41px;
+            left: 12px;
             right: 0;
             margin: 0 auto;
             background-image: url("@/static/images/halo.png");
@@ -732,6 +765,16 @@ export default {
             background-image: url("@/static/images/aperture.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
+        }
+        #circle_line_1 {
+            position: absolute;
+            top: -320px;
+            left: 857px;
+        }
+        #circle_line_2 {
+            position: absolute;
+            top: -460px;
+            left: 729px;
         }
     }
     .solar_terms {
@@ -974,12 +1017,7 @@ export default {
             // -o-transform: rotate(-102deg); /* Opera */
 
             top: 184px;
-            left: -588px;
-            transform: rotate(-8deg);
-            -ms-transform: rotate(-8deg); /* IE 9 */
-            -moz-transform: rotate(-8deg); /* Firefox */
-            -webkit-transform: rotate(-8deg); /* Safari 和 Chrome */
-            -o-transform: rotate(-8deg); /* Opera */
+            left: -593px;
         }
         .item5 {
             // top: 19px;
@@ -991,7 +1029,7 @@ export default {
             // -o-transform: rotate(-114deg); /* Opera */
 
             top: 407px;
-            left: -521px;
+            left: -527px;
         }
     }
     // .sub_title_path {
@@ -1003,7 +1041,12 @@ export default {
         width: 521px;
         position: absolute;
         top: 82px;
-        left: 2399px;
+        left: 2390px;
+        transform: rotate(1deg);
+        -ms-transform: rotate(1deg); /* IE 9 */
+        -moz-transform: rotate(1deg); /* Firefox */
+        -webkit-transform: rotate(1deg); /* Safari 和 Chrome */
+        -o-transform: rotate(1deg); /* Opera */
         .sub_item {
             height: 151px;
             color: white;
@@ -1015,7 +1058,7 @@ export default {
             .title {
                 position: absolute;
                 left: 200px;
-                top: -1px;
+                top: -3px;
                 opacity: 0;
             }
             .big_scale {
@@ -1146,8 +1189,8 @@ export default {
             }
         }
         .sub_item1 {
-            top: -163px;
-            left: -183px;
+            top: -164px;
+            left: -181px;
             transform: rotate(-42deg);
             -ms-transform: rotate(-42deg); /* IE 9 */
             -moz-transform: rotate(-42deg); /* Firefox */
@@ -1156,7 +1199,7 @@ export default {
         }
         .sub_item2 {
             top: -127px;
-            left: -73px;
+            left: -72px;
             transform: rotate(-29deg);
             -ms-transform: rotate(-29deg); /* IE 9 */
             -moz-transform: rotate(-29deg); /* Firefox */
@@ -1166,18 +1209,23 @@ export default {
         .sub_item3 {
             top: -70px;
             left: -9px;
-            transform: rotate(-15deg);
-            -ms-transform: rotate(-15deg); /* IE 9 */
-            -moz-transform: rotate(-15deg); /* Firefox */
-            -webkit-transform: rotate(-15deg); /* Safari 和 Chrome */
-            -o-transform: rotate(-15deg); /* Opera */
+            transform: rotate(-14.5deg);
+            -ms-transform: rotate(-15.5deg); /* IE 9 */
+            -moz-transform: rotate(-15.5deg); /* Firefox */
+            -webkit-transform: rotate(-15.5deg); /* Safari 和 Chrome */
+            -o-transform: rotate(-15.5deg); /* Opera */
         }
         .sub_item4 {
             left: 3px;
+            transform: rotate(-1deg);
+            -ms-transform: rotate(-1deg); /* IE 9 */
+            -moz-transform: rotate(-1deg); /* Firefox */
+            -webkit-transform: rotate(-1deg); /* Safari 和 Chrome */
+            -o-transform: rotate(-1deg); /* Opera */
         }
         .sub_item5 {
             top: 51px;
-            left: -34px;
+            left: -31px;
             transform: rotate(11deg);
             -ms-transform: rotate(11deg); /* IE 9 */
             -moz-transform: rotate(11deg); /* Firefox */
@@ -1186,7 +1234,7 @@ export default {
         }
         .sub_item6 {
             top: 92px;
-            left: -111px;
+            left: -108px;
             transform: rotate(23deg);
             -ms-transform: rotate(23deg); /* IE 9 */
             -moz-transform: rotate(23deg); /* Firefox */

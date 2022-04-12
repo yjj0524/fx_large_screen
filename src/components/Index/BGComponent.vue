@@ -24,46 +24,29 @@
             <h1 class="title1" :style="titleStyle">智 慧新 桥</h1>
             <h1 class="title2">智 慧新 桥</h1>
         </div>
+        <!-- 一级标题移动轨迹 -->
+        <!-- <svg
+            class="primary_title_path"
+            width="600"
+            height="800"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                fill="none"
+                stroke="transparent"
+                d="M792,5.33333c-779,3 -789,790 -789,789.86667"
+            />
+        </svg> -->
         <!-- 一级标题 -->
         <div class="primary_title">
-            <div class="item item1">
-                <div class="title">一级标题</div>
-                <img
-                    src="@/static/images/title.png"
-                    @mouseover="EnlargePrimaryTitle"
-                    @mouseleave="NarrowPrimaryTitle"
-                    alt=""
-                />
-            </div>
-            <div class="item item2">
-                <div class="title">一级标题</div>
-                <img
-                    src="@/static/images/title.png"
-                    @mouseover="EnlargePrimaryTitle"
-                    @mouseleave="NarrowPrimaryTitle"
-                    alt=""
-                />
-            </div>
-            <div class="item item3">
-                <div class="title">一级标题</div>
-                <img
-                    src="@/static/images/title.png"
-                    @mouseover="EnlargePrimaryTitle"
-                    @mouseleave="NarrowPrimaryTitle"
-                    alt=""
-                />
-            </div>
-            <div class="item item4">
-                <div class="title">一级标题</div>
-                <img
-                    src="@/static/images/title.png"
-                    @mouseover="EnlargePrimaryTitle"
-                    @mouseleave="NarrowPrimaryTitle"
-                    alt=""
-                />
-            </div>
-            <div class="item item5">
-                <div class="title">一级标题</div>
+            <div
+                class="item"
+                :class="`item${index + 1}`"
+                v-for="(value, index) in primary_title_datas"
+                :key="index"
+                @click="OpenSubTitle"
+            >
+                <div class="title">{{ value.title }}</div>
                 <img
                     src="@/static/images/title.png"
                     @mouseover="EnlargePrimaryTitle"
@@ -72,6 +55,19 @@
                 />
             </div>
         </div>
+        <!-- 二级标题移动轨迹 -->
+        <!-- <svg
+            class="sub_title_path"
+            width="1000"
+            height="1100"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                fill="none"
+                stroke="red"
+                d="M-218,1100c1190,-5 956,-1046 956,-1046"
+            />
+        </svg> -->
         <!-- 二级标题 -->
         <div class="sub_title">
             <div
@@ -79,6 +75,7 @@
                 :class="`sub_item${index + 1}`"
                 v-for="(item, index) in sub_title_datas"
                 :key="index"
+                @click="OpenSubTitleContent(index)"
             >
                 <div class="title">{{ item.title }}</div>
                 <div
@@ -87,10 +84,16 @@
                     :class="[k == 0 ? 'big_scale' : 'small_scale', `item${v}`]"
                     class="scale"
                 ></div>
+                <div class="sign" v-show="sub_title_selete_index == index">
+                    <div class="sign_2">
+                        <div class="sign_3"></div>
+                    </div>
+                </div>
             </div>
             <div
                 class="sub_item close"
                 :class="`sub_item${sub_title_datas.length + 1}`"
+                @click="CloseSubTitle"
             >
                 <div class="title">关闭</div>
                 <div class="scale big_scale"></div>
@@ -230,27 +233,28 @@ export default {
                     img: "",
                 },
             ],
-            // 子标题
-            sub_title_datas: [
+            // 一级标题
+            primary_title_datas: [
                 {
-                    title: "二级标题1",
+                    title: "一级标题",
                 },
                 {
-                    title: "二级标题2",
+                    title: "一级标题",
                 },
                 {
-                    title: "二级标题3",
+                    title: "一级标题",
                 },
                 {
-                    title: "二级标题4",
+                    title: "一级标题",
                 },
                 {
-                    title: "二级标题5",
-                },
-                {
-                    title: "二级标题6",
+                    title: "一级标题",
                 },
             ],
+            // 子标题
+            sub_title_datas: [],
+            sub_title_selete_index: null,
+            sub_title_show: false,
             titleStyle: {
                 textShadow: "",
             },
@@ -346,27 +350,75 @@ export default {
             });
         //#endregion
 
-        //#region 执行一级标题动画
-        let el = document.querySelector(".primary_title");
-        let primary_title_X = 100;
-        let primary_title_Y = -130;
-        let rotate = 90;
-        anime({
-            targets: el,
-            rotate: rotate,
-            duration: 0,
-        });
-        for (let i = rotate; i > 0; i--) {
+        //#region 执行一级标题显示动画
+        let primary_title_el = document.querySelectorAll(
+            ".primary_title .item"
+        );
+
+        for (let i = 0; i < primary_title_el.length; i++) {
+            let rotate = 0;
+            switch (i) {
+                case 0:
+                    rotate = 20;
+                    break;
+                case 1:
+                    rotate = 10;
+                    break;
+                case 3:
+                    rotate = -10;
+                    break;
+                case 4:
+                    rotate = -20;
+                    break;
+            }
             anime({
-                targets: el,
+                targets: primary_title_el[i],
                 loop: 1,
+                rotate: rotate,
                 easing: "linear",
-                rotate: i,
-                translateX: (primary_title_X -= 10),
-                translateY: (primary_title_Y += 10),
-                duration: 2000,
+                duration: 0,
+            });
+            anime({
+                targets: primary_title_el[i],
+                delay: i * 300,
+                loop: 1,
+                opacity: [
+                    { value: ".2" },
+                    { value: ".4" },
+                    { value: ".6" },
+                    { value: ".8" },
+                    { value: "1" },
+                ],
+                translateX: 350,
+                easing: "linear",
+                duration: 1000,
             });
         }
+        // var primary_title_path = anime.path(".primary_title_path path");
+        // anime({
+        //     targets: ".primary_title",
+        //     translateX: primary_title_path("x"),
+        //     translateY: primary_title_path("y"),
+        //     rotate: primary_title_path("angle"),
+        //     easing: "linear",
+        //     duration: 2500,
+        //     loop: 1,
+        // });
+        //#endregion
+
+        //#region 执行子标题动画
+        // var sub_title_path = anime.path(".sub_title_path path");
+        // anime({
+        //     targets: ".sub_title",
+        //     translateX: sub_title_path("x"),
+        //     translateY: sub_title_path("y"),
+        //     rotate: sub_title_path("angle"),
+        //     easing: "linear",
+        //     duration: 5500,
+        //     loop: 1,
+        // });
+
+        //#endregion
     },
     methods: {
         // 设置24节气图片
@@ -419,6 +471,7 @@ export default {
 
             this.solar_terms_datas = solar_terms;
         },
+        // 放大一级标题图标
         EnlargePrimaryTitle(e) {
             anime({
                 targets: e.target,
@@ -428,6 +481,7 @@ export default {
                 duration: 200,
             });
         },
+        // 缩小一级标题图标
         NarrowPrimaryTitle(e) {
             anime({
                 targets: e.target,
@@ -436,6 +490,191 @@ export default {
                 scale: 1,
                 duration: 200,
             });
+        },
+        // 获取子标题数据
+        GetSubTitleDatas() {
+            let sub_title_datas = [];
+            let count = Math.floor(Math.random() * (7 - 1) + 1);
+
+            for (let i = 0; i < 6; i++) {
+                sub_title_datas.push({
+                    title: `二级标题${i}`,
+                });
+            }
+
+            this.sub_title_datas = sub_title_datas;
+        },
+        // 打开子标题
+        OpenSubTitle() {
+            let that = this;
+            that.sub_title_selete_index = null;
+            that.GetSubTitleDatas();
+
+            setTimeout(() => {
+                let sub_item_el = document.querySelectorAll(
+                    ".sub_title .sub_item"
+                );
+                let sub_title_el =
+                    document.querySelectorAll(".sub_title .title");
+
+                // sign复位
+                let sub_title_sign =
+                    document.querySelectorAll(".sub_title .sign");
+
+                if (that.sub_title_selete_index != null) {
+                    anime({
+                        targets: sub_title_sign[that.sub_title_selete_index],
+                        easing: "linear",
+                        scale: 1,
+                        duration: 0, // 持续时间
+                        loop: 1,
+                    });
+                }
+
+                for (let i = 0; i < sub_item_el.length; i++) {
+                    let scale_el = sub_item_el[i].querySelectorAll(".scale");
+
+                    // 元素复位
+                    if (that.sub_title_show) {
+                        anime({
+                            targets: sub_title_el[i],
+                            translateX: 0,
+                            opacity: [{ value: "0" }],
+                            loop: 1,
+                            easing: "linear",
+                            duration: 0,
+                        });
+
+                        for (let j = 0; j < scale_el.length; j++) {
+                            anime({
+                                targets: scale_el[j],
+                                delay: 0,
+                                opacity: [{ value: "0" }],
+                                loop: 1,
+                                easing: "linear",
+                                duration: 0,
+                            });
+                        }
+                    }
+
+                    // 显示元素
+                    anime({
+                        targets: sub_title_el[i],
+                        delay: i * 200,
+                        translateX: -160,
+                        opacity: [
+                            { value: ".2" },
+                            { value: ".4" },
+                            { value: ".6" },
+                            { value: ".8" },
+                            { value: "1" },
+                        ],
+                        loop: 1,
+                        easing: "linear",
+                        duration: 500,
+                    });
+
+                    for (let j = 0; j < scale_el.length; j++) {
+                        anime({
+                            targets: scale_el[j],
+                            delay: i * 200,
+                            opacity: [
+                                { value: ".2" },
+                                { value: ".4" },
+                                { value: ".6" },
+                                { value: ".8" },
+                                { value: "1" },
+                            ],
+                            loop: 1,
+                            easing: "linear",
+                            duration: 500,
+                        });
+                    }
+                }
+            }, 100);
+
+            that.sub_title_show = true;
+        },
+        // 打开子标题内容
+        OpenSubTitleContent(index) {
+            let that = this;
+            let sub_title = document.querySelectorAll(".sub_title .sign");
+
+            // sign元素复位
+            if (that.sub_title_selete_index != null) {
+                anime({
+                    targets: sub_title[that.sub_title_selete_index],
+                    easing: "linear",
+                    scale: 1,
+                    duration: 300, // 持续时间
+                    loop: 1,
+                });
+            }
+
+            that.sub_title_selete_index = index;
+
+            anime({
+                targets: sub_title[index],
+                easing: "linear",
+                scale: 10,
+                duration: 300, // 持续时间
+                loop: 1,
+            });
+        },
+        // 关闭子标题
+        CloseSubTitle() {
+            let that = this;
+            let sub_item_el = document.querySelectorAll(".sub_title .sub_item");
+            let sub_title_el = document.querySelectorAll(".sub_title .title");
+            let sub_title_sign = document.querySelectorAll(".sub_title .sign");
+
+            // sign元素复位
+            if (that.sub_title_selete_index != null) {
+                anime({
+                    targets: sub_title_sign[that.sub_title_selete_index],
+                    easing: "linear",
+                    scale: 1,
+                    duration: 300, // 持续时间
+                    loop: 1,
+                });
+            }
+
+            for (let i = 0; i < sub_item_el.length; i++) {
+                let scale_el = sub_item_el[i].querySelectorAll(".scale");
+
+                anime({
+                    targets: sub_title_el[i],
+                    translateX: 0,
+                    delay: i * 10,
+                    opacity: [
+                        { value: ".8" },
+                        { value: ".6" },
+                        { value: ".4" },
+                        { value: ".2" },
+                        { value: "0" },
+                    ],
+                    loop: 1,
+                    easing: "linear",
+                    duration: 500,
+                });
+
+                for (let j = 0; j < scale_el.length; j++) {
+                    anime({
+                        targets: scale_el[j],
+                        delay: j * 10,
+                        opacity: [
+                            { value: ".8" },
+                            { value: ".6" },
+                            { value: ".4" },
+                            { value: ".2" },
+                            { value: "0" },
+                        ],
+                        loop: 1,
+                        easing: "linear",
+                        duration: 500,
+                    });
+                }
+            }
         },
     },
 };
@@ -448,6 +687,7 @@ export default {
     position: absolute;
     top: 0;
     left: 194px;
+    overflow: hidden;
     .aperture_Container {
         width: 100%;
         height: 100%;
@@ -657,21 +897,31 @@ export default {
             -webkit-text-fill-color: transparent;
         }
     }
+    // .primary_title_path {
+    //     position: absolute;
+    //     top: -261px;
+    //     left: 1007px;
+    // }
     .primary_title {
-        width: 300px;
-        height: 850px;
+        width: 10px;
+        height: 10px;
         position: absolute;
-        top: -633px;
-        left: 1544px;
+        // top: -261px;
+        top: 540px;
+        left: 1007px;
+        // display: flex;
         .item {
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 6rem;
+            position: absolute;
+            opacity: 0;
+            // margin-bottom: 6rem;
             .title {
+                width: 200px;
                 color: white;
                 font-size: 3rem;
+                text-align: left;
             }
             img {
                 width: 7em;
@@ -679,30 +929,81 @@ export default {
             }
         }
         .item1 {
-            margin-left: 55px;
-            transform: rotate(20deg);
+            // top: 35px;
+            // left: -456px;
+            // transform: rotate(-69deg);
+            // -ms-transform: rotate(-69deg); /* IE 9 */
+            // -moz-transform: rotate(-69deg); /* Firefox */
+            // -webkit-transform: rotate(-69deg); /* Safari 和 Chrome */
+            // -o-transform: rotate(-69deg); /* Opera */
+
+            top: -509px;
+            left: -525px;
         }
         .item2 {
-            margin-left: 15px;
-            transform: rotate(10deg);
+            // top: 78px;
+            // left: -302px;
+            // transform: rotate(-80deg);
+            // -ms-transform: rotate(-80deg); /* IE 9 */
+            // -moz-transform: rotate(-80deg); /* Firefox */
+            // -webkit-transform: rotate(-80deg); /* Safari 和 Chrome */
+            // -o-transform: rotate(-80deg); /* Opera */
+
+            top: -280px;
+            left: -593px;
         }
         .item3 {
-            transform: rotate(0deg);
+            // top: 93px;
+            // left: -142px;
+            // transform: rotate(-91deg);
+            // -ms-transform: rotate(-91deg); /* IE 9 */
+            // -moz-transform: rotate(-91deg); /* Firefox */
+            // -webkit-transform: rotate(-91deg); /* Safari 和 Chrome */
+            // -o-transform: rotate(-91deg); /* Opera */
+
+            top: -50px;
+            left: -609px;
         }
         .item4 {
-            margin-left: 15px;
-            transform: rotate(-10deg);
+            // top: 72px;
+            // left: 13px;
+            // transform: rotate(-102deg);
+            // -ms-transform: rotate(-102deg); /* IE 9 */
+            // -moz-transform: rotate(-102deg); /* Firefox */
+            // -webkit-transform: rotate(-102deg); /* Safari 和 Chrome */
+            // -o-transform: rotate(-102deg); /* Opera */
+
+            top: 184px;
+            left: -588px;
+            transform: rotate(-8deg);
+            -ms-transform: rotate(-8deg); /* IE 9 */
+            -moz-transform: rotate(-8deg); /* Firefox */
+            -webkit-transform: rotate(-8deg); /* Safari 和 Chrome */
+            -o-transform: rotate(-8deg); /* Opera */
         }
         .item5 {
-            margin-left: 55px;
-            transform: rotate(-20deg);
+            // top: 19px;
+            // left: 160px;
+            // transform: rotate(-114deg);
+            // -ms-transform: rotate(-114deg); /* IE 9 */
+            // -moz-transform: rotate(-114deg); /* Firefox */
+            // -webkit-transform: rotate(-114deg); /* Safari 和 Chrome */
+            // -o-transform: rotate(-114deg); /* Opera */
+
+            top: 407px;
+            left: -521px;
         }
     }
+    // .sub_title_path {
+    //     position: absolute;
+    //     top: 258px;
+    //     left: 1652px;
+    // }
     .sub_title {
         width: 521px;
         position: absolute;
-        top: 68px;
-        left: 2421px;
+        top: 82px;
+        left: 2399px;
         .sub_item {
             height: 151px;
             color: white;
@@ -713,8 +1014,9 @@ export default {
             position: relative;
             .title {
                 position: absolute;
-                left: 35px;
+                left: 200px;
                 top: -1px;
+                opacity: 0;
             }
             .big_scale {
                 width: 20px;
@@ -727,6 +1029,38 @@ export default {
                 height: 2px;
                 background: white;
                 margin-top: 12px;
+            }
+            .scale {
+                opacity: 0;
+            }
+            .sign {
+                width: 6px;
+                height: 6px;
+                top: 11px;
+                left: -13px;
+                position: absolute;
+                border-radius: 60px;
+                background-color: rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .sign_2 {
+                    width: 4.5px;
+                    height: 4.5px;
+                    background-color: rgba(255, 255, 255, 0.3);
+                    border-radius: 45px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    .sign_3 {
+                        width: 3px;
+                        height: 3px;
+                        border-radius: 30px;
+                        background: white;
+                        position: absolute;
+                    }
+                }
             }
             .item1 {
             }

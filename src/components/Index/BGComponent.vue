@@ -182,7 +182,8 @@
                 <div class="scale big_scale"></div>
             </div>
         </div>
-        <div class="sub_title_bg_img">
+        <!-- 二级标题点击后的背景和描述信息 -->
+        <div class="sub_title_bg_img" v-show="show_sub_title_bg_img">
             <div class="bg_img">
                 <img src="@/static/images/sub_title_bg.jpg" alt="" />
             </div>
@@ -190,24 +191,46 @@
                 <div class="outer_ring">
                     <div class="sub_title_description_img">
                         <div class="description">
-                            我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文
+                            我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文
                         </div>
                     </div>
                 </div>
+                <img
+                    class="close_img"
+                    src="@/static/images/sub_title_description_close.png"
+                    alt=""
+                    @click="CloseSubTitleBGImg"
+                />
             </div>
-            <img
-                class="close_img"
-                src="@/static/images/sub_title_description_close.png"
-                alt=""
-            />
+        </div>
+        <!-- 新桥24景 -->
+        <div class="scenery_container" @click="MoveScenery">
+            <div class="scroll_1">
+                <div class="scroll_1_1"></div>
+                <div class="scroll_1_2">
+                    <img
+                        class="scroll_img_1"
+                        src="@/static/images/scroll_3.png"
+                        alt=""
+                    />
+                </div>
+            </div>
+            <div class="scroll_2">
+                <div class="scroll_2_1"></div>
+                <div class="scroll_2_2">
+                    <img
+                        class="scroll_img_2"
+                        src="@/static/images/scroll_3.png"
+                        alt=""
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import anime from "animejs/lib/anime.js";
-
-let aaa = 15;
 
 export default {
     name: "",
@@ -366,6 +389,7 @@ export default {
             titleStyle: {
                 textShadow: "",
             },
+            show_sub_title_bg_img: false,
         };
     },
     mounted() {
@@ -606,7 +630,7 @@ export default {
                     targets: e.target,
                     loop: 1,
                     easing: "linear",
-                    scale: 1.1,
+                    scale: 1.2,
                     duration: 200,
                 });
             }
@@ -625,7 +649,7 @@ export default {
         },
         // 指针旋转动画
         PointerRotate(index) {
-            let pointer_img = document.querySelectorAll(".pointer_img");
+            let pointer_img = document.querySelector(".pointer_img");
 
             anime({
                 targets: pointer_img,
@@ -763,6 +787,11 @@ export default {
         OpenSubTitleContent(index) {
             let that = this;
             let sub_title = document.querySelectorAll(".sub_title .sign");
+            let sub_title_bg_img =
+                document.querySelectorAll(".sub_title_bg_img");
+            let sub_title_description = document.querySelectorAll(
+                ".sub_title_bg_img .description_container"
+            );
 
             // sign元素复位
             if (that.sub_title_selete_index != null) {
@@ -777,12 +806,65 @@ export default {
 
             that.sub_title_selete_index = index;
 
+            // 显示sign元素
             anime({
                 targets: sub_title[index],
                 easing: "linear",
                 scale: 10,
                 duration: 300, // 持续时间
                 loop: 1,
+            });
+
+            that.show_sub_title_bg_img = true;
+
+            // 显示二级标题的大背景
+            anime({
+                targets: sub_title_bg_img,
+                opacity: [{ value: "0" }],
+                loop: 1,
+                easing: "linear",
+                duration: 0,
+                complete: function () {
+                    // 显示二级标题的描述信息
+                    anime({
+                        targets: sub_title_description,
+                        opacity: [{ value: "0" }],
+                        loop: 1,
+                        easing: "linear",
+                        duration: 0,
+                        complete: function () {
+                            anime({
+                                targets: sub_title_bg_img,
+                                opacity: [
+                                    { value: ".2" },
+                                    { value: ".4" },
+                                    { value: ".6" },
+                                    { value: ".8" },
+                                    { value: "1" },
+                                ],
+                                loop: 1,
+                                easing: "linear",
+                                duration: 1000,
+                                complete: function () {
+                                    // 显示二级标题的描述信息
+                                    anime({
+                                        targets: sub_title_description,
+                                        opacity: [
+                                            { value: ".2" },
+                                            { value: ".4" },
+                                            { value: ".6" },
+                                            { value: ".8" },
+                                            { value: "1" },
+                                        ],
+                                        loop: 1,
+                                        easing: "linear",
+                                        duration: 1000,
+                                    });
+                                },
+                            });
+                        },
+                    });
+                },
             });
         },
         // 关闭子标题
@@ -842,9 +924,80 @@ export default {
                     });
                 }
             }
+
+            that.CloseSubTitleBGImg();
+        },
+        // 关闭子标题大背景和描述
+        CloseSubTitleBGImg() {
+            let that = this;
+            let sub_title_bg_img =
+                document.querySelectorAll(".sub_title_bg_img");
+            let sub_title_description = document.querySelectorAll(
+                ".sub_title_bg_img .description_container"
+            );
+
+            anime({
+                targets: sub_title_bg_img,
+                opacity: [{ value: "0" }],
+                loop: 1,
+                easing: "linear",
+                duration: 1000,
+                complete: function () {
+                    // 显示二级标题的描述信息
+                    anime({
+                        targets: sub_title_description,
+                        opacity: [{ value: "0" }],
+                        loop: 1,
+                        easing: "linear",
+                        duration: 1000,
+                        complete: function () {
+                            that.show_sub_title_bg_img = false;
+                        },
+                    });
+                },
+            });
+        },
+        // 移动24景色
+        MoveScenery() {
+            let that = this;
+            let scroll_1 = document.querySelector(".scroll_1");
+            let scroll_2 = document.querySelector(".scroll_2");
+            let scroll_img_1 = document.querySelector(".scroll_1 .scroll_img_1");
+            let scroll_img_2 = document.querySelector(".scroll_2 .scroll_img_2");
+
+            anime({
+                targets: scroll_1,
+                translateX: -500,
+                loop: 1,
+                easing: "linear",
+                duration: 3000,
+            });
+            anime({
+                targets: scroll_img_1,
+                translateX: -500,
+                loop: 1,
+                easing: "linear",
+                duration: 3000,
+            });
+
+             anime({
+                targets: scroll_2,
+                translateX: 500,
+                loop: 1,
+                easing: "linear",
+                duration: 3000,
+            });
+            anime({
+                targets: scroll_img_2,
+                translateX: 500,
+                loop: 1,
+                easing: "linear",
+                duration: 3000,
+            });
         },
     },
     watch: {
+        // 24节气的选中项下标
         solar_terms_index(newIndex) {
             this.PointerRotate(newIndex);
         },
@@ -1136,7 +1289,7 @@ export default {
             // top: 904px;
             // left: 456px;
             top: 890px;
-            left: 337px;
+            left: 336px;
             opacity: 0;
             transform: rotate(180deg);
             -ms-transform: rotate(180deg); /* IE 9 */
@@ -1635,6 +1788,7 @@ export default {
         left: 0;
         right: 0;
         margin: 0 auto;
+        opacity: 0;
         .bg_img {
             width: 1050px;
             height: 1050px;
@@ -1653,6 +1807,7 @@ export default {
             position: absolute;
             top: 692px;
             left: -38px;
+            opacity: 0;
             .outer_ring {
                 width: 400px;
                 height: 400px;
@@ -1671,7 +1826,7 @@ export default {
                     justify-content: center;
                     align-items: center;
                     .description {
-                        width: 200px;
+                        width: 224px;
                         height: 210px;
                         text-align: left;
                         color: white;
@@ -1684,14 +1839,85 @@ export default {
                     }
                 }
             }
+            .close_img {
+                width: 57px;
+                height: 57px;
+                position: absolute;
+                top: 301px;
+                left: 297px;
+                -webkit-user-drag: none;
+            }
         }
-        .close_img {
-            width: 57px;
-            height: 57px;
+    }
+    .scenery_container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        .scroll_1 {
+            width: 100px;
+            height: 1025px;
             position: absolute;
-            top: 993px;
-            left: 261px;
-            -webkit-user-drag: none;
+            top: 27px;
+            left: 1623px;
+            .scroll_1_1 {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: url("@/static/images/scroll_1.png");
+                background-size: 100% 100%;
+            }
+            .scroll_1_2 {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                background-image: url("@/static/images/scroll_2.png");
+                background-size: 100% 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .scroll_img_1 {
+                    height: 88%;
+                }
+            }
+        }
+        .scroll_2 {
+            width: 100px;
+            height: 1025px;
+            position: absolute;
+            top: 27px;
+            left: 1723px;
+            .scroll_2_1 {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: url("@/static/images/scroll_1.png");
+                background-size: 100% 100%;
+            }
+            .scroll_2_2 {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                background-image: url("@/static/images/scroll_2.png");
+                background-size: 100% 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                .scroll_img_2 {
+                    height: 88%;
+                }
+            }
         }
     }
 }

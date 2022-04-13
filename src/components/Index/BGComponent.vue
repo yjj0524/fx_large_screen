@@ -16,6 +16,51 @@
                 <circle
                     cx="860"
                     cy="860"
+                    r="600"
+                    stroke="#58638d"
+                    stroke-width="2"
+                    fill="transparent"
+                />
+            </svg>
+            <svg
+                id="circle_line_2"
+                width="1700"
+                height="1700"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="860"
+                    cy="860"
+                    r="655"
+                    stroke="#58638d"
+                    stroke-width="1"
+                    fill="#1f478a"
+                />
+            </svg>
+            <svg
+                id="circle_line_3"
+                width="1700"
+                height="1700"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="860"
+                    cy="860"
+                    r="655"
+                    stroke="#58638d"
+                    stroke-width="2"
+                    fill="transparent"
+                />
+            </svg>
+            <svg
+                id="circle_line_4"
+                width="1700"
+                height="1700"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="860"
+                    cy="860"
                     r="720"
                     stroke="#58638d"
                     stroke-width="1"
@@ -23,7 +68,7 @@
                 />
             </svg>
             <svg
-                id="circle_line_2"
+                id="circle_line_5"
                 width="2000"
                 height="2000"
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,8 +84,12 @@
             </svg>
         </div>
         <!-- 24节气背景图 -->
+        <div class="pointer_img">
+            <img class="img_1" src="@/static/images/light.png" alt="" />
+            <img class="img_2" src="@/static/images/mirage.png" alt="" />
+        </div>
         <div class="solar_terms">
-            <img src="@/static/images/solar_terms.png" alt="" />
+            <img class="img_bg" src="@/static/images/solar_terms.png" alt="" />
         </div>
         <!-- 24节气图标和标题 -->
         <div class="solar_terms_item" v-show="show_solar_terms_img">
@@ -50,6 +99,9 @@
                 :class="`item item${index + 1}`"
                 :src="item.img"
                 alt=""
+                @click="PointerRotate(index)"
+                @mouseover="EnlargeSolarTerms"
+                @mouseleave="NarrowSolarTerms"
             />
             <h1 class="title1" :style="titleStyle">智 慧新 桥</h1>
             <h1 class="title2">智 慧新 桥</h1>
@@ -130,11 +182,32 @@
                 <div class="scale big_scale"></div>
             </div>
         </div>
+        <div class="sub_title_bg_img">
+            <div class="bg_img">
+                <img src="@/static/images/sub_title_bg.jpg" alt="" />
+            </div>
+            <div class="description_container">
+                <div class="outer_ring">
+                    <div class="sub_title_description_img">
+                        <div class="description">
+                            我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img
+                class="close_img"
+                src="@/static/images/sub_title_description_close.png"
+                alt=""
+            />
+        </div>
     </div>
 </template>
 
 <script>
 import anime from "animejs/lib/anime.js";
+
+let aaa = 15;
 
 export default {
     name: "",
@@ -264,6 +337,10 @@ export default {
                     img: "",
                 },
             ],
+            // 24节气选中项下标
+            solar_terms_index: 0,
+            // 节气动画是否完成
+            solar_terms_animation_complete: false,
             // 一级标题
             primary_title_datas: [
                 {
@@ -295,6 +372,14 @@ export default {
         const that = this;
         that.SetSolarTermsImg();
 
+        // anime({
+        //     targets: document.querySelector(".test"),
+        //     rotateY: 360,
+        //     duration: 5000,
+        //     easing: "linear",
+        //     loop: true,
+        // });
+
         //#region 执行背景动画
         // halo_1动画
         anime({
@@ -313,70 +398,81 @@ export default {
             // loop: true,
         });
         // aperture动画
-        anime.timeline({
-            targets: document.querySelector(".aperture"),
-            loop: true,
-        });
-        // .add({
-        //     rotate: 360,
-        //     duration: 60000,
-        //     easing: "linear",
-        // });
-        // solar_terms动画
         anime
             .timeline({
-                targets: document.querySelector(".solar_terms"),
+                targets: document.querySelector(".aperture"),
+                loop: true,
             })
             .add({
-                scale: 30.5,
-                duration: 2000,
-                easing: "easeInOutQuad",
+                // rotate: 360,
+                // duration: 60000,
+                // easing: "linear",
+            });
+        // solar_terms动画
+
+        // 运行24节气动画
+        let solar_terms_el = document.querySelectorAll(
+            ".solar_terms_item .item"
+        );
+
+        for (let i = 0; i < solar_terms_el.length; i++) {
+            anime
+                .timeline({
+                    targets: solar_terms_el[i],
+                    easing: "linear",
+                    loop: 1,
+                })
+                .add({
+                    rotate: i * 15,
+                    duration: 0,
+                })
+                .add({
+                    translateX: -120,
+                    translateY: -15,
+                    opacity: [
+                        { value: ".2" },
+                        { value: ".4" },
+                        { value: ".6" },
+                        { value: ".8" },
+                        { value: "1" },
+                    ],
+                    delay: i * 100,
+                    duration: 800,
+                    complete: function () {
+                        if (i + 1 == solar_terms_el.length) {
+                            that.solar_terms_animation_complete = true;
+                        }
+                    },
+                });
+        }
+
+        // 主标题显示
+        that.show_solar_terms_img = true;
+
+        // 主标题动画
+        anime
+            .timeline({
+                targets: document.querySelectorAll(".solar_terms_item .title1"),
+                easing: "linear",
+            })
+            .add({
+                rotateX: 25,
+                translateY: 6,
+                duration: 1000,
+                loop: 1,
                 complete: function () {
-                    // 运行24节气动画
-                    let solar_terms_Array = document.querySelectorAll(
-                        ".solar_terms_item .item"
-                    );
-
-                    for (let i = 0; i < solar_terms_Array.length; i++) {
-                        anime
-                            .timeline({
-                                targets: solar_terms_Array[i],
-                                easing: "linear",
-                                loop: 1,
-                            })
-                            .add({
-                                rotate: i * 15,
-                                duration: 0,
-                            })
-                            .add({
-                                scale: 1.3,
-                                duration: 300, // 持续时间
-                            })
-                            .add({
-                                scale: 1,
-                                duration: 300, // 持续时间
-                            });
-                    }
-
-                    // 主标题显示
-                    that.show_solar_terms_img = true;
-                    // 主标题动画
-                    anime
-                        .timeline({
-                            targets: document.querySelectorAll(
-                                ".solar_terms_item .title1"
-                            ),
-                            easing: "linear",
-                        })
-                        .add({
-                            translateY: 6,
-                            duration: 1500,
-                            loop: 1,
-                            complete: function () {
-                                that.titleStyle.textShadow = "0 7px 0 #091225";
-                            },
-                        });
+                    that.titleStyle.textShadow = "0 7px 0 #091225";
                 },
+            });
+        anime
+            .timeline({
+                targets: document.querySelectorAll(".solar_terms_item .title2"),
+                easing: "linear",
+            })
+            .add({
+                rotateX: 25,
+                duration: 1000,
+                loop: 1,
             });
         //#endregion
 
@@ -480,6 +576,8 @@ export default {
 
             target_index--;
 
+            this.solar_terms_index = target_index;
+
             for (let i = 0; i < solar_terms.length; i++) {
                 let item = solar_terms[i];
                 let img_index = i < 9 ? `0${i + 1}` : i + 1;
@@ -500,6 +598,42 @@ export default {
             }
 
             this.solar_terms_datas = solar_terms;
+        },
+        // 放大24节气图标
+        EnlargeSolarTerms(e) {
+            if (this.solar_terms_animation_complete) {
+                anime({
+                    targets: e.target,
+                    loop: 1,
+                    easing: "linear",
+                    scale: 1.1,
+                    duration: 200,
+                });
+            }
+        },
+        // 缩小24节气图标
+        NarrowSolarTerms(e) {
+            if (this.solar_terms_animation_complete) {
+                anime({
+                    targets: e.target,
+                    loop: 1,
+                    easing: "linear",
+                    scale: 1,
+                    duration: 200,
+                });
+            }
+        },
+        // 指针旋转动画
+        PointerRotate(index) {
+            let pointer_img = document.querySelectorAll(".pointer_img");
+
+            anime({
+                targets: pointer_img,
+                easing: "linear",
+                rotate: index * 15,
+                duration: 1000,
+                loop: 1,
+            });
         },
         // 放大一级标题图标
         EnlargePrimaryTitle(e) {
@@ -710,6 +844,11 @@ export default {
             }
         },
     },
+    watch: {
+        solar_terms_index(newIndex) {
+            this.PointerRotate(newIndex);
+        },
+    },
 };
 </script>
 
@@ -773,21 +912,70 @@ export default {
         }
         #circle_line_2 {
             position: absolute;
+            top: -320px;
+            left: 857px;
+            opacity: 0.2;
+        }
+        #circle_line_3 {
+            position: absolute;
+            top: -320px;
+            left: 857px;
+        }
+        #circle_line_4 {
+            position: absolute;
+            top: -320px;
+            left: 857px;
+        }
+        #circle_line_5 {
+            position: absolute;
             top: -460px;
             left: 729px;
         }
     }
-    .solar_terms {
+    .pointer_img {
         width: 40px;
-        height: 35px;
+        height: 40px;
         position: absolute;
-        top: 48.1%;
+        top: 519px;
+        left: -10px;
+        right: 0;
+        margin: 0 auto;
+        .img_1 {
+            width: 128px;
+            height: 490px;
+            position: absolute;
+            top: -472px;
+            left: -44px;
+            right: 0;
+            margin: 0 auto;
+            transform: rotate(-0.2deg);
+            -ms-transform: rotate(-0.2deg); /* IE 9 */
+            -moz-transform: rotate(-0.2deg); /* Firefox */
+            -webkit-transform: rotate(-0.2deg); /* Safari 和 Chrome */
+            -o-transform: rotate(-0.2deg); /* Opera */
+        }
+        .img_2 {
+            width: 228.5px;
+            height: 483px;
+            position: absolute;
+            top: -485px;
+            left: -96px;
+            right: 0;
+            margin: 0 auto;
+        }
+    }
+    .solar_terms {
+        width: 1196px;
+        height: 1080px;
+        position: absolute;
+        top: 0px;
         left: 0;
         right: 0;
         margin: 0 auto;
-        img {
+        .img_bg {
             width: 100%;
             height: 100%;
+            -webkit-user-drag: none;
         }
     }
     .solar_terms_item {
@@ -803,109 +991,297 @@ export default {
             width: 6rem;
             height: 6rem;
             position: absolute;
+            -webkit-user-drag: none;
         }
         .item1 {
-            top: 15px;
-            left: 452px;
+            // top: 12px;
+            // left: 452px;
+            top: 26px;
+            left: 571px;
+            opacity: 0;
         }
         .item2 {
-            top: 30px;
-            left: 573px;
+            // top: 27px;
+            // left: 571px;
+            top: 73px;
+            left: 683px;
+            opacity: 0;
+            transform: rotate(15deg);
+            -ms-transform: rotate(15deg); /* IE 9 */
+            -moz-transform: rotate(15deg); /* Firefox */
+            -webkit-transform: rotate(15deg); /* Safari 和 Chrome */
+            -o-transform: rotate(15deg); /* Opera */
         }
         .item3 {
-            top: 74px;
-            left: 681px;
+            // top: 72px;
+            // left: 678px;
+            top: 145px;
+            left: 773px;
+            opacity: 0;
+            transform: rotate(30deg);
+            -ms-transform: rotate(30deg); /* IE 9 */
+            -moz-transform: rotate(30deg); /* Firefox */
+            -webkit-transform: rotate(30deg); /* Safari 和 Chrome */
+            -o-transform: rotate(30deg); /* Opera */
         }
         .item4 {
-            top: 145px;
-            left: 777px;
+            // top: 143px;
+            // left: 769px;
+            top: 240px;
+            left: 845px;
+            opacity: 0;
+            transform: rotate(45deg);
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -moz-transform: rotate(45deg); /* Firefox */
+            -webkit-transform: rotate(45deg); /* Safari 和 Chrome */
+            -o-transform: rotate(45deg); /* Opera */
         }
         .item5 {
-            top: 237px;
-            left: 848px;
+            // top: 237px;
+            // left: 848px;
+            top: 346px;
+            left: 886px;
+            opacity: 0;
+            transform: rotate(60deg);
+            -ms-transform: rotate(60deg); /* IE 9 */
+            -moz-transform: rotate(60deg); /* Firefox */
+            -webkit-transform: rotate(60deg); /* Safari 和 Chrome */
+            -o-transform: rotate(60deg); /* Opera */
         }
         .item6 {
-            top: 346px;
-            left: 894px;
+            // top: 346px;
+            // left: 894px;
+            top: 463px;
+            left: 902px;
+            opacity: 0;
+            transform: rotate(75deg);
+            -ms-transform: rotate(75deg); /* IE 9 */
+            -moz-transform: rotate(75deg); /* Firefox */
+            -webkit-transform: rotate(75deg); /* Safari 和 Chrome */
+            -o-transform: rotate(75deg); /* Opera */
         }
         .item7 {
-            top: 456px;
-            left: 907px;
+            // top: 456px;
+            // left: 907px;
+            top: 575px;
+            left: 885px;
+            opacity: 0;
+            transform: rotate(90deg);
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -moz-transform: rotate(90deg); /* Firefox */
+            -webkit-transform: rotate(90deg); /* Safari 和 Chrome */
+            -o-transform: rotate(90deg); /* Opera */
         }
         .item8 {
-            top: 577px;
-            left: 892px;
+            // top: 577px;
+            // left: 892px;
+            top: 688px;
+            left: 838px;
+            opacity: 0;
+            transform: rotate(105deg);
+            -ms-transform: rotate(105deg); /* IE 9 */
+            -moz-transform: rotate(105deg); /* Firefox */
+            -webkit-transform: rotate(105deg); /* Safari 和 Chrome */
+            -o-transform: rotate(105deg); /* Opera */
         }
         .item9 {
-            top: 683px;
-            left: 847px;
+            // top: 683px;
+            // left: 847px;
+            top: 777px;
+            left: 765px;
+            opacity: 0;
+            transform: rotate(120deg);
+            -ms-transform: rotate(120deg); /* IE 9 */
+            -moz-transform: rotate(120deg); /* Firefox */
+            -webkit-transform: rotate(120deg); /* Safari 和 Chrome */
+            -o-transform: rotate(120deg); /* Opera */
         }
         .item10 {
-            top: 776px;
-            left: 774px;
+            // top: 776px;
+            // left: 774px;
+            top: 850px;
+            left: 672px;
+            opacity: 0;
+            transform: rotate(135deg);
+            -ms-transform: rotate(135deg); /* IE 9 */
+            -moz-transform: rotate(135deg); /* Firefox */
+            -webkit-transform: rotate(135deg); /* Safari 和 Chrome */
+            -o-transform: rotate(135deg); /* Opera */
         }
         .item11 {
-            top: 846px;
-            left: 681px;
+            // top: 846px;
+            // left: 681px;
+            top: 892px;
+            left: 565px;
+            opacity: 0;
+            transform: rotate(150deg);
+            -ms-transform: rotate(150deg); /* IE 9 */
+            -moz-transform: rotate(150deg); /* Firefox */
+            -webkit-transform: rotate(150deg); /* Safari 和 Chrome */
+            -o-transform: rotate(150deg); /* Opera */
         }
         .item12 {
-            top: 890px;
-            left: 570px;
+            // top: 890px;
+            // left: 570px;
+            top: 906px;
+            left: 448px;
+            opacity: 0;
+            transform: rotate(165deg);
+            -ms-transform: rotate(165deg); /* IE 9 */
+            -moz-transform: rotate(165deg); /* Firefox */
+            -webkit-transform: rotate(165deg); /* Safari 和 Chrome */
+            -o-transform: rotate(165deg); /* Opera */
         }
         .item13 {
-            top: 904px;
-            left: 456px;
+            // top: 904px;
+            // left: 456px;
+            top: 890px;
+            left: 337px;
+            opacity: 0;
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg); /* IE 9 */
+            -moz-transform: rotate(180deg); /* Firefox */
+            -webkit-transform: rotate(180deg); /* Safari 和 Chrome */
+            -o-transform: rotate(180deg); /* Opera */
         }
         .item14 {
-            top: 890px;
-            left: 336px;
+            // top: 890px;
+            // left: 336px;
+            top: 843px;
+            left: 223px;
+            opacity: 0;
+            transform: rotate(195deg);
+            -ms-transform: rotate(195deg); /* IE 9 */
+            -moz-transform: rotate(195deg); /* Firefox */
+            -webkit-transform: rotate(195deg); /* Safari 和 Chrome */
+            -o-transform: rotate(195deg); /* Opera */
         }
         .item15 {
-            top: 844px;
-            left: 227px;
+            // top: 844px;
+            // left: 227px;
+            top: 772px;
+            left: 134px;
+            opacity: 0;
+            transform: rotate(210deg);
+            -ms-transform: rotate(210deg); /* IE 9 */
+            -moz-transform: rotate(210deg); /* Firefox */
+            -webkit-transform: rotate(210deg); /* Safari 和 Chrome */
+            -o-transform: rotate(210deg); /* Opera */
         }
         .item16 {
-            top: 774px;
-            left: 132px;
+            // top: 774px;
+            // left: 132px;
+            top: 676px;
+            left: 63px;
+            opacity: 0;
+            transform: rotate(225deg);
+            -ms-transform: rotate(225deg); /* IE 9 */
+            -moz-transform: rotate(225deg); /* Firefox */
+            -webkit-transform: rotate(225deg); /* Safari 和 Chrome */
+            -o-transform: rotate(225deg); /* Opera */
         }
         .item17 {
-            top: 683px;
-            left: 60px;
+            // top: 683px;
+            // left: 60px;
+            top: 570px;
+            left: 21px;
+            opacity: 0;
+            transform: rotate(240deg);
+            -ms-transform: rotate(240deg); /* IE 9 */
+            -moz-transform: rotate(240deg); /* Firefox */
+            -webkit-transform: rotate(240deg); /* Safari 和 Chrome */
+            -o-transform: rotate(240deg); /* Opera */
         }
         .item18 {
-            top: 575px;
-            left: 14px;
+            // top: 575px;
+            // left: 14px;
+            top: 454px;
+            left: 6px;
+            opacity: 0;
+            transform: rotate(255deg);
+            -ms-transform: rotate(255deg); /* IE 9 */
+            -moz-transform: rotate(255deg); /* Firefox */
+            -webkit-transform: rotate(255deg); /* Safari 和 Chrome */
+            -o-transform: rotate(255deg); /* Opera */
         }
         .item19 {
-            top: 458px;
-            left: -1px;
+            // top: 458px;
+            // left: -1px;
+            top: 336px;
+            left: 22px;
+            opacity: 0;
+            transform: rotate(270deg);
+            -ms-transform: rotate(270deg); /* IE 9 */
+            -moz-transform: rotate(270deg); /* Firefox */
+            -webkit-transform: rotate(270deg); /* Safari 和 Chrome */
+            -o-transform: rotate(270deg); /* Opera */
         }
         .item20 {
-            top: 344px;
-            left: 13px;
+            // top: 344px;
+            // left: 13px;
+            top: 230px;
+            left: 69px;
+            opacity: 0;
+            transform: rotate(285deg);
+            -ms-transform: rotate(285deg); /* IE 9 */
+            -moz-transform: rotate(285deg); /* Firefox */
+            -webkit-transform: rotate(285deg); /* Safari 和 Chrome */
+            -o-transform: rotate(285deg); /* Opera */
         }
         .item21 {
-            top: 237px;
-            left: 61px;
+            // top: 237px;
+            // left: 61px;
+            top: 139px;
+            left: 140px;
+            opacity: 0;
+            transform: rotate(300deg);
+            -ms-transform: rotate(300deg); /* IE 9 */
+            -moz-transform: rotate(300deg); /* Firefox */
+            -webkit-transform: rotate(300deg); /* Safari 和 Chrome */
+            -o-transform: rotate(300deg); /* Opera */
         }
         .item22 {
-            top: 146px;
-            left: 134px;
+            // top: 146px;
+            // left: 134px;
+            top: 68px;
+            left: 234px;
+            opacity: 0;
+            transform: rotate(315deg);
+            -ms-transform: rotate(315deg); /* IE 9 */
+            -moz-transform: rotate(315deg); /* Firefox */
+            -webkit-transform: rotate(315deg); /* Safari 和 Chrome */
+            -o-transform: rotate(315deg); /* Opera */
         }
         .item23 {
-            top: 75px;
-            left: 228px;
+            // top: 75px;
+            // left: 228px;
+            top: 24px;
+            left: 341px;
+            opacity: 0;
+            transform: rotate(330deg);
+            -ms-transform: rotate(330deg); /* IE 9 */
+            -moz-transform: rotate(330deg); /* Firefox */
+            -webkit-transform: rotate(330deg); /* Safari 和 Chrome */
+            -o-transform: rotate(330deg); /* Opera */
         }
         .item24 {
-            top: 32px;
-            left: 336px;
+            // top: 32px;
+            // left: 336px;
+            top: 9px;
+            left: 457px;
+            opacity: 0;
+            transform: rotate(345deg);
+            -ms-transform: rotate(345deg); /* IE 9 */
+            -moz-transform: rotate(345deg); /* Firefox */
+            -webkit-transform: rotate(345deg); /* Safari 和 Chrome */
+            -o-transform: rotate(345deg); /* Opera */
         }
         .title1 {
             width: 210px;
             font-size: 6.5rem;
             position: absolute;
             top: 315px;
-            left: 396px;
+            left: 393px;
             color: #7f6c4a;
         }
         .title2 {
@@ -913,7 +1289,7 @@ export default {
             font-size: 6.5rem;
             position: absolute;
             top: 315px;
-            left: 396px;
+            left: 393px;
             background-image: linear-gradient(
                 -45deg,
                 #ebe6de,
@@ -1249,6 +1625,73 @@ export default {
             -moz-transform: rotate(38deg); /* Firefox */
             -webkit-transform: rotate(38deg); /* Safari 和 Chrome */
             -o-transform: rotate(38deg); /* Opera */
+        }
+    }
+    .sub_title_bg_img {
+        width: 1050px;
+        height: 1050px;
+        position: absolute;
+        top: 13px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        .bg_img {
+            width: 1050px;
+            height: 1050px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 50%;
+            img {
+                -webkit-user-drag: none;
+            }
+        }
+        .description_container {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 692px;
+            left: -38px;
+            .outer_ring {
+                width: 400px;
+                height: 400px;
+                border-radius: 50%;
+                background-image: url("@/static/images/outer_ring.png");
+                background-size: 100% 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .sub_title_description_img {
+                    width: 360px;
+                    height: 360px;
+                    background-image: url("@/static/images/sub_title_description.png");
+                    background-size: 100% 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .description {
+                        width: 200px;
+                        height: 210px;
+                        text-align: left;
+                        color: white;
+                        overflow-y: scroll;
+                        text-indent: 34px;
+                        letter-spacing: 3px;
+                    }
+                    .description::-webkit-scrollbar {
+                        width: 0 !important;
+                    }
+                }
+            }
+        }
+        .close_img {
+            width: 57px;
+            height: 57px;
+            position: absolute;
+            top: 993px;
+            left: 261px;
+            -webkit-user-drag: none;
         }
     }
 }

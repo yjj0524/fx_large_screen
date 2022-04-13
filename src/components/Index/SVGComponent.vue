@@ -245,7 +245,6 @@ export default {
                 duration: 3900,
             });
         //#endregion
-
     },
 };
 </script>

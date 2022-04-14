@@ -1,5 +1,19 @@
 <template>
     <div class="overall">
+        <div class="left_title" @click="OpenSceneryContainer">
+            <img
+                class="left_title_img"
+                src="@/static/images/index_title.png"
+                alt=""
+            />
+        </div>
+        <div class="right_title" @click="OpenSceneryContainer">
+            <img
+                class="right_title_img"
+                src="@/static/images/index_title.png"
+                alt=""
+            />
+        </div>
         <div class="aperture_Container">
             <!-- 光环1 -->
             <div class="halo_1"></div>
@@ -204,25 +218,58 @@
             </div>
         </div>
         <!-- 新桥24景 -->
-        <div class="scenery_container" @click="MoveScenery">
-            <div class="scroll_1">
-                <div class="scroll_1_1"></div>
-                <div class="scroll_1_2">
-                    <img
-                        class="scroll_img_1"
-                        src="@/static/images/scroll_3.png"
-                        alt=""
-                    />
+        <div
+            class="scenery_container"
+            v-show="show_scenery_container"
+            @click.self="CloseSceneryContainer"
+        >
+            <div class="covering_layer">
+                <div class="scenery_container_bg_img">
+                    <img src="@/static/images/scenery_img.png" alt="" />
+                    <div
+                        class="title_container same"
+                        v-show="show_title_and_btns"
+                    >
+                        <div class="title_1">新桥二十四景 · 春分</div>
+                        <div class="title_2">
+                            立春阳气转，雨水雁河边；惊蛰乌鸦叫，春分地皮干。
+                        </div>
+                    </div>
+                    <div
+                        class="btn_container same"
+                        v-show="show_title_and_btns"
+                    >
+                        <img
+                            class="scroll_pre"
+                            src="@/static/images/scroll_pre.png"
+                            alt=""
+                        />
+                        <img
+                            class="scroll_next"
+                            src="@/static/images/scroll_next.png"
+                            alt=""
+                        />
+                        <img
+                            class="scroll_close"
+                            src="@/static/images/scroll_close.png"
+                            alt=""
+                            @click.stop="CloseScroll"
+                        />
+                    </div>
                 </div>
             </div>
-            <div class="scroll_2">
-                <div class="scroll_2_1"></div>
-                <div class="scroll_2_2">
-                    <img
-                        class="scroll_img_2"
-                        src="@/static/images/scroll_3.png"
-                        alt=""
-                    />
+            <div class="scroll_container" @click.stop="OpenScroll">
+                <div class="scroll_1">
+                    <div class="scroll_1_1"></div>
+                    <div class="scroll_1_2">
+                        <div class="scroll_img_1"></div>
+                    </div>
+                </div>
+                <div class="scroll_2">
+                    <div class="scroll_2_1"></div>
+                    <div class="scroll_2_2">
+                        <div class="scroll_img_2"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -390,19 +437,17 @@ export default {
                 textShadow: "",
             },
             show_sub_title_bg_img: false,
+            // 显示卷轴容器
+            show_scenery_container: false,
+            // 未展开卷轴前允许点击空白处关闭卷轴容器
+            allow_close_scenery_container: true,
+            // 显示卷轴中的描述和按钮
+            show_title_and_btns: false,
         };
     },
     mounted() {
         const that = this;
         that.SetSolarTermsImg();
-
-        // anime({
-        //     targets: document.querySelector(".test"),
-        //     rotateY: 360,
-        //     duration: 5000,
-        //     easing: "linear",
-        //     loop: true,
-        // });
 
         //#region 执行背景动画
         // halo_1动画
@@ -655,7 +700,7 @@ export default {
                 targets: pointer_img,
                 easing: "linear",
                 rotate: index * 15,
-                duration: 1000,
+                duration: 500,
                 loop: 1,
             });
         },
@@ -957,42 +1002,251 @@ export default {
                 },
             });
         },
-        // 移动24景色
-        MoveScenery() {
+        // 打开24景
+        OpenSceneryContainer() {
+            if (this.allow_close_scenery_container) {
+                this.show_scenery_container = true;
+                let scenery_container =
+                    document.querySelector(".scenery_container");
+
+                anime({
+                    targets: scenery_container,
+                    opacity: [
+                        { value: ".2" },
+                        { value: ".4" },
+                        { value: ".6" },
+                        { value: ".8" },
+                        { value: "1" },
+                    ],
+                    loop: 1,
+                    easing: "linear",
+                    duration: 1000,
+                });
+            }
+        },
+        // 关闭24景（未展开时）
+        CloseSceneryContainer() {
+            let that = this;
+
+            if (that.allow_close_scenery_container) {
+                let scenery_container =
+                    document.querySelector(".scenery_container");
+
+                anime({
+                    targets: scenery_container,
+                    opacity: [
+                        { value: ".8" },
+                        { value: ".6" },
+                        { value: ".4" },
+                        { value: ".2" },
+                        { value: "0" },
+                    ],
+                    loop: 1,
+                    easing: "linear",
+                    duration: 1000,
+                    complete: function () {
+                        that.show_scenery_container = false;
+                    },
+                });
+            }
+        },
+        // 展开24景卷轴
+        OpenScroll() {
             let that = this;
             let scroll_1 = document.querySelector(".scroll_1");
             let scroll_2 = document.querySelector(".scroll_2");
-            let scroll_img_1 = document.querySelector(".scroll_1 .scroll_img_1");
-            let scroll_img_2 = document.querySelector(".scroll_2 .scroll_img_2");
+            let scroll_img_1 = document.querySelector(
+                ".scroll_1 .scroll_img_1"
+            );
+            let scroll_img_2 = document.querySelector(
+                ".scroll_2 .scroll_img_2"
+            );
+            let covering_layer = document.querySelector(
+                ".scenery_container .covering_layer"
+            );
+            let title_container = document.querySelector(
+                ".scenery_container .title_container"
+            );
+            let btn_container = document.querySelector(
+                ".scenery_container .btn_container"
+            );
 
+            that.allow_close_scenery_container = false;
+
+            // 背景移动
+            anime({
+                targets: covering_layer,
+                translateX: -1500,
+                width: 3000,
+                loop: 1,
+                easing: "linear",
+                duration: 2000,
+                // 背景移动完成后展示描述信息和按钮
+                complete: function () {
+                    that.show_title_and_btns = true;
+
+                    anime({
+                        targets: [title_container, btn_container],
+                        opacity: [
+                            { value: ".2" },
+                            { value: ".4" },
+                            { value: ".6" },
+                            { value: ".8" },
+                            { value: "1" },
+                        ],
+                        loop: 1,
+                        easing: "linear",
+                        duration: 1000,
+                    });
+                },
+            });
+
+            // 左卷轴向左移动
             anime({
                 targets: scroll_1,
-                translateX: -500,
+                translateX: -1494,
                 loop: 1,
                 easing: "linear",
-                duration: 3000,
-            });
-            anime({
-                targets: scroll_img_1,
-                translateX: -500,
-                loop: 1,
-                easing: "linear",
-                duration: 3000,
+                duration: 2000,
             });
 
-             anime({
-                targets: scroll_2,
-                translateX: 500,
-                loop: 1,
-                easing: "linear",
-                duration: 3000,
-            });
+            // 左卷轴里的图片向左移动
             anime({
-                targets: scroll_img_2,
-                translateX: 500,
+                targets: scroll_img_1,
+                translateX: -1100,
                 loop: 1,
                 easing: "linear",
-                duration: 3000,
+                duration: 2000,
+            });
+
+            // 右卷轴向右移动
+            anime({
+                targets: scroll_2,
+                translateX: 1494,
+                loop: 1,
+                easing: "linear",
+                duration: 2000,
+            });
+
+            // 右卷轴里的图片向右移动
+            anime
+                .timeline({
+                    targets: scroll_img_2,
+                    loop: 1,
+                    easing: "linear",
+                })
+                .add({
+                    translateX: 1200,
+                    duration: 2000,
+                });
+        },
+        CloseScroll() {
+            let that = this;
+            let scroll_1 = document.querySelector(".scroll_1");
+            let scroll_2 = document.querySelector(".scroll_2");
+            let scroll_img_1 = document.querySelector(
+                ".scroll_1 .scroll_img_1"
+            );
+            let scroll_img_2 = document.querySelector(
+                ".scroll_2 .scroll_img_2"
+            );
+            let scenery_container =
+                document.querySelector(".scenery_container");
+            let covering_layer = document.querySelector(
+                ".scenery_container .covering_layer"
+            );
+            let title_container = document.querySelector(
+                ".scenery_container .title_container"
+            );
+            let btn_container = document.querySelector(
+                ".scenery_container .btn_container"
+            );
+
+            that.allow_close_scenery_container = true;
+
+            // 隐藏标题和按钮
+            anime({
+                targets: [title_container, btn_container],
+                opacity: [
+                    { value: ".8" },
+                    { value: ".6" },
+                    { value: ".4" },
+                    { value: ".2" },
+                    { value: "0" },
+                ],
+                loop: 1,
+                easing: "linear",
+                duration: 500,
+                complete: function () {
+                    that.show_title_and_btns = false;
+
+                    // 背景移动
+                    anime({
+                        targets: covering_layer,
+                        translateX: 0,
+                        width: 0,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 2000,
+                    });
+
+                    // 左卷轴向左移动
+                    anime({
+                        targets: scroll_1,
+                        translateX: 0,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 2000,
+                    });
+
+                    // 左卷轴里的图片向左移动
+                    anime({
+                        targets: scroll_img_1,
+                        translateX: 0,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 2000,
+                    });
+
+                    // 右卷轴向右移动
+                    anime({
+                        targets: scroll_2,
+                        translateX: 0,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 2000,
+                    });
+
+                    // 右卷轴里的图片向右移动
+                    anime
+                        .timeline({
+                            targets: scroll_img_2,
+                            loop: 1,
+                            easing: "linear",
+                        })
+                        .add({
+                            translateX: 0,
+                            duration: 2000,
+                            complete: function () {
+                                anime({
+                                    targets: scenery_container,
+                                    opacity: [
+                                        { value: ".8" },
+                                        { value: ".6" },
+                                        { value: ".4" },
+                                        { value: ".2" },
+                                        { value: "0" },
+                                    ],
+                                    loop: 1,
+                                    easing: "linear",
+                                    duration: 1000,
+                                    complete: function () {
+                                        that.show_scenery_container = false;
+                                    },
+                                });
+                            },
+                        });
+                },
             });
         },
     },
@@ -1012,7 +1266,38 @@ export default {
     position: absolute;
     top: 0;
     left: 194px;
-    overflow: hidden;
+    .left_title {
+        width: 5rem;
+        height: 10rem;
+        position: absolute;
+        top: 469px;
+        left: -140px;
+        border-radius: 0 10rem 10rem 0;
+        background: rgba(40, 56, 88, 0.8);
+        .left_title_img {
+            width: 1rem;
+            height: 9rem;
+            position: absolute;
+            top: 0.6rem;
+            left: 0.6rem;
+        }
+    }
+    .right_title {
+        width: 5rem;
+        height: 10rem;
+        position: absolute;
+        top: 469px;
+        left: 3522px;
+        border-radius: 10rem 0 0 10rem;
+        background: rgba(40, 56, 88, 0.8);
+        .right_title_img {
+            width: 1rem;
+            height: 9rem;
+            position: absolute;
+            top: 0.6rem;
+            right: 0.6rem;
+        }
+    }
     .aperture_Container {
         width: 100%;
         height: 100%;
@@ -1149,7 +1434,7 @@ export default {
         .item1 {
             // top: 12px;
             // left: 452px;
-            top: 26px;
+            top: 27px;
             left: 571px;
             opacity: 0;
         }
@@ -1157,7 +1442,7 @@ export default {
             // top: 27px;
             // left: 571px;
             top: 73px;
-            left: 683px;
+            left: 682px;
             opacity: 0;
             transform: rotate(15deg);
             -ms-transform: rotate(15deg); /* IE 9 */
@@ -1855,12 +2140,63 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
+        opacity: 0;
+        overflow: hidden;
+        .covering_layer {
+            width: 4px;
+            height: 913px;
+            position: absolute;
+            top: 84px;
+            left: 1721px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .scenery_container_bg_img {
+                width: 3000px;
+                height: 100%;
+                background-image: url("@/static/images/scenery_container_bg_img.png");
+                background-size: 100% 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .title_container {
+                position: absolute;
+                top: 641px;
+                left: 110px;
+                color: white;
+                .title_1 {
+                    font-size: 5rem;
+                    text-align: left;
+                    margin-bottom: 15px;
+                    letter-spacing: 5px;
+                }
+                .title_2 {
+                    font-size: 2.5rem;
+                    letter-spacing: 5px;
+                }
+            }
+            .btn_container {
+                width: 129px;
+                height: 30px;
+                position: absolute;
+                top: 804px;
+                left: 2828px;
+                display: flex;
+                justify-content: space-around;
+            }
+            .same {
+                opacity: 0;
+            }
+        }
+
         .scroll_1 {
-            width: 100px;
+            width: 150px;
             height: 1025px;
             position: absolute;
             top: 27px;
-            left: 1623px;
+            left: 1576px;
             .scroll_1_1 {
                 width: 100%;
                 height: 100%;
@@ -1876,23 +2212,26 @@ export default {
                 position: absolute;
                 top: 0;
                 left: 0;
-                overflow: hidden;
                 background-image: url("@/static/images/scroll_2.png");
                 background-size: 100% 100%;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
+                overflow: hidden;
                 .scroll_img_1 {
-                    height: 88%;
+                    width: 1500px;
+                    height: 86.5%;
+                    position: absolute;
+                    top: 70px;
+                    left: -217px;
+                    background-image: url("@/static/images/scroll_3.png");
+                    background-size: 500px 520px;
                 }
             }
         }
         .scroll_2 {
-            width: 100px;
+            width: 148px;
             height: 1025px;
             position: absolute;
             top: 27px;
-            left: 1723px;
+            left: 1726px;
             .scroll_2_1 {
                 width: 100%;
                 height: 100%;
@@ -1901,6 +2240,7 @@ export default {
                 left: 0;
                 background-image: url("@/static/images/scroll_1.png");
                 background-size: 100% 100%;
+                overflow: hidden;
             }
             .scroll_2_2 {
                 width: 100%;
@@ -1911,11 +2251,16 @@ export default {
                 overflow: hidden;
                 background-image: url("@/static/images/scroll_2.png");
                 background-size: 100% 100%;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
+                overflow: hidden;
                 .scroll_img_2 {
-                    height: 88%;
+                    width: 1500px;
+                    height: 86.5%;
+                    position: absolute;
+                    top: 70px;
+                    left: -1286px;
+                    transform: rotateY(180deg);
+                    background-image: url("@/static/images/scroll_3.png");
+                    background-size: 500px 520px;
                 }
             }
         }

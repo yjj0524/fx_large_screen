@@ -130,20 +130,7 @@
                     />
                 </g>
             </svg>
-            <div class="left_title">
-                <img
-                    class="left_title_img"
-                    src="@/static/images/index_title.png"
-                    alt=""
-                />
-            </div>
-            <div class="right_title">
-                <img
-                    class="right_title_img"
-                    src="@/static/images/index_title.png"
-                    alt=""
-                />
-            </div>
+            
         </div>
     </div>
 </template>
@@ -265,38 +252,6 @@ export default {
         }
         path {
             stroke-width: 0.15rem;
-        }
-        .left_title {
-            width: 5rem;
-            height: 10rem;
-            position: absolute;
-            top: 469px;
-            left: 54px;
-            border-radius: 0 10rem 10rem 0;
-            background: rgba(40, 56, 88, 0.8);
-            .left_title_img {
-                width: 1rem;
-                height: 9rem;
-                position: absolute;
-                top: 0.6rem;
-                left: 0.6rem;
-            }
-        }
-        .right_title {
-            width: 5rem;
-            height: 10rem;
-            position: absolute;
-            top: 469px;
-            left: 3716px;
-            border-radius: 10rem 0 0 10rem;
-            background: rgba(40, 56, 88, 0.8);
-            .right_title_img {
-                width: 1rem;
-                height: 9rem;
-                position: absolute;
-                top: 0.6rem;
-                right: 0.6rem;
-            }
         }
     }
 }

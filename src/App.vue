@@ -18,6 +18,9 @@ body,
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    img {
+        -webkit-user-drag: none;
+    }
 }
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;

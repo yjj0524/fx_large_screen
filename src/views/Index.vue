@@ -24,7 +24,7 @@ export default {
 
 <style lang="less" scoped>
 .container {
-    width: 100%;
+    width: 3840px;
     height: 100%;
     position: relative;
     // display: flex;

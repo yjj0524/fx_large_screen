@@ -1,19 +1,5 @@
 <template>
     <div class="overall">
-        <div class="left_title" @click="OpenSceneryContainer">
-            <img
-                class="left_title_img"
-                src="@/static/images/index_title.png"
-                alt=""
-            />
-        </div>
-        <div class="right_title" @click="OpenSceneryContainer">
-            <img
-                class="right_title_img"
-                src="@/static/images/index_title.png"
-                alt=""
-            />
-        </div>
         <div class="aperture_Container">
             <!-- 光环1 -->
             <div class="halo_1"></div>
@@ -61,9 +47,9 @@
                     cx="860"
                     cy="860"
                     r="655"
-                    stroke="#58638d"
+                    stroke="#1c2c57"
                     stroke-width="2"
-                    fill="transparent"
+                    fill="#172653"
                 />
             </svg>
             <svg
@@ -117,8 +103,8 @@
                 @mouseover="EnlargeSolarTerms"
                 @mouseleave="NarrowSolarTerms"
             />
-            <h1 class="title1" :style="titleStyle">智 慧新 桥</h1>
-            <h1 class="title2">智 慧新 桥</h1>
+            <div class="title1" :style="titleStyle">智 慧新 桥</div>
+            <div class="title2">智 慧新 桥</div>
         </div>
         <!-- 一级标题移动轨迹 -->
         <!-- <svg
@@ -272,6 +258,20 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="left_title" @click="OpenSceneryContainer">
+            <img
+                class="left_title_img"
+                src="@/static/images/index_title.png"
+                alt=""
+            />
+        </div>
+        <div class="right_title" @click="OpenSceneryContainer">
+            <img
+                class="right_title_img"
+                src="@/static/images/index_title.png"
+                alt=""
+            />
         </div>
     </div>
 </template>
@@ -431,6 +431,7 @@ export default {
             ],
             // 子标题
             sub_title_datas: [],
+            // 子标题的选中项
             sub_title_selete_index: null,
             sub_title_show: false,
             titleStyle: {
@@ -453,7 +454,7 @@ export default {
         // halo_1动画
         anime({
             // targets: document.querySelector(".halo_1"),
-            // rotate: -360,
+            // rotate: 360,
             // duration: 60000,
             // easing: "linear",
             // loop: true,
@@ -461,9 +462,9 @@ export default {
         // halo_2动画
         anime({
             // targets: document.querySelector(".halo_2"),
-            // rotate: 360,
-            // duration: 60000,
             // easing: "linear",
+            // rotate: -360,
+            // duration: 60000,
             // loop: true,
         });
         // aperture动画
@@ -526,7 +527,7 @@ export default {
             })
             .add({
                 rotateX: 25,
-                translateY: 6,
+                translateY: 4.5,
                 duration: 1000,
                 loop: 1,
                 complete: function () {
@@ -667,6 +668,8 @@ export default {
             }
 
             this.solar_terms_datas = solar_terms;
+
+            this.PointerRotate(target_index);
         },
         // 放大24节气图标
         EnlargeSolarTerms(e) {
@@ -694,15 +697,46 @@ export default {
         },
         // 指针旋转动画
         PointerRotate(index) {
+            let that = this;
             let pointer_img = document.querySelector(".pointer_img");
+
+            let solar_terms_item_title = document.querySelector(
+                ".solar_terms_item .title2"
+            );
+
+            // console.log(that.solar_terms_index * 15);
+
+            anime({
+                targets: solar_terms_item_title,
+                easing: "linear",
+                backgroundImage: [
+                    {
+                        value:
+                            "linear-gradient(" +
+                            (that.solar_terms_index * 15 + 90) +
+                            "deg,#68583e,#68583e,#68583e,#d5bb8c,#d5bb8c,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#d5bb8c,#5f4f33,#897552,#d5bb8c,#ebe6de,#ebe6de)",
+                    },
+                    {
+                        value:
+                            "linear-gradient(" +
+                            (index * 15 + 90) +
+                            "deg,#68583e,#68583e,#68583e,#d5bb8c,#d5bb8c,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#d5bb8c,#5f4f33,#897552,#d5bb8c,#ebe6de,#ebe6de)",
+                    },
+                ],
+                duration: 1350,
+                loop: 1,
+            });
 
             anime({
                 targets: pointer_img,
                 easing: "linear",
+                delay: 250,
                 rotate: index * 15,
-                duration: 500,
+                duration: 1200,
                 loop: 1,
             });
+
+            that.solar_terms_index = index;
         },
         // 放大一级标题图标
         EnlargePrimaryTitle(e) {
@@ -852,13 +886,18 @@ export default {
             that.sub_title_selete_index = index;
 
             // 显示sign元素
-            anime({
-                targets: sub_title[index],
-                easing: "linear",
-                scale: 10,
-                duration: 300, // 持续时间
-                loop: 1,
-            });
+            anime
+                .timeline({
+                    targets: sub_title[index],
+                    easing: "linear",
+                })
+                .add({
+                    opacity: [{ value: "1" }],
+                    scale: 10,
+                    duration: 300,
+                    loop: 1,
+                })
+                .add({});
 
             that.show_sub_title_bg_img = true;
 
@@ -980,21 +1019,35 @@ export default {
             let sub_title_description = document.querySelectorAll(
                 ".sub_title_bg_img .description_container"
             );
+            let sub_title_sign = document.querySelectorAll(".sub_title .sign");
+
+            if (that.sub_title_selete_index != null) {
+                anime({
+                    targets: sub_title_sign[that.sub_title_selete_index],
+                    easing: "linear",
+                    opacity: [{ value: "0" }],
+                    duration: 500,
+                    loop: 1,
+                    complete: function () {
+                        that.sub_title_selete_index = null;
+                    },
+                });
+            }
 
             anime({
                 targets: sub_title_bg_img,
                 opacity: [{ value: "0" }],
                 loop: 1,
                 easing: "linear",
-                duration: 1000,
+                duration: 500,
                 complete: function () {
-                    // 显示二级标题的描述信息
+                    // 隐藏二级标题的描述信息
                     anime({
                         targets: sub_title_description,
                         opacity: [{ value: "0" }],
                         loop: 1,
                         easing: "linear",
-                        duration: 1000,
+                        duration: 500,
                         complete: function () {
                             that.show_sub_title_bg_img = false;
                         },
@@ -1252,26 +1305,27 @@ export default {
     },
     watch: {
         // 24节气的选中项下标
-        solar_terms_index(newIndex) {
-            this.PointerRotate(newIndex);
-        },
+        // solar_terms_index(newIndex) {
+        //     this.PointerRotate(newIndex);
+        // },
     },
 };
 </script>
 
 <style lang="less" scoped>
 .overall {
-    width: 90%;
+    width: 3840px;
     height: 100%;
     position: absolute;
     top: 0;
-    left: 194px;
+    left: 0;
+    overflow: hidden;
     .left_title {
         width: 5rem;
         height: 10rem;
         position: absolute;
         top: 469px;
-        left: -140px;
+        left: 54px;
         border-radius: 0 10rem 10rem 0;
         background: rgba(40, 56, 88, 0.8);
         .left_title_img {
@@ -1287,7 +1341,7 @@ export default {
         height: 10rem;
         position: absolute;
         top: 469px;
-        left: 3522px;
+        left: 3716px;
         border-radius: 10rem 0 0 10rem;
         background: rgba(40, 56, 88, 0.8);
         .right_title_img {
@@ -1305,11 +1359,11 @@ export default {
         position: relative;
         margin: 0 auto;
         .halo_1 {
-            width: 3100px;
-            height: 3100px;
+            width: 2956px;
+            height: 2956px;
             position: absolute;
-            top: -92%;
-            left: 10px;
+            top: -87%;
+            left: 20px;
             right: 0;
             margin: 0 auto;
             background-image: url("@/static/images/halo.png");
@@ -1346,28 +1400,29 @@ export default {
         #circle_line_1 {
             position: absolute;
             top: -320px;
-            left: 857px;
+            left: 1051px;
         }
         #circle_line_2 {
             position: absolute;
             top: -320px;
-            left: 857px;
+            left: 1051px;
             opacity: 0.2;
         }
         #circle_line_3 {
             position: absolute;
             top: -320px;
-            left: 857px;
+            left: 1051px;
+            opacity: 0.1;
         }
         #circle_line_4 {
             position: absolute;
             top: -320px;
-            left: 857px;
+            left: 1051px;
         }
         #circle_line_5 {
             position: absolute;
             top: -460px;
-            left: 729px;
+            left: 923px;
         }
     }
     .pointer_img {
@@ -1413,7 +1468,6 @@ export default {
         .img_bg {
             width: 100%;
             height: 100%;
-            -webkit-user-drag: none;
         }
     }
     .solar_terms_item {
@@ -1429,7 +1483,6 @@ export default {
             width: 6rem;
             height: 6rem;
             position: absolute;
-            -webkit-user-drag: none;
         }
         .item1 {
             // top: 12px;
@@ -1718,33 +1771,35 @@ export default {
             width: 210px;
             font-size: 6.5rem;
             position: absolute;
-            top: 315px;
+            top: 372px;
             left: 393px;
-            color: #7f6c4a;
+            color: #b8a990;
+            font-weight: bold;
         }
         .title2 {
             width: 210px;
             font-size: 6.5rem;
             position: absolute;
-            top: 315px;
+            top: 372px;
             left: 393px;
-            background-image: linear-gradient(
+            font-weight: bold;
+            background: linear-gradient(
                 -45deg,
                 #ebe6de,
                 #ebe6de,
                 #d5bb8c,
-                #d5bb8c,
+                #897552,
                 #5f4f33,
-                #a4967e,
-                #d5bb8c,
                 #d5bb8c,
                 #ffeecf,
                 #ffeecf,
                 #ffeecf,
                 #ffeecf,
                 #ffeecf,
+                #ffeecf,
+                #ffeecf,
                 #d5bb8c,
-                #68583e,
+                #d5bb8c,
                 #68583e,
                 #68583e,
                 #68583e
@@ -1765,7 +1820,7 @@ export default {
         position: absolute;
         // top: -261px;
         top: 540px;
-        left: 1007px;
+        left: 1215px;
         // display: flex;
         .item {
             display: flex;
@@ -1807,7 +1862,7 @@ export default {
             // -o-transform: rotate(-80deg); /* Opera */
 
             top: -280px;
-            left: -593px;
+            left: -596px;
         }
         .item3 {
             // top: 93px;
@@ -1819,7 +1874,7 @@ export default {
             // -o-transform: rotate(-91deg); /* Opera */
 
             top: -50px;
-            left: -609px;
+            left: -619px;
         }
         .item4 {
             // top: 72px;
@@ -1831,7 +1886,7 @@ export default {
             // -o-transform: rotate(-102deg); /* Opera */
 
             top: 184px;
-            left: -593px;
+            left: -597px;
         }
         .item5 {
             // top: 19px;
@@ -1842,8 +1897,8 @@ export default {
             // -webkit-transform: rotate(-114deg); /* Safari 和 Chrome */
             // -o-transform: rotate(-114deg); /* Opera */
 
-            top: 407px;
-            left: -527px;
+            top: 408px;
+            left: -528px;
         }
     }
     // .sub_title_path {
@@ -1855,7 +1910,7 @@ export default {
         width: 521px;
         position: absolute;
         top: 82px;
-        left: 2390px;
+        left: 2584px;
         transform: rotate(1deg);
         -ms-transform: rotate(1deg); /* IE 9 */
         -moz-transform: rotate(1deg); /* Firefox */
@@ -2082,9 +2137,6 @@ export default {
             align-items: center;
             overflow: hidden;
             border-radius: 50%;
-            img {
-                -webkit-user-drag: none;
-            }
         }
         .description_container {
             width: 400px;
@@ -2130,7 +2182,6 @@ export default {
                 position: absolute;
                 top: 301px;
                 left: 297px;
-                -webkit-user-drag: none;
             }
         }
     }
@@ -2147,7 +2198,7 @@ export default {
             height: 913px;
             position: absolute;
             top: 84px;
-            left: 1721px;
+            left: 1915px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -2196,7 +2247,7 @@ export default {
             height: 1025px;
             position: absolute;
             top: 27px;
-            left: 1576px;
+            left: 1768px;
             .scroll_1_1 {
                 width: 100%;
                 height: 100%;
@@ -2231,7 +2282,7 @@ export default {
             height: 1025px;
             position: absolute;
             top: 27px;
-            left: 1726px;
+            left: 1918px;
             .scroll_2_1 {
                 width: 100%;
                 height: 100%;

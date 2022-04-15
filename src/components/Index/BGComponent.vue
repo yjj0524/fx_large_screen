@@ -1,6 +1,6 @@
 <template>
-    <div class="overall">
-        <div class="aperture_Container">
+    <div class="bg_component">
+        <div class="aperture_container">
             <!-- 光环1 -->
             <div class="halo_1"></div>
             <!-- 光环2 -->
@@ -89,8 +89,9 @@
             <img class="img_2" src="@/static/images/mirage.png" alt="" />
         </div>
         <div class="solar_terms">
-            <img class="img_bg" src="@/static/images/solar_terms.png" alt="" />
+            <img class="img_bg" src="@/static/images/solar_terms_1.png" alt="" />
         </div>
+        <LineComponent />
         <!-- 24节气图标和标题 -->
         <div class="solar_terms_item" v-show="show_solar_terms_img">
             <img
@@ -278,9 +279,13 @@
 
 <script>
 import anime from "animejs/lib/anime.js";
+import LineComponent from "@/components/Index/LineComponent.vue";
 
 export default {
-    name: "",
+    name: "BGComponent",
+    components: {
+        LineComponent,
+    },
     data() {
         return {
             show_solar_terms_img: false,
@@ -1313,8 +1318,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.overall {
-    width: 3840px;
+.bg_component {
+    width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
@@ -1352,7 +1357,7 @@ export default {
             right: 0.6rem;
         }
     }
-    .aperture_Container {
+    .aperture_container {
         width: 100%;
         height: 100%;
         overflow: hidden;

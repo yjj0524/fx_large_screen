@@ -1,5 +1,5 @@
 <template>
-    <div class="overall">
+    <div class="svg_component">
         <div class="box">
             <svg
                 id="svg_container"
@@ -139,6 +139,7 @@
 import anime from "animejs/lib/anime.js";
 
 export default {
+    name: "SVGComponent",
     mounted() {
         //#region 执行SVG动画
         let path_array = document.querySelectorAll("#svg_container path");
@@ -237,7 +238,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.overall {
+.svg_component {
     width: 100%;
     height: 100%;
     .box {

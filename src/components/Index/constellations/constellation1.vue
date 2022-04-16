@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import anime from "animejs/lib/anime.js";
+// import anime from "animejs/lib/anime.js";
 
 export default {
     name: "LineComponent",
@@ -108,7 +108,20 @@ export default {
         };
     },
     mounted() {
-        let duration = 25000;
+        let duration = 20000;
+
+        anime
+            .timeline({
+                targets: document.querySelector(
+                    ".constellation_container_1"
+                ),
+                easing: "linear",
+                loop: true,
+            })
+            .add({
+                // rotate: -360,
+                // duration: 120000,
+            });
 
         anime
             .timeline({
@@ -251,11 +264,5 @@ export default {
     right: 0;
     bottom: 0;
     margin: 0 auto;
-    border: 1px solid red;
-    #svg_item {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
 }
 </style>

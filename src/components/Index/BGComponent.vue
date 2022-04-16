@@ -89,7 +89,11 @@
             <img class="img_2" src="@/static/images/mirage.png" alt="" />
         </div>
         <div class="solar_terms">
-            <img class="img_bg" src="@/static/images/solar_terms_1.png" alt="" />
+            <img
+                class="img_bg"
+                src="@/static/images/solar_terms_1.png"
+                alt=""
+            />
         </div>
         <LineComponent />
         <!-- 24节气图标和标题 -->
@@ -532,8 +536,8 @@ export default {
             })
             .add({
                 rotateX: 25,
-                translateY: 4.5,
-                duration: 1000,
+                translateY: 5,
+                duration: 2000,
                 loop: 1,
                 complete: function () {
                     that.titleStyle.textShadow = "0 7px 0 #091225";
@@ -546,7 +550,7 @@ export default {
             })
             .add({
                 rotateX: 25,
-                duration: 1000,
+                duration: 2000,
                 loop: 1,
             });
         //#endregion
@@ -728,7 +732,7 @@ export default {
                             "deg,#68583e,#68583e,#68583e,#d5bb8c,#d5bb8c,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#ffeecf,#d5bb8c,#5f4f33,#897552,#d5bb8c,#ebe6de,#ebe6de)",
                     },
                 ],
-                duration: 1350,
+                duration: 1400,
                 loop: 1,
             });
 
@@ -1198,6 +1202,7 @@ export default {
                     duration: 2000,
                 });
         },
+        // 关闭24景（展开时）
         CloseScroll() {
             let that = this;
             let scroll_1 = document.querySelector(".scroll_1");
@@ -1219,8 +1224,6 @@ export default {
             let btn_container = document.querySelector(
                 ".scenery_container .btn_container"
             );
-
-            that.allow_close_scenery_container = true;
 
             // 隐藏标题和按钮
             anime({
@@ -1299,6 +1302,7 @@ export default {
                                     easing: "linear",
                                     duration: 1000,
                                     complete: function () {
+                                        that.allow_close_scenery_container = true;
                                         that.show_scenery_container = false;
                                     },
                                 });

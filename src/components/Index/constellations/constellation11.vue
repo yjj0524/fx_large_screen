@@ -101,7 +101,6 @@
 // import anime from "animejs/lib/anime.js";
 
 export default {
-    name: "LineComponent",
     components: {},
     data() {
         return {
@@ -130,7 +129,156 @@ export default {
         };
     },
     mounted() {
-        let duration = 20000;
+        let duration = 5000;
+
+        anime
+            .timeline({
+                targets: document.querySelector(
+                    ".constellation_container_11"
+                ),
+                easing: "linear",
+                loop: true,
+            })
+            .add({
+                rotate: 360,
+                duration: 20000,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_circle1",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: 40,
+                translateY: 20,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_path1",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M60 30 L10 5",
+            })
+            .add({
+                d: "M20 10 L30 25",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_circle2",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -20,
+                translateY: -20,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_path2",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M10 5 L15 30",
+            })
+            .add({
+                d: "M30 25 L45 30",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_circle3",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -30,
+                translateY: 0,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_path3",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M15 30 L115 15",
+            })
+            .add({
+                d: "M45 30 L65 25",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_circle4",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: 50,
+                translateY: -10,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_path4",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M115 15 L45 40",
+            })
+            .add({
+                d: "M65 25 L95 50",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_11 #svg_circle5",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -50,
+                translateY: -10,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
     },
     methods: {},
 };

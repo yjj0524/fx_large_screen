@@ -86,7 +86,6 @@
 // import anime from "animejs/lib/anime.js";
 
 export default {
-    name: "LineComponent",
     components: {},
     data() {
         return {
@@ -108,7 +107,7 @@ export default {
         };
     },
     mounted() {
-        let duration = 20000;
+        let duration = 15000;
 
         anime
             .timeline({
@@ -119,8 +118,8 @@ export default {
                 loop: true,
             })
             .add({
-                // rotate: -360,
-                // duration: 120000,
+                rotate: -360,
+                duration: 120000,
             });
 
         anime
@@ -259,10 +258,11 @@ export default {
     width: 80px;
     height: 150px;
     position: absolute;
-    top: 28px;
-    left: -291px;
+    top: 58px;
+    left: -251px;
     right: 0;
     bottom: 0;
     margin: 0 auto;
+    // border: 1px solid red;
 }
 </style>

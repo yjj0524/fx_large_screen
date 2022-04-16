@@ -116,7 +116,6 @@
 // import anime from "animejs/lib/anime.js";
 
 export default {
-    name: "LineComponent",
     components: {},
     data() {
         return {
@@ -151,6 +150,185 @@ export default {
     },
     mounted() {
         let duration = 20000;
+
+        anime
+            .timeline({
+                targets: document.querySelector(
+                    ".constellation_container_6"
+                ),
+                easing: "linear",
+                loop: true,
+            })
+            .add({
+                rotate: -360,
+                duration: 70000,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_circle1",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: 0,
+                translateY: -25,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_path1",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M10 5 L10 55",
+            })
+            .add({
+                d: "M10 30 L30 30",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_circle2",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -20,
+                translateY: 25,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_path2",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M10 55 L35 55",
+            })
+            .add({
+                d: "M30 30 L55 15",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_circle3",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -20,
+                translateY: 40,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_path3",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M35 55 L25 25",
+            })
+            .add({
+                d: "M55 15 L65 30",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_circle4",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -40,
+                translateY: -5,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_path4",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M10 55 L80 90",
+            })
+            .add({
+                d: "M30 30 L40 50",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_circle5",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: 40,
+                translateY: 40,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_path5",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M80 90 L30 80",
+            })
+            .add({
+                d: "M40 50 L70 60",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_6 #svg_circle6",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -40,
+                translateY: 20,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
     },
     methods: {},
 };
@@ -161,8 +339,8 @@ export default {
     width: 130px;
     height: 120px;
     position: absolute;
-    top: 300px;
-    left: 518px;
+    top: 250px;
+    left: 618px;
     right: 0;
     bottom: 0;
     margin: 0 auto;

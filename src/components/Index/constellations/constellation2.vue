@@ -206,7 +206,6 @@
 // import anime from "animejs/lib/anime.js";
 
 export default {
-    name: "LineComponent",
     components: {},
     data() {
         return {
@@ -263,7 +262,7 @@ export default {
         };
     },
     mounted() {
-        let duration = 18000;
+        let duration = 15000;
 
         anime
             .timeline({
@@ -274,8 +273,8 @@ export default {
                 loop: true,
             })
             .add({
-                // rotate: 360,
-                // duration: 120000,
+                rotate: 360,
+                duration: 110000,
             });
 
         anime
@@ -342,7 +341,7 @@ export default {
                 loop: true,
             })
             .add({
-                d: "M40 20 L12 150",
+                d: "M40 20 L12 120",
                 duration: duration,
             })
             .add({
@@ -360,7 +359,7 @@ export default {
             })
             .add({
                 translateX: -10,
-                translateY: 50,
+                translateY: 20,
                 duration: duration,
             })
             .add({
@@ -378,7 +377,7 @@ export default {
                 loop: true,
             })
             .add({
-                d: "M12 150 L50 160",
+                d: "M12 120 L50 160",
                 duration: duration,
             })
             .add({
@@ -702,10 +701,11 @@ export default {
     width: 180px;
     height: 180px;
     position: absolute;
-    top: 28px;
-    left: -74px;
+    top: 50px;
+    left: 0px;
     right: 0;
     bottom: 0;
     margin: 0 auto;
+    // border: 1px solid red;
 }
 </style>

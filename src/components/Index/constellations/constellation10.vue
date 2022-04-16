@@ -71,7 +71,6 @@
 // import anime from "animejs/lib/anime.js";
 
 export default {
-    name: "LineComponent",
     components: {},
     data() {
         return {
@@ -92,7 +91,96 @@ export default {
         };
     },
     mounted() {
-        let duration = 20000;
+        let duration = 15000;
+
+        anime
+            .timeline({
+                targets: document.querySelector(
+                    ".constellation_container_10"
+                ),
+                easing: "linear",
+                loop: true,
+            })
+            .add({
+                rotate: 360,
+                duration: 20000,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_10 #svg_circle1",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: 40,
+                translateY: 20,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_10 #svg_path1",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M50 60 L5 65",
+            })
+            .add({
+                d: "M10 40 L30 25",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_10 #svg_circle2",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -25,
+                translateY: 40,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_10 #svg_path2",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                d: "M5 65 L15 10",
+            })
+            .add({
+                d: "M30 25 L45 40",
+            });
+
+        anime
+            .timeline({
+                targets: ".constellation_container_10 #svg_circle3",
+                easing: "linear",
+                loop: true,
+                duration: duration,
+            })
+            .add({
+                translateX: -30,
+                translateY: -30,
+            })
+            .add({
+                translateX: 0,
+                translateY: 0,
+            });
     },
     methods: {},
 };

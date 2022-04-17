@@ -83,10 +83,11 @@
 </template>
 
 <script>
-// import anime from "animejs/lib/anime.js";
+import anime from "animejs/lib/anime.js";
 
 export default {
     components: {},
+    props: ["isRun"],
     data() {
         return {
             datas: {
@@ -107,147 +108,149 @@ export default {
         };
     },
     mounted() {
-        let duration = 15000;
+        let duration = 18000;
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                rotate: -360,
-                duration: 120000,
-            });
+        if (this.isRun) {
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    rotate: 360,
+                    duration: 120000,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_circle1"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                translateX: -5,
-                translateY: -120,
-                duration: duration,
-            })
-            .add({
-                translateX: 0,
-                translateY: 0,
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_circle1"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    translateX: -5,
+                    translateY: -120,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                    duration: duration,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_path1"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                d: "M5 25 L5 130",
-                duration: duration,
-            })
-            .add({
-                d: "M10 145 L25 140",
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_path1"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    d: "M5 25 L5 130",
+                    duration: duration,
+                })
+                .add({
+                    d: "M10 145 L25 140",
+                    duration: duration,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_circle2"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                translateX: -20,
-                translateY: -10,
-                duration: duration,
-            })
-            .add({
-                translateX: 0,
-                translateY: 0,
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_circle2"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    translateX: -20,
+                    translateY: -10,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                    duration: duration,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_path2"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                d: "M5 130 L70 140",
-                duration: duration,
-            })
-            .add({
-                d: "M25 140 L30 120",
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_path2"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    d: "M5 130 L70 140",
+                    duration: duration,
+                })
+                .add({
+                    d: "M25 140 L30 120",
+                    duration: duration,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_circle3"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                translateX: 40,
-                translateY: 20,
-                duration: duration,
-            })
-            .add({
-                translateX: 0,
-                translateY: 0,
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_circle3"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    translateX: 40,
+                    translateY: 20,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                    duration: duration,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_path3"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                d: "M70 140 L25 115",
-                duration: duration,
-            })
-            .add({
-                d: "M30 120 L45 65",
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_path3"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    d: "M70 140 L25 115",
+                    duration: duration,
+                })
+                .add({
+                    d: "M30 120 L45 65",
+                    duration: duration,
+                });
 
-        anime
-            .timeline({
-                targets: document.querySelector(
-                    ".constellation_container_1 #svg_circle4"
-                ),
-                easing: "linear",
-                loop: true,
-            })
-            .add({
-                translateX: -20,
-                translateY: 50,
-                duration: duration,
-            })
-            .add({
-                translateX: 0,
-                translateY: 0,
-                duration: duration,
-            });
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_1 #svg_circle4"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    translateX: -20,
+                    translateY: 50,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                    duration: duration,
+                });
+        }
     },
     methods: {},
 };
@@ -258,7 +261,7 @@ export default {
     width: 80px;
     height: 150px;
     position: absolute;
-    top: 58px;
+    top: 42px;
     left: -251px;
     right: 0;
     bottom: 0;

@@ -753,7 +753,7 @@ export default {
                 targets: e.target,
                 loop: 1,
                 easing: "linear",
-                scale: 1.3,
+                scale: 1.2,
                 duration: 200,
             });
         },

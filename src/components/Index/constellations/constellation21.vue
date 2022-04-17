@@ -1,5 +1,5 @@
 <template>
-    <div class="constellation_container_20">
+    <div class="constellation_container_21">
         <svg
             id="svg_item"
             width="100%"
@@ -7,7 +7,7 @@
             xmlns="http://www.w3.org/2000/svg"
         >
             <defs>
-                <filter id="f20" x="-50%" y="-50%" width="200%" height="200%">
+                <filter id="f21" x="-50%" y="-50%" width="200%" height="200%">
                     <feOffset
                         result="offOut"
                         in="SourceGraphic"
@@ -22,7 +22,7 @@
                     <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
                 </filter>
             </defs>
-            <g filter="url(#f20)">
+            <g filter="url(#f21)">
                 <circle
                     id="svg_circle1"
                     :cx="datas.svg.cx1"
@@ -42,7 +42,7 @@
                     id="svg_circle2"
                     :cx="datas.svg.cx2"
                     :cy="datas.svg.cy2"
-                    r="4"
+                    r="6"
                     stroke="white"
                     stroke-width="1"
                     fill="white"
@@ -57,7 +57,37 @@
                     id="svg_circle3"
                     :cx="datas.svg.cx3"
                     :cy="datas.svg.cy3"
-                    r="6"
+                    r="4"
+                    stroke="white"
+                    stroke-width="1"
+                    fill="white"
+                />
+                <path
+                    id="svg_path3"
+                    :d="datas.svg.x3"
+                    stroke-width="2"
+                    style="fill: transparent; stroke: white"
+                />
+                <circle
+                    id="svg_circle4"
+                    :cx="datas.svg.cx4"
+                    :cy="datas.svg.cy4"
+                    r="4"
+                    stroke="white"
+                    stroke-width="1"
+                    fill="white"
+                />
+                <path
+                    id="svg_path4"
+                    :d="datas.svg.x4"
+                    stroke-width="2"
+                    style="fill: transparent; stroke: white"
+                />
+                <circle
+                    id="svg_circle5"
+                    :cx="datas.svg.cx5"
+                    :cy="datas.svg.cy5"
+                    r="4"
                     stroke="white"
                     stroke-width="1"
                     fill="white"
@@ -71,58 +101,61 @@
 import anime from "animejs/lib/anime.js";
 
 export default {
-    props: ["isRun"],
     components: {},
+    props: ["isRun"],
     data() {
         return {
             datas: {
                 svg: {
-                    x1: "M20 100 L35 85",
-                    x2: "M35 85 L65 60",
+                    x1: "M30 55 L50 30",
+                    x2: "M50 30 L65 35",
+                    x3: "M65 35 L55 55",
+                    x4: "M55 55 L80 70",
+                    cx1: 30,
+                    cy1: 55,
 
-                    cx1: 20,
-                    cy1: 100,
-
-                    cx2: 35,
-                    cy2: 85,
+                    cx2: 50,
+                    cy2: 30,
 
                     cx3: 65,
-                    cy3: 60,
+                    cy3: 35,
+
+                    cx4: 55,
+                    cy4: 55,
+
+                    cx5: 80,
+                    cy5: 70,
                 },
             },
         };
     },
     mounted() {
-        let duration = 20000;
+        let duration = 16000;
 
         if (this.isRun) {
             anime
                 .timeline({
                     targets: document.querySelector(
-                        ".constellation_container_20"
+                        ".constellation_container_21"
                     ),
                     easing: "linear",
                     loop: true,
                 })
                 .add({
-                    rotate: 360,
+                    rotate: -360,
                     duration: 120000,
                 });
 
             anime
                 .timeline({
-                    targets: ".constellation_container_20 #svg_circle1",
+                    targets: ".constellation_container_21 #svg_circle1",
                     easing: "linear",
                     loop: true,
                     duration: duration,
                 })
                 .add({
-                    translateX: 60,
-                    translateY: 0,
-                })
-                .add({
                     translateX: 0,
-                    translateY: -80,
+                    translateY: -40,
                 })
                 .add({
                     translateX: 0,
@@ -131,35 +164,28 @@ export default {
 
             anime
                 .timeline({
-                    targets: ".constellation_container_20 #svg_path1",
+                    targets: ".constellation_container_21 #svg_path1",
                     easing: "linear",
                     loop: true,
                     duration: duration,
                 })
                 .add({
-                    d: "M80 100 L15 45",
+                    d: "M30 15 L30 70",
                 })
                 .add({
-                    d: "M20 20 L35 5",
-                })
-                .add({
-                    d: "M20 100 L35 85",
+                    d: "M30 55 L50 30",
                 });
 
             anime
                 .timeline({
-                    targets: ".constellation_container_20 #svg_circle2",
+                    targets: ".constellation_container_21 #svg_circle2",
                     easing: "linear",
                     loop: true,
                     duration: duration,
                 })
                 .add({
                     translateX: -20,
-                    translateY: -40,
-                })
-                .add({
-                    translateX: 0,
-                    translateY: -80,
+                    translateY: 40,
                 })
                 .add({
                     translateX: 0,
@@ -168,35 +194,88 @@ export default {
 
             anime
                 .timeline({
-                    targets: ".constellation_container_20 #svg_path2",
+                    targets: ".constellation_container_21 #svg_path2",
                     easing: "linear",
                     loop: true,
                     duration: duration,
                 })
                 .add({
-                    d: "M15 45 L15 80",
+                    d: "M30 70 L35 35",
                 })
                 .add({
-                    d: "M35 5 L75 100",
-                })
-                .add({
-                    d: "M35 85 L65 60",
+                    d: "M50 30 L65 35",
                 });
 
             anime
                 .timeline({
-                    targets: ".constellation_container_20 #svg_circle3",
+                    targets: ".constellation_container_21 #svg_circle3",
                     easing: "linear",
                     loop: true,
                     duration: duration,
                 })
                 .add({
-                    translateX: -50,
-                    translateY: 20,
+                    translateX: -30,
+                    translateY: 0,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_21 #svg_path3",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    d: "M35 35 L65 15",
+                })
+                .add({
+                    d: "M65 35 L55 55",
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_21 #svg_circle4",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
                 })
                 .add({
                     translateX: 10,
-                    translateY: 40,
+                    translateY: -40,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_21 #svg_path4",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    d: "M65 15 L60 40",
+                })
+                .add({
+                    d: "M55 55 L80 70",
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_21 #svg_circle5",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    translateX: -20,
+                    translateY: -30,
                 })
                 .add({
                     translateX: 0,
@@ -209,12 +288,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.constellation_container_20 {
-    width: 100px;
+.constellation_container_21 {
+    width: 130px;
     height: 120px;
     position: absolute;
-    top: 114px;
-    left: -396px;
+    top: 357px;
+    left: -514px;
     right: 0;
     bottom: 0;
     margin: 0 auto;

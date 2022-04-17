@@ -1,25 +1,29 @@
 <template>
     <div class="svg_container">
-        <constellation1 />
-        <constellation2 />
-        <constellation3 />
-        <constellation4 />
-        <constellation5 />
-        <constellation6 />
-        <constellation7 />
-        <constellation8 />
-        <constellation9 />
-        <constellation10 />
-        <constellation11 />
-        <constellation12 />
-        <constellation13 />
-        <constellation14 />
-        <constellation15 />
-        <constellation16 />
-        <constellation17 />
-        <constellation18 />
-        <constellation19 />
-        <constellation20 />
+        <constellation1 :isRun="false" />
+        <constellation2 :isRun="true" />
+        <constellation3 :isRun="false" />
+        <constellation4 :isRun="false" />
+        <constellation5 :isRun="false" />
+        <constellation6 :isRun="false" />
+        <constellation7 :isRun="false" />
+        <constellation8 :isRun="false" />
+        <constellation9 :isRun="false" />
+        <constellation10 :isRun="false" />
+        <constellation11 :isRun="false" />
+        <constellation12 :isRun="false" />
+        <constellation13 :isRun="false" />
+        <constellation14 :isRun="false" />
+        <constellation15 :isRun="false" />
+        <constellation16 :isRun="false" />
+        <constellation17 :isRun="false" />
+        <constellation18 :isRun="false" />
+        <constellation19 :isRun="false" />
+        <constellation20 :isRun="false" />
+        <constellation21 :isRun="false" />
+        <constellation22 :isRun="false" />
+        <constellation23 :isRun="false" />
+        <constellation24 :isRun="false" />
     </div>
 </template>
 
@@ -44,6 +48,10 @@ import constellation17 from "@/components/Index/constellations/constellation17.v
 import constellation18 from "@/components/Index/constellations/constellation18.vue";
 import constellation19 from "@/components/Index/constellations/constellation19.vue";
 import constellation20 from "@/components/Index/constellations/constellation20.vue";
+import constellation21 from "@/components/Index/constellations/constellation21.vue";
+import constellation22 from "@/components/Index/constellations/constellation22.vue";
+import constellation23 from "@/components/Index/constellations/constellation23.vue";
+import constellation24 from "@/components/Index/constellations/constellation24.vue";
 
 export default {
     name: "LineComponent",
@@ -68,6 +76,10 @@ export default {
         constellation18,
         constellation19,
         constellation20,
+        constellation21,
+        constellation22,
+        constellation23,
+        constellation24,
     },
     data() {
         return {

@@ -83,10 +83,10 @@
 </template>
 
 <script>
-// import anime from "animejs/lib/anime.js";
+import anime from "animejs/lib/anime.js";
 
 export default {
-    name: "LineComponent",
+    props: ["isRun"],
     components: {},
     data() {
         return {
@@ -112,7 +112,128 @@ export default {
         };
     },
     mounted() {
-        let duration = 20000;
+        let duration = 15000;
+
+        if (this.isRun) {
+            anime
+                .timeline({
+                    targets: document.querySelector(
+                        ".constellation_container_19"
+                    ),
+                    easing: "linear",
+                    loop: true,
+                })
+                .add({
+                    rotate: -360,
+                    duration: 120000,
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_circle1",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 60,
+                    translateY: 0,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_path1",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    d: "M85 110 L25 115",
+                })
+                .add({
+                    d: "M25 110 L45 75",
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_circle2",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    translateX: -20,
+                    translateY: 40,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_path2",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    d: "M25 115 L95 20",
+                })
+                .add({
+                    d: "M45 75 L75 60",
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_circle3",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 20,
+                    translateY: -40,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_path3",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    d: "M95 20 L80 80",
+                })
+                .add({
+                    d: "M75 60 L60 40",
+                });
+
+            anime
+                .timeline({
+                    targets: ".constellation_container_19 #svg_circle4",
+                    easing: "linear",
+                    loop: true,
+                    duration: duration,
+                })
+                .add({
+                    translateX: 20,
+                    translateY: 40,
+                })
+                .add({
+                    translateX: 0,
+                    translateY: 0,
+                });
+        }
     },
     methods: {},
 };
@@ -123,8 +244,8 @@ export default {
     width: 100px;
     height: 120px;
     position: absolute;
-    top: 227px;
-    left: -536px;
+    top: 205px;
+    left: -507px;
     right: 0;
     bottom: 0;
     margin: 0 auto;

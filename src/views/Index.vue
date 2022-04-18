@@ -27,13 +27,10 @@ export default {
     width: 3840px;
     height: 100%;
     position: relative;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-evenly;
     background-image: url("@/static/images/bg.png");
-    background-size: 120% 100%;
+    background-size: 130% 100%;
     background-repeat: no-repeat;
-    // animation: animatedBackground 50s linear infinite reverse;
+    // animation: animatedBackground 60s linear infinite reverse;
 
     @keyframes animatedBackground {
         from {

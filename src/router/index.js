@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import IndexView from '../views/Index.vue'
-import dataV from '@jiaminghi/data-view'
 
 Vue.use(VueRouter)
-Vue.use(dataV)
 
 const routes = [{
         path: '/',
@@ -19,6 +17,15 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/Index.vue')
+    },
+    {
+        path: '/dataView',
+        name: 'dataView',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/DataView.vue')
     }
 ]
 

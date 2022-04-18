@@ -1,12 +1,6 @@
 <template>
     <div class="bg_component">
         <div class="aperture_container">
-            <!-- 光环1 -->
-            <div class="halo_1"></div>
-            <!-- 光环2 -->
-            <div class="halo_2"></div>
-            <!-- 光圈 -->
-            <div class="aperture"></div>
             <svg
                 id="circle_line_1"
                 width="1700"
@@ -34,19 +28,19 @@
                     r="655"
                     stroke="#58638d"
                     stroke-width="1"
-                    fill="#1f478a"
+                    fill="transparent"
                 />
             </svg>
             <svg
                 id="circle_line_3"
-                width="1700"
-                height="1700"
+                width="1100"
+                height="1100"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <circle
-                    cx="860"
-                    cy="860"
-                    r="655"
+                    cx="550"
+                    cy="550"
+                    r="550"
                     stroke="#1c2c57"
                     stroke-width="2"
                     fill="#172653"
@@ -82,6 +76,15 @@
                     fill="transparent"
                 />
             </svg>
+            <div id="circle_line_6"></div>
+            <div id="circle_line_7"></div>
+            <div id="circle_line_8"></div>
+            <!-- 光环1 -->
+            <div class="halo_1"></div>
+            <!-- 光环2 -->
+            <div class="halo_2"></div>
+            <!-- 光圈 -->
+            <div class="aperture"></div>
         </div>
         <!-- 24节气背景图 -->
         <div class="pointer_img">
@@ -89,13 +92,8 @@
             <img class="img_2" src="@/static/images/mirage.png" alt="" />
         </div>
         <div class="solar_terms">
-            <img
-                class="img_bg"
-                src="@/static/images/solar_terms_1.png"
-                alt=""
-            />
+            <img class="img_bg" src="@/static/images/solar_terms.png" alt="" />
         </div>
-        <LineComponent />
         <!-- 24节气图标和标题 -->
         <div class="solar_terms_item" v-show="show_solar_terms_img">
             <img
@@ -109,7 +107,7 @@
                 @mouseleave="NarrowSolarTerms"
             />
             <div class="title1" :style="titleStyle">智 慧新 桥</div>
-            <div class="title2">智 慧新 桥</div>
+            <div class="title2" @click.stop="JumpToDataView">智 慧新 桥</div>
         </div>
         <!-- 一级标题移动轨迹 -->
         <!-- <svg
@@ -283,13 +281,10 @@
 
 <script>
 import anime from "animejs/lib/anime.js";
-import LineComponent from "@/components/Index/LineComponent.vue";
 
 export default {
     name: "BGComponent",
-    components: {
-        LineComponent,
-    },
+    components: {},
     data() {
         return {
             show_solar_terms_img: false,
@@ -462,31 +457,67 @@ export default {
         //#region 执行背景动画
         // halo_1动画
         anime({
-            // targets: document.querySelector(".halo_1"),
+            // targets: ".halo_1",
             // rotate: 360,
-            // duration: 60000,
+            // duration: 15000,
             // easing: "linear",
             // loop: true,
         });
+
         // halo_2动画
         anime({
-            // targets: document.querySelector(".halo_2"),
+            // targets: ".halo_2",
             // easing: "linear",
             // rotate: -360,
-            // duration: 60000,
+            // duration: 15000,
             // loop: true,
         });
+
         // aperture动画
-        anime
-            .timeline({
-                targets: document.querySelector(".aperture"),
-                loop: true,
-            })
-            .add({
-                // rotate: 360,
-                // duration: 60000,
-                // easing: "linear",
-            });
+        anime({
+            // targets: ".aperture",
+            // loop: true,
+            // rotate: 360,
+            // duration: 25000,
+            // easing: "linear",
+        });
+
+        // 逐渐扩大的圈
+        anime({
+            // targets: "#circle_line_3",
+            // loop: true,
+            // scale: 1.19,
+            // duration: 3000,
+            // easing: "linear",
+        });
+
+        // 滚动的圆弧6
+        anime({
+            // targets: "#circle_line_6",
+            // loop: true,
+            // rotate: -360,
+            // duration: 10000,
+            // easing: "linear",
+        });
+
+        // 滚动的圆弧7
+        anime({
+            // targets: "#circle_line_7",
+            // loop: true,
+            // rotate: 360,
+            // duration: 16000,
+            // easing: "linear",
+        });
+
+        // 滚动的圆弧8
+        anime({
+            // targets: "#circle_line_8",
+            // loop: true,
+            // rotate: 360,
+            // duration: 10000,
+            // easing: "linear",
+        });
+
         // solar_terms动画
 
         // 运行24节气动画
@@ -508,15 +539,9 @@ export default {
                 .add({
                     translateX: -120,
                     translateY: -15,
-                    opacity: [
-                        { value: ".2" },
-                        { value: ".4" },
-                        { value: ".6" },
-                        { value: ".8" },
-                        { value: "1" },
-                    ],
-                    delay: i * 100,
-                    duration: 800,
+                    opacity: "1",
+                    delay: i * 120,
+                    duration: 1000,
                     complete: function () {
                         if (i + 1 == solar_terms_el.length) {
                             that.solar_terms_animation_complete = true;
@@ -587,13 +612,7 @@ export default {
                 targets: primary_title_el[i],
                 delay: i * 300,
                 loop: 1,
-                opacity: [
-                    { value: ".2" },
-                    { value: ".4" },
-                    { value: ".6" },
-                    { value: ".8" },
-                    { value: "1" },
-                ],
+                opacity: "1",
                 translateX: 350,
                 easing: "linear",
                 duration: 1000,
@@ -838,13 +857,7 @@ export default {
                         targets: sub_title_el[i],
                         delay: i * 200,
                         translateX: -160,
-                        opacity: [
-                            { value: ".2" },
-                            { value: ".4" },
-                            { value: ".6" },
-                            { value: ".8" },
-                            { value: "1" },
-                        ],
+                        opacity: "1",
                         loop: 1,
                         easing: "linear",
                         duration: 500,
@@ -854,13 +867,7 @@ export default {
                         anime({
                             targets: scale_el[j],
                             delay: i * 200,
-                            opacity: [
-                                { value: ".2" },
-                                { value: ".4" },
-                                { value: ".6" },
-                                { value: ".8" },
-                                { value: "1" },
-                            ],
+                            opacity: "1",
                             loop: 1,
                             easing: "linear",
                             duration: 500,
@@ -928,13 +935,7 @@ export default {
                         complete: function () {
                             anime({
                                 targets: sub_title_bg_img,
-                                opacity: [
-                                    { value: ".2" },
-                                    { value: ".4" },
-                                    { value: ".6" },
-                                    { value: ".8" },
-                                    { value: "1" },
-                                ],
+                                opacity: "1",
                                 loop: 1,
                                 easing: "linear",
                                 duration: 1000,
@@ -942,13 +943,7 @@ export default {
                                     // 显示二级标题的描述信息
                                     anime({
                                         targets: sub_title_description,
-                                        opacity: [
-                                            { value: ".2" },
-                                            { value: ".4" },
-                                            { value: ".6" },
-                                            { value: ".8" },
-                                            { value: "1" },
-                                        ],
+                                        opacity: "1",
                                         loop: 1,
                                         easing: "linear",
                                         duration: 1000,
@@ -988,13 +983,7 @@ export default {
                     targets: sub_title_el[i],
                     translateX: 0,
                     delay: i * 10,
-                    opacity: [
-                        { value: ".8" },
-                        { value: ".6" },
-                        { value: ".4" },
-                        { value: ".2" },
-                        { value: "0" },
-                    ],
+                    opacity: "0",
                     loop: 1,
                     easing: "linear",
                     duration: 500,
@@ -1004,13 +993,7 @@ export default {
                     anime({
                         targets: scale_el[j],
                         delay: j * 10,
-                        opacity: [
-                            { value: ".8" },
-                            { value: ".6" },
-                            { value: ".4" },
-                            { value: ".2" },
-                            { value: "0" },
-                        ],
+                        opacity: "0",
                         loop: 1,
                         easing: "linear",
                         duration: 500,
@@ -1073,16 +1056,10 @@ export default {
 
                 anime({
                     targets: scenery_container,
-                    opacity: [
-                        { value: ".2" },
-                        { value: ".4" },
-                        { value: ".6" },
-                        { value: ".8" },
-                        { value: "1" },
-                    ],
+                    opacity: "1",
                     loop: 1,
                     easing: "linear",
-                    duration: 1000,
+                    duration: 1500,
                 });
             }
         },
@@ -1096,16 +1073,10 @@ export default {
 
                 anime({
                     targets: scenery_container,
-                    opacity: [
-                        { value: ".8" },
-                        { value: ".6" },
-                        { value: ".4" },
-                        { value: ".2" },
-                        { value: "0" },
-                    ],
+                    opacity: "0",
                     loop: 1,
                     easing: "linear",
-                    duration: 1000,
+                    duration: 1500,
                     complete: function () {
                         that.show_scenery_container = false;
                     },
@@ -1142,20 +1113,14 @@ export default {
                 width: 3000,
                 loop: 1,
                 easing: "linear",
-                duration: 2000,
+                duration: 2500,
                 // 背景移动完成后展示描述信息和按钮
                 complete: function () {
                     that.show_title_and_btns = true;
 
                     anime({
                         targets: [title_container, btn_container],
-                        opacity: [
-                            { value: ".2" },
-                            { value: ".4" },
-                            { value: ".6" },
-                            { value: ".8" },
-                            { value: "1" },
-                        ],
+                        opacity: "1",
                         loop: 1,
                         easing: "linear",
                         duration: 1000,
@@ -1169,7 +1134,7 @@ export default {
                 translateX: -1494,
                 loop: 1,
                 easing: "linear",
-                duration: 2000,
+                duration: 2500,
             });
 
             // 左卷轴里的图片向左移动
@@ -1178,7 +1143,7 @@ export default {
                 translateX: -1100,
                 loop: 1,
                 easing: "linear",
-                duration: 2000,
+                duration: 2500,
             });
 
             // 右卷轴向右移动
@@ -1187,20 +1152,17 @@ export default {
                 translateX: 1494,
                 loop: 1,
                 easing: "linear",
-                duration: 2000,
+                duration: 2500,
             });
 
             // 右卷轴里的图片向右移动
-            anime
-                .timeline({
-                    targets: scroll_img_2,
-                    loop: 1,
-                    easing: "linear",
-                })
-                .add({
-                    translateX: 1200,
-                    duration: 2000,
-                });
+            anime({
+                targets: scroll_img_2,
+                loop: 1,
+                easing: "linear",
+                translateX: 1200,
+                duration: 2500,
+            });
         },
         // 关闭24景（展开时）
         CloseScroll() {
@@ -1228,13 +1190,7 @@ export default {
             // 隐藏标题和按钮
             anime({
                 targets: [title_container, btn_container],
-                opacity: [
-                    { value: ".8" },
-                    { value: ".6" },
-                    { value: ".4" },
-                    { value: ".2" },
-                    { value: "0" },
-                ],
+                opacity: "0",
                 loop: 1,
                 easing: "linear",
                 duration: 500,
@@ -1248,7 +1204,7 @@ export default {
                         width: 0,
                         loop: 1,
                         easing: "linear",
-                        duration: 2000,
+                        duration: 2500,
                     });
 
                     // 左卷轴向左移动
@@ -1257,7 +1213,7 @@ export default {
                         translateX: 0,
                         loop: 1,
                         easing: "linear",
-                        duration: 2000,
+                        duration: 2500,
                     });
 
                     // 左卷轴里的图片向左移动
@@ -1266,7 +1222,7 @@ export default {
                         translateX: 0,
                         loop: 1,
                         easing: "linear",
-                        duration: 2000,
+                        duration: 2500,
                     });
 
                     // 右卷轴向右移动
@@ -1275,7 +1231,7 @@ export default {
                         translateX: 0,
                         loop: 1,
                         easing: "linear",
-                        duration: 2000,
+                        duration: 2500,
                     });
 
                     // 右卷轴里的图片向右移动
@@ -1287,20 +1243,14 @@ export default {
                         })
                         .add({
                             translateX: 0,
-                            duration: 2000,
+                            duration: 2500,
                             complete: function () {
                                 anime({
                                     targets: scenery_container,
-                                    opacity: [
-                                        { value: ".8" },
-                                        { value: ".6" },
-                                        { value: ".4" },
-                                        { value: ".2" },
-                                        { value: "0" },
-                                    ],
+                                    opacity: "0",
                                     loop: 1,
                                     easing: "linear",
-                                    duration: 1000,
+                                    duration: 1500,
                                     complete: function () {
                                         that.allow_close_scenery_container = true;
                                         that.show_scenery_container = false;
@@ -1310,6 +1260,10 @@ export default {
                         });
                 },
             });
+        },
+        // 跳转到数据展示页
+        JumpToDataView() {
+            this.$router.push({ path: "/dataView" });
         },
     },
     watch: {
@@ -1419,9 +1373,9 @@ export default {
         }
         #circle_line_3 {
             position: absolute;
-            top: -320px;
-            left: 1051px;
-            opacity: 0.1;
+            top: -10px;
+            left: 1361px;
+            opacity: 0.5;
         }
         #circle_line_4 {
             position: absolute;
@@ -1432,6 +1386,42 @@ export default {
             position: absolute;
             top: -460px;
             left: 923px;
+        }
+        #circle_line_6 {
+            width: 1012px;
+            height: 1012px;
+            border: 20px solid transparent;
+            border-right: 20px solid #273f74;
+            border-radius: 50%;
+            position: absolute;
+            top: 16px;
+            left: -7px;
+            right: 0;
+            margin: 0 auto;
+        }
+        #circle_line_7 {
+            width: 1150px;
+            height: 1150px;
+            border: 20px solid transparent;
+            border-left: 20px solid #273f74;
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+        #circle_line_8 {
+            width: 1250px;
+            height: 1250px;
+            border: 20px solid transparent;
+            border-top: 20px solid #273f74;
+            border-radius: 50%;
+            position: absolute;
+            top: -105px;
+            left: -17px;
+            right: 0;
+            margin: 0 auto;
         }
     }
     .pointer_img {

@@ -21,7 +21,23 @@
                             />
                             <div class="title">新桥总览</div>
                         </div>
-                        <div class="left_top_datas"></div>
+                        <div class="left_top_datas">
+                            <div
+                                class="data_item"
+                                v-for="(item, index) in datas"
+                                :key="index"
+                            >
+                                <div class="data_img">
+                                    <img
+                                        class="item_img"
+                                        :src="item.img"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="data_name">{{ item.name }}</div>
+                                <div class="data_value">{{ item.value }}</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="left_bottom">
                         <div class="left_bottom_decorate">
@@ -32,39 +48,16 @@
                             />
                             <div class="title">产业兴旺</div>
                         </div>
-                        <div class="left_bottom_datas"></div>
+                        <div class="left_bottom_datas">
+                            <IndustryChartComponent />
+                        </div>
                     </div>
                 </div>
-                <div class="data_item_middle"></div>
+                <div class="data_item_middle">
+                    <div class="middle_container"></div>
+                </div>
                 <div class="data_item_right">
-                    <div class="right_top">
-                        <div class="rigth_top_item_1">
-                            <div class="item_decorate">
-                                <img
-                                    class="right_top_img"
-                                    src="@/static/images/small_decorate.png"
-                                    alt=""
-                                />
-                                <div class="title1">生态宜居</div>
-                                <div class="title2">查看详情 >></div>
-                            </div>
-                            <div class="right_top_datas"></div>
-                        </div>
-                        <div class="rigth_top_item_2">
-                            <div class="item_decorate">
-                                <img
-                                    class="right_top_img"
-                                    src="@/static/images/small_decorate.png"
-                                    alt=""
-                                />
-                                <div class="title1">乡风文明</div>
-                                <div class="title2">查看详情 >></div>
-                            </div>
-                            <div class="right_top_datas"></div>
-                        </div>
-                        <div class="rigth_top_item_3"></div>
-                    </div>
-
+                    <SliderComponent />
                     <div class="right_bottom">
                         <div class="right_bottom_decorate">
                             <img
@@ -73,7 +66,14 @@
                                 alt=""
                             />
                             <div class="title1">生活富裕</div>
-                            <div class="title2">查看详情 >></div>
+                            <div class="title2">
+                                查看详情<span
+                                    ><img
+                                        class="view_details"
+                                        src="@/static/images/view_details.png"
+                                        alt=""
+                                /></span>
+                            </div>
                         </div>
                         <div class="right_bottom_datas"></div>
                     </div>
@@ -96,7 +96,7 @@
             </div>
         </div>
         <!-- 左边按钮组 -->
-        <div class="btn_group_left">
+        <div class="btn_group_left" v-show="scroll_anime_complete">
             <div class="btn_item" v-for="(item, index) of 4" :key="index">
                 <img
                     class="btn_img img_10"
@@ -118,13 +118,23 @@
                     src="@/static/images/golden_btn/golden_btn_7.png"
                     alt=""
                 />
+                <div class="colored_ball_container">
+                    <ColoredBallComponent
+                        :component_index="index + 1"
+                        :run_colored_ball_animation="run_colored_ball_animation"
+                    />
+                </div>
                 <div class="bird_container">
                     <img
                         class="btn_img img_6"
                         src="@/static/images/golden_btn/golden_btn_6.png"
                         alt=""
                     />
-                    <img class="btn_img img_5" :src="btn_img" alt="" />
+                    <img
+                        class="btn_img img_5"
+                        src="@/static/images/golden_btn/golden_btn_5.png"
+                        alt=""
+                    />
                 </div>
                 <img
                     class="btn_img img_4"
@@ -153,7 +163,7 @@
             </div>
         </div>
         <!-- 右边按钮组 -->
-        <div class="btn_group_right">
+        <div class="btn_group_right" v-show="scroll_anime_complete">
             <div class="btn_item">
                 <img
                     class="btn_img img_10"
@@ -175,13 +185,23 @@
                     src="@/static/images/blue_btn/blue_btn_7.png"
                     alt=""
                 />
+                <div class="colored_ball_container">
+                    <ColoredBallComponent
+                        :component_index="20"
+                        :run_colored_ball_animation="run_colored_ball_animation"
+                    />
+                </div>
                 <div class="bird_container">
                     <img
                         class="btn_img img_6"
                         src="@/static/images/blue_btn/blue_btn_6.png"
                         alt=""
                     />
-                    <img class="btn_img img_5" :src="btn_img" alt="" />
+                    <img
+                        class="btn_img img_5"
+                        src="@/static/images/blue_btn/blue_btn_5.png"
+                        alt=""
+                    />
                 </div>
                 <img
                     class="btn_img img_4"
@@ -229,13 +249,23 @@
                     src="@/static/images/golden_btn/golden_btn_7.png"
                     alt=""
                 />
+                <div class="colored_ball_container">
+                    <ColoredBallComponent
+                        :component_index="index + 5"
+                        :run_colored_ball_animation="run_colored_ball_animation"
+                    />
+                </div>
                 <div class="bird_container">
                     <img
                         class="btn_img img_6"
                         src="@/static/images/golden_btn/golden_btn_6.png"
                         alt=""
                     />
-                    <img class="btn_img img_5" :src="btn_img" alt="" />
+                    <img
+                        class="btn_img img_5"
+                        src="@/static/images/golden_btn/golden_btn_5.png"
+                        alt=""
+                    />
                 </div>
                 <img
                     class="btn_img img_4"
@@ -272,128 +302,199 @@
 
 <script>
 import anime from "animejs/lib/anime.js";
+import SliderComponent from "@/components/DataView/SliderComponent.vue";
+import IndustryChartComponent from "@/components/DataView/IndustryChartComponent.vue";
+import ColoredBallComponent from "@/components/DataView/ColoredBallComponent.vue";
 
 export default {
     name: "DataView",
+    components: {
+        SliderComponent,
+        IndustryChartComponent,
+        ColoredBallComponent,
+    },
     data() {
         return {
-            img_index: 5,
-            btn_img: require("@/static/images/golden_btn/golden_btn_5.png"),
+            datas: [
+                {
+                    name: "土地",
+                    value: "2.74",
+                    img: require("../static/images/data_img_1.png"),
+                },
+                {
+                    name: "房屋",
+                    value: "1042",
+                    img: require("../static/images/data_img_2.png"),
+                },
+                {
+                    name: "人员",
+                    value: "2869",
+                    img: require("../static/images/data_img_3.png"),
+                },
+                {
+                    name: "道路",
+                    value: "20",
+                    img: require("../static/images/data_img_4.png"),
+                },
+                {
+                    name: "河道",
+                    value: "30",
+                    img: require("../static/images/data_img_5.png"),
+                },
+                {
+                    name: "桥梁",
+                    value: "40",
+                    img: require("../static/images/data_img_6.png"),
+                },
+                {
+                    name: "企业",
+                    value: "100",
+                    img: require("../static/images/data_img_7.png"),
+                },
+                {
+                    name: "服务点",
+                    value: "7",
+                    img: require("../static/images/data_img_8.png"),
+                },
+                {
+                    name: "微网格",
+                    value: "19",
+                    img: require("../static/images/data_img_9.png"),
+                },
+            ],
+            scroll_anime_complete: false,
+            run_colored_ball_animation: false,
         };
     },
     mounted() {
         this.MoveScroll();
-        let that = this;
-
-        // anime.timeline({
-        //     targets: ".btn_group_left .img_7",
-        //     loop: true,
-        //     easing: "linear",
-        //     duration: 3000,
-        // }).add({
-        //     rotateY: 40,
-        // }).add({
-        //     rotateY: 0,
-        // }).add({
-        //     rotateY: -40,
-        // }).add({
-        //     rotateY: 0,
-        // });
-
-        // anime({
-        //     targets: ".btn_group_left .img_8",
-        //     rotate: -360,
-        //     loop: true,
-        //     easing: "linear",
-        //     duration: 5000,
-        // });
-
-        // anime({
-        //     targets: ".btn_group_left .img_9",
-        //     rotate: 360,
-        //     loop: true,
-        //     easing: "linear",
-        //     duration: 5000,
-        // });
-
-        // anime({
-        //     targets: ".btn_group_left .bird_container",
-        //     rotate: -360,
-        //     loop: true,
-        //     easing: "linear",
-        //     duration: 5000,
-        // });
-
-        // setInterval(() => {
-        //     let index = that.img_index == 5 ? 6 : 5;
-        //     that.img_index = index;
-        //     that.btn_img = require(`@/static/images/golden_btn/golden_btn_${index}.png`)
-        // }, 300);
     },
     methods: {
         // 移动画卷
         MoveScroll() {
+            let that = this;
+
             // 左卷轴向左移动
             anime({
-                targets: ".scroll_container .scroll_1",
-                translateX: -1709,
+                targets: ".scroll_container",
+                opacity: 1,
                 loop: 1,
                 easing: "linear",
-                duration: 0,
-            });
-
-            // 左卷轴里的图片向左移动
-            anime({
-                targets: ".scroll_1 .scroll_img_1",
-                translateX: -1050,
-                loop: 1,
-                easing: "linear",
-                duration: 0,
+                duration: 100,
                 complete: function () {
+                    // 左卷轴向左移动
                     anime({
-                        targets: ".data_view_container .content_box",
-                        zIndex: 2,
+                        targets: ".scroll_container .scroll_1",
+                        translateX: -1709,
                         loop: 1,
                         easing: "linear",
-                        duration: 0,
+                        duration: 1500,
+                    });
+
+                    // 左卷轴里的图片向左移动
+                    anime({
+                        targets: ".scroll_1 .scroll_img_1",
+                        translateX: -1050,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 1500,
+                        complete: function () {
+                            that.scroll_anime_complete = true;
+                            that.run_colored_ball_animation = true;
+                            that.RunAllAnimation();
+
+                            anime({
+                                targets: ".data_view_container .content_box",
+                                zIndex: 2,
+                                loop: 1,
+                                easing: "linear",
+                                duration: 0,
+                            });
+                        },
+                    });
+
+                    // 右卷轴向右移动
+                    anime({
+                        targets: ".scroll_container .scroll_2",
+                        translateX: 1732,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 1500,
+                    });
+
+                    // 右卷轴里的图片向右移动
+                    anime({
+                        targets: ".scroll_2 .scroll_img_2",
+                        loop: 1,
+                        easing: "linear",
+                        translateX: 1200,
+                        duration: 1500,
+                    });
+
+                    // 移动左边遮布
+                    anime({
+                        targets: ".data_view_container .cover_cloth_left",
+                        translateX: -1709,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 1500,
+                    });
+
+                    // 移动右边遮布
+                    anime({
+                        targets: ".data_view_container .cover_cloth_right",
+                        translateX: 1732,
+                        loop: 1,
+                        easing: "linear",
+                        duration: 1500,
                     });
                 },
             });
+        },
+        RunAllAnimation() {
+            let that = this;
 
-            // 右卷轴向右移动
             anime({
-                targets: ".scroll_container .scroll_2",
-                translateX: 1732,
-                loop: 1,
+                targets: ".left_top_datas .data_img",
+                rotate: -360,
+                loop: true,
                 easing: "linear",
-                duration: 0,
+                duration: 10000,
             });
 
-            // 右卷轴里的图片向右移动
             anime({
-                targets: ".scroll_2 .scroll_img_2",
-                loop: 1,
+                targets: ".left_top_datas .item_img",
+                rotate: 360,
+                loop: true,
                 easing: "linear",
-                translateX: 1200,
-                duration: 0,
+                duration: 10000,
             });
 
-            // 移动左边遮布
             anime({
-                targets: ".data_view_container .cover_cloth_left",
-                translateX: -1709,
-                loop: 1,
+                targets: [".btn_group_left .img_8", ".btn_group_right .img_8"],
+                rotate: -360,
+                loop: true,
                 easing: "linear",
-                duration: 0,
+                duration: 10000,
             });
 
-            // 移动右边遮布
             anime({
-                targets: ".data_view_container .cover_cloth_right",
-                translateX: 1732,
-                loop: 1,
+                targets: [".btn_group_left .img_9", ".btn_group_right .img_9"],
+                rotate: 360,
+                loop: true,
                 easing: "linear",
-                duration: 0,
+                duration: 10000,
+            });
+
+            anime({
+                targets: [
+                    ".btn_group_left .bird_container",
+                    ".btn_group_right .bird_container",
+                ],
+                rotate: -360,
+                loop: true,
+                easing: "linear",
+                duration: 10000,
             });
         },
     },
@@ -501,8 +602,38 @@ export default {
                         position: absolute;
                         top: 50px;
                         left: 30px;
+                        display: flex;
                         background-image: url("@/static/images/left_top_frame.png");
                         background-size: 100% 100%;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                        .data_item {
+                            width: 100px;
+                            height: 180px;
+                            margin-left: 47px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            .data_img {
+                                width: 100px;
+                                height: 100px;
+                                background-image: url("@/static/images/data_bg.png");
+                                background-size: 100% 100%;
+                                .item_img {
+                                    width: 75px;
+                                    height: 75px;
+                                    margin: 11px 3px 0 0;
+                                }
+                            }
+                            .data_name {
+                                font-size: 1.2rem;
+                                color: #98ddfe;
+                            }
+                            .data_value {
+                                font-size: 2rem;
+                                color: #ffc47f;
+                            }
+                        }
                     }
                 }
                 .left_bottom {
@@ -543,103 +674,25 @@ export default {
                 height: 98.7%;
                 // background: #9cb0c0;
                 // opacity: 0.3;
+                background-image: url("@/static/images/middle_map_bg_1.png");
+                background-size: 100% 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .middle_container {
+                    width: 98%;
+                    height: 96%;
+                    background-image: url("@/static/images/middle_map_bg_2.png");
+                    background-size: 100% 100%;
+                    opacity: 0.1;
+                }
             }
             .data_item_right {
                 width: 23.5%;
                 height: 100%;
                 display: flex;
                 flex-direction: column;
-                .right_top {
-                    width: 100%;
-                    height: 60%;
-                    display: flex;
-                    flex-direction: column;
-                    position: relative;
-                    .rigth_top_item_1 {
-                        width: 100%;
-                        height: 47%;
-                        position: relative;
-                        .item_decorate {
-                            height: 10%;
-                            position: relative;
-                            .right_top_img {
-                                position: absolute;
-                                top: 0;
-                                left: 13px;
-                                width: 97%;
-                            }
-                            .title1 {
-                                font-size: 2rem;
-                                color: white;
-                                position: absolute;
-                                top: 5px;
-                                left: 90px;
-                                font-weight: bold;
-                            }
-                            .title2 {
-                                font-size: 1.2rem;
-                                color: #ffd3a0;
-                                position: absolute;
-                                top: 20px;
-                                right: 30px;
-                                font-weight: bold;
-                            }
-                        }
-                        .right_top_datas {
-                            width: 95%;
-                            height: 76%;
-                            position: absolute;
-                            top: 50px;
-                            left: 30px;
-                            background-image: url("@/static/images/right_top_frame.png");
-                            background-size: 100% 100%;
-                        }
-                    }
-                    .rigth_top_item_2 {
-                        width: 100%;
-                        height: 47%;
-                        position: relative;
-                        .item_decorate {
-                            height: 10%;
-                            position: relative;
-                            .right_top_img {
-                                position: absolute;
-                                top: 0;
-                                left: 13px;
-                                width: 97%;
-                            }
-                            .title1 {
-                                font-size: 2rem;
-                                color: white;
-                                position: absolute;
-                                top: 5px;
-                                left: 90px;
-                                font-weight: bold;
-                            }
-                            .title2 {
-                                font-size: 1.2rem;
-                                color: #ffd3a0;
-                                position: absolute;
-                                top: 20px;
-                                right: 30px;
-                                font-weight: bold;
-                            }
-                        }
-                        .right_top_datas {
-                            width: 95%;
-                            height: 76%;
-                            position: absolute;
-                            top: 50px;
-                            left: 30px;
-                            background-image: url("@/static/images/right_top_frame.png");
-                            background-size: 100% 100%;
-                        }
-                    }
-                    .rigth_top_item_3 {
-                        width: 100%;
-                        height: 6%;
-                    }
-                }
+
                 .right_bottom {
                     width: 100%;
                     height: 40%;
@@ -668,6 +721,11 @@ export default {
                             top: 20px;
                             right: 30px;
                             font-weight: bold;
+                            .view_details {
+                                margin-left: 5px;
+                                width: 10px;
+                                height: 10px;
+                            }
                         }
                     }
                     .right_bottom_datas {
@@ -675,7 +733,7 @@ export default {
                         height: 84%;
                         position: absolute;
                         top: 50px;
-                        left: 32px;
+                        left: 33px;
                         background-image: url("@/static/images/right_bottom_frame.png");
                         background-size: 100% 100%;
                     }
@@ -689,6 +747,8 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
+        opacity: 0;
+        z-index: 1;
         .scroll_1 {
             width: 200px;
             height: 1260px;
@@ -773,6 +833,7 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        z-index: 2;
         .btn_item {
             width: 135px;
             height: 135px;
@@ -858,6 +919,7 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        z-index: 2;
         .btn_item {
             width: 135px;
             height: 135px;
@@ -933,6 +995,17 @@ export default {
             }
         }
     }
+    .colored_ball_container {
+        width: 180px;
+        height: 200px;
+        position: absolute;
+        top: -51px;
+        left: -24px;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        // border: 1px solid red;
+    }
     .cover_cloth_left {
         position: absolute;
         background: #eeeeee;
@@ -940,6 +1013,7 @@ export default {
         height: 100%;
         top: 0;
         left: 0;
+        z-index: 1;
     }
     .cover_cloth_right {
         position: absolute;
@@ -948,6 +1022,7 @@ export default {
         height: 100%;
         top: 0;
         right: 0;
+        z-index: 1;
     }
 }
 </style>

@@ -75,7 +75,9 @@
                                 /></span>
                             </div>
                         </div>
-                        <div class="right_bottom_datas"></div>
+                        <div class="right_bottom_datas">
+                            <LifeAffluentComponent />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -305,6 +307,7 @@ import anime from "animejs/lib/anime.js";
 import SliderComponent from "@/components/DataView/SliderComponent.vue";
 import IndustryChartComponent from "@/components/DataView/IndustryChartComponent.vue";
 import ColoredBallComponent from "@/components/DataView/ColoredBallComponent.vue";
+import LifeAffluentComponent from "@/components/DataView/LifeAffluentComponent.vue";
 
 export default {
     name: "DataView",
@@ -312,6 +315,7 @@ export default {
         SliderComponent,
         IndustryChartComponent,
         ColoredBallComponent,
+        LifeAffluentComponent,
     },
     data() {
         return {
@@ -374,7 +378,7 @@ export default {
         MoveScroll() {
             let that = this;
 
-            // 左卷轴向左移动
+            // 展示卷轴
             anime({
                 targets: ".scroll_container",
                 opacity: 1,
@@ -388,7 +392,7 @@ export default {
                         translateX: -1709,
                         loop: 1,
                         easing: "linear",
-                        duration: 1500,
+                        duration: 0,
                     });
 
                     // 左卷轴里的图片向左移动
@@ -397,11 +401,13 @@ export default {
                         translateX: -1050,
                         loop: 1,
                         easing: "linear",
-                        duration: 1500,
+                        duration: 0,
                         complete: function () {
+                            // 卷轴动画完成
                             that.scroll_anime_complete = true;
-                            that.run_colored_ball_animation = true;
-                            that.RunAllAnimation();
+                            // 运行彩球动画
+                            // that.run_colored_ball_animation = true;
+                            // that.RunAllAnimation();
 
                             anime({
                                 targets: ".data_view_container .content_box",
@@ -419,7 +425,7 @@ export default {
                         translateX: 1732,
                         loop: 1,
                         easing: "linear",
-                        duration: 1500,
+                        duration: 0,
                     });
 
                     // 右卷轴里的图片向右移动
@@ -428,7 +434,7 @@ export default {
                         loop: 1,
                         easing: "linear",
                         translateX: 1200,
-                        duration: 1500,
+                        duration: 0,
                     });
 
                     // 移动左边遮布
@@ -437,7 +443,7 @@ export default {
                         translateX: -1709,
                         loop: 1,
                         easing: "linear",
-                        duration: 1500,
+                        duration: 0,
                     });
 
                     // 移动右边遮布
@@ -446,7 +452,7 @@ export default {
                         translateX: 1732,
                         loop: 1,
                         easing: "linear",
-                        duration: 1500,
+                        duration: 0,
                     });
                 },
             });

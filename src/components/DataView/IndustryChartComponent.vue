@@ -5,6 +5,8 @@
 <script>
 import * as echarts from "echarts";
 
+let industry_chart;
+
 export default {
     name: "IndustryChart",
     data() {
@@ -12,14 +14,14 @@ export default {
     },
     mounted() {
         let that = this;
-        that.init();
+        that.Init();
 
         setInterval(() => {
-            that.init();
+            that.Init();
         }, 5000);
     },
     methods: {
-        init() {
+        Init() {
             let temp_datas = [];
             let temp_1 = [];
             for (let i = 0; i < 5; i++) {
@@ -314,7 +316,17 @@ export default {
                     },
                 ],
             };
-            let industry_chart = echarts.init(
+
+            // 销毁
+            if (
+                industry_chart != null &&
+                industry_chart != "" &&
+                industry_chart != undefined
+            ) {
+                industry_chart.dispose();
+            }
+
+            industry_chart = echarts.init(
                 document.getElementById("industry_chart")
             );
             // 定时适应一次，防止icon图片变形

@@ -31,7 +31,7 @@ export default {
             let option = this.getPie3D([
                 {
                     name: "数据一",
-                    value: 60,
+                    value: 45,
                     itemStyle: {
                         opacity: 1,
                         color: "#afc8ef",
@@ -160,6 +160,15 @@ export default {
                     }
                     return Math.sin(v) > 0 ? 1 * height : -1;
                 },
+                z: function (u, v) {
+                    if (u < -Math.PI * 0.5) {
+                        return Math.sin(u);
+                    }
+                    if (u > Math.PI * 2.5) {
+                        return Math.sin(u);
+                    }
+                    return Math.sin(v) > 0 ? 1 * height : -1;
+                },
             };
             // console.log('getparams');
         },
@@ -194,6 +203,8 @@ export default {
                         hovered: false,
                         k: k,
                     },
+                    blendMode: "lighter",
+                    silent: false,
                 };
 
                 if (typeof pieData[i].itemStyle != "undefined") {
@@ -238,20 +249,20 @@ export default {
 
             // 准备待返回的配置项，把准备好的 legendData、series 传入。
             let option = {
-                // // 鼠标移入事件
-                // tooltip: {
-                //     formatter: (params) => {
-                //         if (params.seriesName !== "mouseoutSeries") {
-                //             return `${
-                //                 params.seriesName
-                //             }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
-                //                 params.color
-                //             };"></span>${
-                //                 option.series[params.seriesIndex].pieData.value
-                //             }`;
-                //         }
-                //     },
-                // },
+                // 鼠标移入事件
+                tooltip: {
+                    formatter: (params) => {
+                        if (params.seriesName !== "mouseoutSeries") {
+                            return `${
+                                params.seriesName
+                            }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
+                                params.color
+                            };"></span>${
+                                option.series[params.seriesIndex].pieData.value
+                            }`;
+                        }
+                    },
+                },
                 legend: {
                     selectedMode: false, // 禁止点击
                     data: legendData,
@@ -281,12 +292,14 @@ export default {
                 grid3D: {
                     show: false,
                     boxHeight: 1.5,
-                    //top: '30%',
-                    left: "-20%",
+                    top: '-5%',
+                    left: "-15%",
                     // bottom: "100%",
                     backgroundColor: "transparent",
                     // environment: "white", // 图层背景
                     viewControl: {
+                        autoRotate: true, // 自动旋转
+                        // autoRotateDirection: "ccw",
                         distance: 300,
                         alpha: 25,
                         beta: 50,

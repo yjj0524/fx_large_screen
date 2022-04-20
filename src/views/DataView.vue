@@ -76,7 +76,36 @@
                             </div>
                         </div>
                         <div class="right_bottom_datas">
-                            <LifeAffluentComponent />
+                            <div class="right_bottom_bg">
+                                <img
+                                    class="life_affluent_img_4"
+                                    src="@/static/images/life_affluent_4.png"
+                                    alt=""
+                                />
+                                <img
+                                    class="life_affluent_img_3"
+                                    src="@/static/images/life_affluent_3.png"
+                                    alt=""
+                                />
+                                <img
+                                    class="life_affluent_img_2"
+                                    src="@/static/images/life_affluent_2.png"
+                                    alt=""
+                                />
+                                <img
+                                    class="life_affluent_img_1"
+                                    src="@/static/images/life_affluent_1.png"
+                                    alt=""
+                                />
+                                <LifeColoredBallComponent
+                                    :run_colored_ball_animation="
+                                        run_colored_ball_animation
+                                    "
+                                />
+                            </div>
+                            <div class="life_affluent_container">
+                                <LifeAffluentComponent />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,25 +128,46 @@
         </div>
         <!-- 左边按钮组 -->
         <div class="btn_group_left" v-show="scroll_anime_complete">
-            <div class="btn_item" v-for="(item, index) of 4" :key="index">
+            <div
+                class="btn_item"
+                v-for="(item, index) of 4"
+                :key="index"
+                @click="Overview(index)"
+            >
                 <img
                     class="btn_img img_10"
-                    src="@/static/images/golden_btn/golden_btn_10.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_10.png')
+                            : require('../static/images/golden_btn/golden_btn_10.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_9"
-                    src="@/static/images/golden_btn/golden_btn_9.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_9.png')
+                            : require('../static/images/golden_btn/golden_btn_9.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_8"
-                    src="@/static/images/golden_btn/golden_btn_8.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_8.png')
+                            : require('../static/images/golden_btn/golden_btn_8.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_7"
-                    src="@/static/images/golden_btn/golden_btn_7.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_7.png')
+                            : require('../static/images/golden_btn/golden_btn_7.png'),
+                    ]"
                     alt=""
                 />
                 <div class="colored_ball_container">
@@ -129,33 +179,57 @@
                 <div class="bird_container">
                     <img
                         class="btn_img img_6"
-                        src="@/static/images/golden_btn/golden_btn_6.png"
+                        :src="[
+                            index == btn_item_selected_index
+                                ? require('../static/images/blue_btn/blue_btn_6.png')
+                                : require('../static/images/golden_btn/golden_btn_6.png'),
+                        ]"
                         alt=""
                     />
                     <img
                         class="btn_img img_5"
-                        src="@/static/images/golden_btn/golden_btn_5.png"
+                        :src="[
+                            index == btn_item_selected_index
+                                ? require('../static/images/blue_btn/blue_btn_5.png')
+                                : require('../static/images/golden_btn/golden_btn_5.png'),
+                        ]"
                         alt=""
                     />
                 </div>
                 <img
                     class="btn_img img_4"
-                    src="@/static/images/golden_btn/golden_btn_4.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_4.png')
+                            : require('../static/images/golden_btn/golden_btn_4.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_3"
-                    src="@/static/images/golden_btn/golden_btn_3.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_3.png')
+                            : require('../static/images/golden_btn/golden_btn_3.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_2"
-                    src="@/static/images/golden_btn/golden_btn_2.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_2.png')
+                            : require('../static/images/golden_btn/golden_btn_2.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_1"
-                    src="@/static/images/golden_btn/golden_btn_1.png"
+                    :src="[
+                        index == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_1.png')
+                            : require('../static/images/golden_btn/golden_btn_1.png'),
+                    ]"
                     alt=""
                 />
                 <div class="describe">
@@ -166,7 +240,7 @@
         </div>
         <!-- 右边按钮组 -->
         <div class="btn_group_right" v-show="scroll_anime_complete">
-            <div class="btn_item">
+            <!-- <div class="btn_item">
                 <img
                     class="btn_img img_10"
                     src="@/static/images/blue_btn/blue_btn_10.png"
@@ -229,26 +303,47 @@
                     <img src="@/static/images/btn_middle_img.png" alt="" />
                     <div class="title">总览</div>
                 </div>
-            </div>
-            <div class="btn_item" v-for="(item, index) of 3" :key="index">
+            </div> -->
+            <div
+                class="btn_item"
+                v-for="(item, index) of 4"
+                :key="index"
+                @click="Overview(index + 4)"
+            >
                 <img
                     class="btn_img img_10"
-                    src="@/static/images/golden_btn/golden_btn_10.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_10.png')
+                            : require('../static/images/golden_btn/golden_btn_10.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_9"
-                    src="@/static/images/golden_btn/golden_btn_9.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_9.png')
+                            : require('../static/images/golden_btn/golden_btn_9.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_8"
-                    src="@/static/images/golden_btn/golden_btn_8.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_8.png')
+                            : require('../static/images/golden_btn/golden_btn_8.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_7"
-                    src="@/static/images/golden_btn/golden_btn_7.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_7.png')
+                            : require('../static/images/golden_btn/golden_btn_7.png'),
+                    ]"
                     alt=""
                 />
                 <div class="colored_ball_container">
@@ -260,33 +355,57 @@
                 <div class="bird_container">
                     <img
                         class="btn_img img_6"
-                        src="@/static/images/golden_btn/golden_btn_6.png"
+                        :src="[
+                            index + 4 == btn_item_selected_index
+                                ? require('../static/images/blue_btn/blue_btn_6.png')
+                                : require('../static/images/golden_btn/golden_btn_6.png'),
+                        ]"
                         alt=""
                     />
                     <img
                         class="btn_img img_5"
-                        src="@/static/images/golden_btn/golden_btn_5.png"
+                        :src="[
+                            index + 4 == btn_item_selected_index
+                                ? require('../static/images/blue_btn/blue_btn_5.png')
+                                : require('../static/images/golden_btn/golden_btn_5.png'),
+                        ]"
                         alt=""
                     />
                 </div>
                 <img
                     class="btn_img img_4"
-                    src="@/static/images/golden_btn/golden_btn_4.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_4.png')
+                            : require('../static/images/golden_btn/golden_btn_4.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_3"
-                    src="@/static/images/golden_btn/golden_btn_3.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_3.png')
+                            : require('../static/images/golden_btn/golden_btn_3.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_2"
-                    src="@/static/images/golden_btn/golden_btn_2.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_2.png')
+                            : require('../static/images/golden_btn/golden_btn_2.png'),
+                    ]"
                     alt=""
                 />
                 <img
                     class="btn_img img_1"
-                    src="@/static/images/golden_btn/golden_btn_1.png"
+                    :src="[
+                        index + 4 == btn_item_selected_index
+                            ? require('../static/images/blue_btn/blue_btn_1.png')
+                            : require('../static/images/golden_btn/golden_btn_1.png'),
+                    ]"
                     alt=""
                 />
                 <div class="describe">
@@ -308,6 +427,7 @@ import SliderComponent from "@/components/DataView/SliderComponent.vue";
 import IndustryChartComponent from "@/components/DataView/IndustryChartComponent.vue";
 import ColoredBallComponent from "@/components/DataView/ColoredBallComponent.vue";
 import LifeAffluentComponent from "@/components/DataView/LifeAffluentComponent.vue";
+import LifeColoredBallComponent from "@/components/DataView/LifeColoredBallComponent.vue";
 
 export default {
     name: "DataView",
@@ -316,6 +436,7 @@ export default {
         IndustryChartComponent,
         ColoredBallComponent,
         LifeAffluentComponent,
+        LifeColoredBallComponent,
     },
     data() {
         return {
@@ -366,6 +487,7 @@ export default {
                     img: require("../static/images/data_img_9.png"),
                 },
             ],
+            btn_item_selected_index: null,
             scroll_anime_complete: false,
             run_colored_ball_animation: false,
         };
@@ -377,6 +499,7 @@ export default {
         // 移动画卷
         MoveScroll() {
             let that = this;
+            let duration = 0;
 
             // 展示卷轴
             anime({
@@ -392,7 +515,7 @@ export default {
                         translateX: -1709,
                         loop: 1,
                         easing: "linear",
-                        duration: 0,
+                        duration: duration,
                     });
 
                     // 左卷轴里的图片向左移动
@@ -401,7 +524,7 @@ export default {
                         translateX: -1050,
                         loop: 1,
                         easing: "linear",
-                        duration: 0,
+                        duration: duration,
                         complete: function () {
                             // 卷轴动画完成
                             that.scroll_anime_complete = true;
@@ -425,7 +548,7 @@ export default {
                         translateX: 1732,
                         loop: 1,
                         easing: "linear",
-                        duration: 0,
+                        duration: duration,
                     });
 
                     // 右卷轴里的图片向右移动
@@ -434,7 +557,7 @@ export default {
                         loop: 1,
                         easing: "linear",
                         translateX: 1200,
-                        duration: 0,
+                        duration: duration,
                     });
 
                     // 移动左边遮布
@@ -443,7 +566,7 @@ export default {
                         translateX: -1709,
                         loop: 1,
                         easing: "linear",
-                        duration: 0,
+                        duration: duration,
                     });
 
                     // 移动右边遮布
@@ -452,17 +575,20 @@ export default {
                         translateX: 1732,
                         loop: 1,
                         easing: "linear",
-                        duration: 0,
+                        duration: duration,
                     });
                 },
             });
         },
+        // 运行所有动画
         RunAllAnimation() {
             let that = this;
 
+            // 左右按钮组动画
             anime({
                 targets: ".left_top_datas .data_img",
                 rotate: -360,
+
                 loop: true,
                 easing: "linear",
                 duration: 10000,
@@ -502,6 +628,33 @@ export default {
                 easing: "linear",
                 duration: 10000,
             });
+
+            // 3D饼图动画
+            anime({
+                targets: [".life_affluent_img_1", ".life_affluent_img_2"],
+                rotate: -360,
+                loop: true,
+                easing: "linear",
+                duration: 15000,
+            });
+
+            anime
+                .timeline({
+                    targets: ".life_affluent_img_3",
+                    loop: true,
+                    easing: "linear",
+                    duration: 2000,
+                })
+                .add({
+                    translateY: 30,
+                })
+                .add({
+                    translateY: 0,
+                });
+        },
+        // 总览
+        Overview(index) {
+            this.btn_item_selected_index = index;
         },
     },
 };
@@ -742,6 +895,50 @@ export default {
                         left: 33px;
                         background-image: url("@/static/images/right_bottom_frame.png");
                         background-size: 100% 100%;
+                        .right_bottom_bg {
+                            width: 350px;
+                            height: 350px;
+                            // border: 1px solid red;
+                            position: relative;
+                            top: 20px;
+                            left: 92px;
+                            transform: rotateX(70deg);
+                            .life_affluent_img_4 {
+                                width: 100%;
+                                height: 100%;
+                                position: absolute;
+                                top: 39px;
+                                left: 0;
+                            }
+                            .life_affluent_img_3 {
+                                width: 107%;
+                                height: 100%;
+                                position: absolute;
+                                top: 10px;
+                                left: -12px;
+                            }
+                            .life_affluent_img_2 {
+                                width: 65%;
+                                height: 60%;
+                                position: absolute;
+                                top: 72px;
+                                left: 52px;
+                            }
+                            .life_affluent_img_1 {
+                                width: 95%;
+                                height: 95%;
+                                position: absolute;
+                                top: 0;
+                                left: 10px;
+                            }
+                        }
+                        .life_affluent_container {
+                            width: 100%;
+                            height: 100%;
+                            position: relative;
+                            top: -352px;
+                            left: 0;
+                        }
                     }
                 }
             }

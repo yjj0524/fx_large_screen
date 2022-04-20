@@ -144,6 +144,7 @@ export default {
     mounted() {
         let that = this;
 
+        // 查看详情箭头动画
         // anime.timeline({
         //     targets: ".view_details",
         //     loop: true,

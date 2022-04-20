@@ -16,9 +16,9 @@ export default {
         let that = this;
         that.Init();
 
-        setInterval(() => {
-            that.Init();
-        }, 5000);
+        // setInterval(() => {
+        //     that.Init();
+        // }, 5000);
     },
     methods: {
         Init() {
@@ -47,6 +47,7 @@ export default {
                     bottom: 40,
                 },
                 legend: {
+                    selectedMode: false, // 禁止点击
                     show: true,
                     data: [
                         {

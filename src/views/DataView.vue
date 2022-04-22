@@ -4,11 +4,21 @@
             <!-- 背景图-地图 -->
             <img class="map_bg_img" src="@/static/images/map_bg.png" alt="" />
             <div class="middle_content">
+                <img
+                    class="top_img"
+                    src="@/static/images/top_decorate.png"
+                    alt=""
+                />
                 <div class="top_conatiner">
                     <h1 class="top_title">奉贤区新桥村智慧村庄信息服务平台</h1>
                 </div>
-                <div class="current_weather">20°C 晴</div>
-                <div class="current_time">2022.04.18 12:00:00</div>
+                <div class="current_temperature">
+                    20°C<span class="current_weather">晴</span>
+                </div>
+                <div class="current_date">
+                    {{ specific_date
+                    }}<span class="current_time">{{ specific_time }}</span>
+                </div>
             </div>
             <div class="data_container">
                 <div class="data_item_left">
@@ -53,9 +63,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="data_item_middle">
-                    <div class="middle_container"></div>
+                <div class="data_middle" @click.once="OpenArcGisMapContainer">
+                    <div class="data_item_middle">
+                        <div class="middle_container">
+                            <ArcGisComponent />
+                        </div>
+                    </div>
                 </div>
+
                 <div class="data_item_right">
                     <SliderComponent />
                     <div class="right_bottom">
@@ -104,7 +119,7 @@
                                 />
                             </div>
                             <div class="life_affluent_container">
-                                <LifeAffluentComponent />
+                                <LifeAffluentChartComponent />
                             </div>
                         </div>
                     </div>
@@ -240,70 +255,6 @@
         </div>
         <!-- 右边按钮组 -->
         <div class="btn_group_right" v-show="scroll_anime_complete">
-            <!-- <div class="btn_item">
-                <img
-                    class="btn_img img_10"
-                    src="@/static/images/blue_btn/blue_btn_10.png"
-                    alt=""
-                />
-                <img
-                    class="btn_img img_9"
-                    src="@/static/images/blue_btn/blue_btn_9.png"
-                    alt=""
-                />
-                <img
-                    class="btn_img img_8"
-                    src="@/static/images/blue_btn/blue_btn_8.png"
-                    alt=""
-                />
-                <img
-                    class="btn_img img_7"
-                    src="@/static/images/blue_btn/blue_btn_7.png"
-                    alt=""
-                />
-                <div class="colored_ball_container">
-                    <ColoredBallComponent
-                        :component_index="20"
-                        :run_colored_ball_animation="run_colored_ball_animation"
-                    />
-                </div>
-                <div class="bird_container">
-                    <img
-                        class="btn_img img_6"
-                        src="@/static/images/blue_btn/blue_btn_6.png"
-                        alt=""
-                    />
-                    <img
-                        class="btn_img img_5"
-                        src="@/static/images/blue_btn/blue_btn_5.png"
-                        alt=""
-                    />
-                </div>
-                <img
-                    class="btn_img img_4"
-                    src="@/static/images/blue_btn/blue_btn_4.png"
-                    alt=""
-                />
-                <img
-                    class="btn_img img_3"
-                    src="@/static/images/blue_btn/blue_btn_3.png"
-                    alt=""
-                />
-                <img
-                    class="btn_img img_2"
-                    src="@/static/images/blue_btn/blue_btn_2.png"
-                    alt=""
-                />
-                <img
-                    class="btn_img img_1"
-                    src="@/static/images/blue_btn/blue_btn_1.png"
-                    alt=""
-                />
-                <div class="describe">
-                    <img src="@/static/images/btn_middle_img.png" alt="" />
-                    <div class="title">总览</div>
-                </div>
-            </div> -->
             <div
                 class="btn_item"
                 v-for="(item, index) of 4"
@@ -414,6 +365,8 @@
                 </div>
             </div>
         </div>
+        <!-- 右边返回按钮 -->
+        <div class="back_btn" @click="BackPrePage"></div>
         <!-- 左边遮布 -->
         <div class="cover_cloth_left"></div>
         <!-- 右边遮布 -->
@@ -426,8 +379,9 @@ import anime from "animejs/lib/anime.js";
 import SliderComponent from "@/components/DataView/SliderComponent.vue";
 import IndustryChartComponent from "@/components/DataView/IndustryChartComponent.vue";
 import ColoredBallComponent from "@/components/DataView/ColoredBallComponent.vue";
-import LifeAffluentComponent from "@/components/DataView/LifeAffluentComponent.vue";
+import LifeAffluentChartComponent from "@/components/DataView/LifeAffluentChartComponent.vue";
 import LifeColoredBallComponent from "@/components/DataView/LifeColoredBallComponent.vue";
+import ArcGisComponent from "@/components/DataView/ArcGisComponent.vue";
 
 export default {
     name: "DataView",
@@ -435,11 +389,18 @@ export default {
         SliderComponent,
         IndustryChartComponent,
         ColoredBallComponent,
-        LifeAffluentComponent,
+        LifeAffluentChartComponent,
         LifeColoredBallComponent,
+        ArcGisComponent,
     },
     data() {
         return {
+            // 日期
+            specific_date: "",
+            // 时间
+            specific_time: "",
+            // 日期时间定时器
+            date_timer: null,
             datas: [
                 {
                     name: "土地",
@@ -487,19 +448,55 @@ export default {
                     img: require("../static/images/data_img_9.png"),
                 },
             ],
+            // 左右按钮组的选中项
             btn_item_selected_index: null,
+            // 卷轴动画完成
             scroll_anime_complete: false,
+            // 运行彩球动画
             run_colored_ball_animation: false,
         };
     },
     mounted() {
+        this.GetCurrentTime();
+        this.date_timer = setInterval(() => {
+            this.GetCurrentTime();
+        }, 1000);
         this.MoveScroll();
     },
     methods: {
+        GetCurrentTime() {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            if (month < 10) {
+                month = `0${month}`;
+            }
+            let day = date.getDate();
+            if (day < 10) {
+                day = `0${day}`;
+            }
+            let hour = date.getHours();
+            if (hour < 10) {
+                hour = `0${hour}`;
+            }
+            let minute = date.getMinutes();
+            if (minute < 10) {
+                minute = `0${minute}`;
+            }
+            let second = date.getSeconds();
+            if (second < 10) {
+                second = `0${second}`;
+            }
+
+            this.specific_date = `${year}.${month}.${day}`;
+            this.specific_time = `${hour}:${minute}:${second}`;
+
+            // console.log(`${year}年${month}月${day}日${hour}时${minute}分${second}秒`);
+        },
         // 移动画卷
         MoveScroll() {
             let that = this;
-            let duration = 0;
+            let duration = 1500;
 
             // 展示卷轴
             anime({
@@ -529,8 +526,8 @@ export default {
                             // 卷轴动画完成
                             that.scroll_anime_complete = true;
                             // 运行彩球动画
-                            // that.run_colored_ball_animation = true;
-                            // that.RunAllAnimation();
+                            that.run_colored_ball_animation = true;
+                            that.RunAllAnimation();
 
                             anime({
                                 targets: ".data_view_container .content_box",
@@ -656,6 +653,30 @@ export default {
         Overview(index) {
             this.btn_item_selected_index = index;
         },
+        // 打开地图
+        OpenArcGisMapContainer() {
+            anime({
+                targets: ".data_middle .data_item_middle",
+                opacity: 1,
+                loop: 1,
+                easing: "linear",
+                duration: 1000,
+            });
+        },
+        // 返回上一页
+        BackPrePage() {
+            if (window.history.length <= 1) {
+                this.$router.push({ path: "/" });
+                return false;
+            } else {
+                this.$router.go(-1);
+            }
+        },
+    },
+    beforeDestroy() {
+        // 清除日期时间定时器
+        clearInterval(this.date_timer);
+        this.date_timer = null;
     },
 };
 </script>
@@ -695,30 +716,50 @@ export default {
             top: 0;
             left: 0;
             // border: 1px solid red;
-            .top_conatiner {
-                width: 100%;
+            .top_img {
+                width: 101%;
                 height: 120%;
-                background-image: url("@/static/images/top_decorate.png");
-                background-size: 100% 100%;
-                .top_title {
-                    margin: 0;
-                    font-size: 3.3rem;
-                    color: #ffe7cb;
-                    letter-spacing: 12px;
-                    text-shadow: 3px 3px 15px #6b3661, -3px -3px 15px #6b3661;
-                }
+                position: absolute;
+                top: 22px;
+                left: -13px;
+                right: 0;
+                bottom: 0;
+                margin: auto;
             }
-            .current_weather {
+            .top_title {
+                margin: 0;
+                font-size: 3.3rem;
+                color: #ffe7cb;
+                letter-spacing: 12px;
+                text-shadow: 3px 3px 15px #6b3661, -3px -3px 15px #6b3661;
+                position: absolute;
+                top: 3px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+            }
+            .current_temperature {
                 position: absolute;
                 top: 50px;
                 left: 20px;
                 color: white;
+                font-size: 1.5rem;
+                .current_weather {
+                    margin-left: 30px;
+                }
             }
-            .current_time {
+            .current_date {
                 position: absolute;
                 top: 50px;
                 right: 20px;
                 color: white;
+                font-size: 1.5rem;
+                .current_time {
+                    margin-left: 25px;
+                    font-weight: bold;
+                    font-size: 1.7rem;
+                }
             }
         }
         .data_container {
@@ -828,22 +869,25 @@ export default {
                     }
                 }
             }
-            .data_item_middle {
+            .data_middle {
                 width: 52.5%;
                 height: 98.7%;
-                // background: #9cb0c0;
-                // opacity: 0.3;
-                background-image: url("@/static/images/middle_map_bg_1.png");
-                background-size: 100% 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                .middle_container {
-                    width: 98%;
-                    height: 96%;
-                    background-image: url("@/static/images/middle_map_bg_2.png");
+                .data_item_middle {
+                    width: 100%;
+                    height: 100%;
+                    // background: #9cb0c0;
+                    opacity: 0;
+                    background-image: url("@/static/images/middle_map_bg_1.png");
                     background-size: 100% 100%;
-                    opacity: 0.1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .middle_container {
+                        width: 98%;
+                        height: 96%;
+                        background-image: url("@/static/images/middle_map_bg_2.png");
+                        background-size: 100% 100%;
+                    }
                 }
             }
             .data_item_right {
@@ -1197,6 +1241,17 @@ export default {
                 left: -15px;
             }
         }
+    }
+    .back_btn {
+        width: 62px;
+        height: 55px;
+        position: absolute;
+        bottom: 45px;
+        right: 72px;
+        background-image: url("@/static/images/back_img.png");
+        background-size: 100% 100%;
+        // border: 1px solid red;
+        z-index: 2;
     }
     .colored_ball_container {
         width: 180px;

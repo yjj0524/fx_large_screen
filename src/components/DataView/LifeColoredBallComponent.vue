@@ -56,6 +56,7 @@ export default {
             for (let i = 0; i < 500; i++) {
                 let item = {
                     cx: that.GetRandomNumber(10, 345),
+                    // cx: i % 2 == 0 ? that.GetRandomNumber(10, 50) : that.GetRandomNumber(300, 345),
                     cy: that.GetRandomNumber(200, 300),
                     // stroke: colors[that.GetRandomNumber(0, that.colors.length)],
                     fill: colors[that.GetRandomNumber(0, colors.length)],

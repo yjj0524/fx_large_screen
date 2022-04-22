@@ -16,9 +16,9 @@ export default {
         let that = this;
         that.Init();
 
-        // setInterval(() => {
-        //     that.Init();
-        // }, 5000);
+        setInterval(() => {
+            that.Init();
+        }, 5000);
     },
     methods: {
         Init() {
@@ -43,7 +43,7 @@ export default {
                 grid: {
                     left: 60,
                     right: 20,
-                    top: 50,
+                    top: 60,
                     bottom: 40,
                 },
                 legend: {
@@ -66,8 +66,8 @@ export default {
                     orient: "horizontal",
                     top: "3%",
                     right: "2.3%",
-                    itemWidth: 16.5,
-                    itemHeight: 6,
+                    itemWidth: 16,
+                    itemHeight: 16,
                     textStyle: {
                         color: "white",
                     },
@@ -330,10 +330,6 @@ export default {
             industry_chart = echarts.init(
                 document.getElementById("industry_chart")
             );
-            // 定时适应一次，防止icon图片变形
-            setTimeout(() => {
-                industry_chart.resize();
-            }, 800);
             industry_chart.setOption(options);
             window.addEventListener("resize", function () {
                 industry_chart.resize();

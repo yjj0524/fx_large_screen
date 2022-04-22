@@ -35,7 +35,11 @@
                         </div>
                         <div class="right_item">
                             <div class="right_item_1">
-                                <img src="" alt="" />
+                                <img
+                                    class="arrow_group_img"
+                                    src="@/static/images/arrow_group.png"
+                                    alt=""
+                                />
                                 <div class="title">美丽乡村</div>
                             </div>
                             <div class="right_item_2">
@@ -53,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="right_item_5">
-                                <div class="title">生态商务区</div>
+                                <div class="title">生态商务区:</div>
                                 <div class="value"></div>
                             </div>
                         </div>
@@ -86,8 +90,12 @@
                         </div>
                         <div class="right_item">
                             <div class="right_item_1">
-                                <img src="" alt="" />
-                                <div class="title">美丽乡村</div>
+                                <img
+                                    class="arrow_group_img"
+                                    src="@/static/images/arrow_group.png"
+                                    alt=""
+                                />
+                                <div class="title">村规民约</div>
                             </div>
                             <div class="right_item_2">
                                 <div class="title">空间布局:</div>
@@ -104,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="right_item_5">
-                                <div class="title">生态商务区</div>
+                                <div class="title">生态商务区:</div>
                                 <div class="value"></div>
                             </div>
                         </div>
@@ -145,14 +153,14 @@ export default {
         let that = this;
 
         // 查看详情箭头动画
-        // anime.timeline({
-        //     targets: ".view_details",
-        //     loop: true,
-        //     easing: "linear",
-        //     duration: 1000,
-        // }).add({
-        //     translateX: 8,
-        // });
+        anime.timeline({
+            targets: ".view_details",
+            loop: true,
+            easing: "linear",
+            duration: 1000,
+        }).add({
+            translateX: 8,
+        });
     },
 };
 </script>
@@ -233,14 +241,19 @@ export default {
                     align-items: flex-start;
                     font-size: 1.3rem;
                     color: white;
+                    letter-spacing: 2px;
                     .right_item_1 {
-                        margin-top: 10px;
+                        margin-top: 5px;
                         font-size: 1.5rem;
                         color: #ffd3a0;
                         display: flex;
                         flex-direction: row;
                         align-items: center;
                         justify-content: center;
+                        .arrow_group_img {
+                            width: 49px;
+                            height: 33px;
+                        }
                     }
                     .right_item_2 {
                         margin-top: 10px;
@@ -364,14 +377,19 @@ export default {
                     align-items: flex-start;
                     font-size: 1.3rem;
                     color: white;
+                    letter-spacing: 2px;
                     .right_item_1 {
-                        margin-top: 10px;
+                        margin-top: 5px;
                         font-size: 1.5rem;
                         color: #ffd3a0;
                         display: flex;
                         flex-direction: row;
                         align-items: center;
                         justify-content: center;
+                        .arrow_group_img {
+                            width: 49px;
+                            height: 33px;
+                        }
                     }
                     .right_item_2 {
                         margin-top: 10px;

@@ -11,7 +11,7 @@
                     <!-- 左中线 -->
                     <path
                         id="svg_left_1"
-                        d="M55 540 L620 540"
+                        d="M55 540 L622 540"
                         style="fill: transparent; stroke: #3d5789"
                     />
                     <!-- 左上线 -->

@@ -186,7 +186,7 @@
             </div>
         </div>
         <!-- 二级标题点击后的背景和描述信息 -->
-        <div class="sub_title_bg_img" v-show="show_sub_title_bg_img">
+        <div class="sub_title_bg_img" v-if="show_sub_title_bg_img">
             <div class="bg_img">
                 <img src="@/static/images/sub_title_bg.jpg" alt="" />
             </div>
@@ -212,7 +212,7 @@
             v-show="show_scenery_container"
             @click.self="CloseSceneryContainer"
         >
-            <div class="covering_layer">
+            <div class="covering_layer" v-if="show_scenery_container">
                 <div class="scenery_container_bg_img">
                     <div class="scenery_img_container">
                         <div class="imgs_container">
@@ -241,11 +241,13 @@
                             class="scroll_pre"
                             src="@/static/images/scroll_pre.png"
                             alt=""
+                            @click="ScrollToPre"
                         />
                         <img
                             class="scroll_next"
                             src="@/static/images/scroll_next.png"
                             alt=""
+                            @click="ScrollToNext"
                         />
                         <img
                             class="scroll_close"
@@ -256,7 +258,11 @@
                     </div>
                 </div>
             </div>
-            <div class="scroll_container" @click.stop="OpenScroll">
+            <div
+                class="scroll_container"
+                @click.stop="OpenScroll"
+                v-if="show_scenery_container"
+            >
                 <div class="scroll_1">
                     <div class="scroll_1_1"></div>
                     <div class="scroll_1_2">
@@ -455,8 +461,12 @@ export default {
             show_scenery_container: false,
             // 未展开卷轴前允许点击空白处关闭卷轴容器
             allow_close_scenery_container: true,
+            // 允许展开卷轴
+            allow_open_scroll: true,
             // 显示卷轴中的描述和按钮
             show_title_and_btns: false,
+            // 允许切换24景图片
+            allow_switch_scenery_img: true,
             // 当前24景显示的图片下标
             current_show_scenery_img_index: 1,
         };
@@ -474,65 +484,65 @@ export default {
             //#region 执行背景动画
             // halo_1动画
             anime({
-                targets: ".halo_1",
-                rotate: 360,
-                duration: 15000,
-                easing: "linear",
-                loop: true,
+                // targets: ".halo_1",
+                // rotate: 360,
+                // duration: 15000,
+                // easing: "linear",
+                // loop: true,
             });
 
             // halo_2动画
             anime({
-                targets: ".halo_2",
-                easing: "linear",
-                rotate: -360,
-                duration: 15000,
-                loop: true,
+                // targets: ".halo_2",
+                // easing: "linear",
+                // rotate: -360,
+                // duration: 15000,
+                // loop: true,
             });
 
             // aperture动画
             anime({
-                targets: ".aperture",
-                loop: true,
-                rotate: 360,
-                duration: 25000,
-                easing: "linear",
+                // targets: ".aperture",
+                // loop: true,
+                // rotate: 360,
+                // duration: 25000,
+                // easing: "linear",
             });
 
             // 逐渐扩大的圈
             anime({
-                targets: "#circle_line_3",
-                loop: true,
-                scale: 1.19,
-                duration: 3000,
-                easing: "linear",
+                // targets: "#circle_line_3",
+                // loop: true,
+                // scale: 1.19,
+                // duration: 3000,
+                // easing: "linear",
             });
 
             // 滚动的圆弧6
             anime({
-                targets: "#circle_line_6",
-                loop: true,
-                rotate: -360,
-                duration: 10000,
-                easing: "linear",
+                // targets: "#circle_line_6",
+                // loop: true,
+                // rotate: -360,
+                // duration: 10000,
+                // easing: "linear",
             });
 
             // 滚动的圆弧7
             anime({
-                targets: "#circle_line_7",
-                loop: true,
-                rotate: 360,
-                duration: 16000,
-                easing: "linear",
+                // targets: "#circle_line_7",
+                // loop: true,
+                // rotate: 360,
+                // duration: 16000,
+                // easing: "linear",
             });
 
             // 滚动的圆弧8
             anime({
-                targets: "#circle_line_8",
-                loop: true,
-                rotate: 360,
-                duration: 10000,
-                easing: "linear",
+                // targets: "#circle_line_8",
+                // loop: true,
+                // rotate: 360,
+                // duration: 10000,
+                // easing: "linear",
             });
 
             // 运行24节气动画
@@ -1067,7 +1077,7 @@ export default {
                 },
             });
         },
-        // 打开24景
+        // 打开24景容器
         OpenSceneryContainer() {
             if (this.allow_close_scenery_container) {
                 this.show_scenery_container = true;
@@ -1106,112 +1116,136 @@ export default {
         // 展开24景卷轴
         OpenScroll() {
             let that = this;
-            let scroll_1 = document.querySelector(".scroll_1");
-            let scroll_2 = document.querySelector(".scroll_2");
-            let scroll_img_1 = document.querySelector(
-                ".scroll_1 .scroll_img_1"
-            );
-            let scroll_img_2 = document.querySelector(
-                ".scroll_2 .scroll_img_2"
-            );
-            let covering_layer = document.querySelector(
-                ".scenery_container .covering_layer"
-            );
-            let title_container = document.querySelector(
-                ".scenery_container .title_container"
-            );
-            let btn_container = document.querySelector(
-                ".scenery_container .btn_container"
-            );
 
-            that.allow_close_scenery_container = false;
+            if (that.allow_open_scroll) {
+                // 防止重复展开
+                that.allow_open_scroll = false;
+                let scroll_1 = document.querySelector(".scroll_1");
+                let scroll_2 = document.querySelector(".scroll_2");
+                let scroll_img_1 = document.querySelector(
+                    ".scroll_1 .scroll_img_1"
+                );
+                let scroll_img_2 = document.querySelector(
+                    ".scroll_2 .scroll_img_2"
+                );
+                let covering_layer = document.querySelector(
+                    ".scenery_container .covering_layer"
+                );
+                let title_container = document.querySelector(
+                    ".scenery_container .title_container"
+                );
+                let btn_container = document.querySelector(
+                    ".scenery_container .btn_container"
+                );
 
-            // 背景移动
-            anime({
-                targets: covering_layer,
-                translateX: -1500,
-                width: 3000,
-                loop: 1,
-                easing: "linear",
-                duration: 2500,
-                // 背景移动完成后展示描述信息和按钮
-                complete: function () {
-                    that.show_title_and_btns = true;
+                that.allow_close_scenery_container = false;
 
-                    anime({
-                        targets: [title_container, btn_container],
-                        opacity: "1",
-                        loop: 1,
-                        easing: "linear",
-                        duration: 1000,
-                    });
-                },
-            });
+                // 背景移动
+                anime({
+                    targets: covering_layer,
+                    translateX: -1500,
+                    width: 3000,
+                    loop: 1,
+                    easing: "linear",
+                    duration: 2500,
+                    // 背景移动完成后展示描述信息和按钮
+                    complete: function () {
+                        that.show_title_and_btns = true;
 
-            // 左卷轴向左移动
-            anime({
-                targets: scroll_1,
-                translateX: -1494,
-                loop: 1,
-                easing: "linear",
-                duration: 2500,
-            });
+                        anime({
+                            targets: [title_container, btn_container],
+                            opacity: "1",
+                            loop: 1,
+                            easing: "linear",
+                            duration: 1000,
+                        });
+                    },
+                });
 
-            // 左卷轴里的图片向左移动
-            anime({
-                targets: scroll_img_1,
-                translateX: -1100,
-                loop: 1,
-                easing: "linear",
-                duration: 2500,
-            });
+                // 左卷轴向左移动
+                anime({
+                    targets: scroll_1,
+                    translateX: -1494,
+                    loop: 1,
+                    easing: "linear",
+                    duration: 2500,
+                });
 
-            // 右卷轴向右移动
-            anime({
-                targets: scroll_2,
-                translateX: 1494,
-                loop: 1,
-                easing: "linear",
-                duration: 2500,
-            });
+                // 左卷轴里的图片向左移动
+                anime({
+                    targets: scroll_img_1,
+                    translateX: -1100,
+                    loop: 1,
+                    easing: "linear",
+                    duration: 2500,
+                });
 
-            // 右卷轴里的图片向右移动
-            anime({
-                targets: scroll_img_2,
-                loop: 1,
-                easing: "linear",
-                translateX: 1200,
-                duration: 2500,
-            });
+                // 右卷轴向右移动
+                anime({
+                    targets: scroll_2,
+                    translateX: 1494,
+                    loop: 1,
+                    easing: "linear",
+                    duration: 2500,
+                });
+
+                // 右卷轴里的图片向右移动
+                anime({
+                    targets: scroll_img_2,
+                    loop: 1,
+                    easing: "linear",
+                    translateX: 1200,
+                    duration: 2500,
+                });
+            }
         },
         // 上一页
         ScrollToPre() {
             let that = this;
 
-            if (this.current_show_scenery_img_index > 1) {
+            if (
+                that.current_show_scenery_img_index > 1 &&
+                that.allow_switch_scenery_img
+            ) {
+                that.allow_switch_scenery_img = false;
+
                 anime({
                     targets: ".imgs_container",
                     translateX:
-                        (that.current_show_scenery_img_index - 1) * -2941,
+                        (that.current_show_scenery_img_index - 2) * -2941,
                     loop: 1,
                     easing: "linear",
-                    duration: 2000,
+                    duration: 1500,
+                    complete: function () {
+                        that.allow_switch_scenery_img = true;
+                    },
                 });
 
-                this.current_show_scenery_img_index--;
+                that.current_show_scenery_img_index--;
             }
         },
+        // 下一页
         ScrollToNext() {
-            if (this.current_show_scenery_img_index < 5) {
+            let that = this;
+
+            if (
+                that.current_show_scenery_img_index < 5 &&
+                that.allow_switch_scenery_img
+            ) {
+                that.allow_switch_scenery_img = false;
+
                 anime({
                     targets: ".imgs_container",
-                    translateX: this.current_show_scenery_img_index * -2941,
+                    translateX: that.current_show_scenery_img_index * -2941,
                     loop: 1,
                     easing: "linear",
-                    duration: 2000,
+                    duration: 1500,
+                    complete: function () {
+                        that.allow_switch_scenery_img = true;
+                    },
                 });
 
-                this.current_show_scenery_img_index++;
+                that.current_show_scenery_img_index++;
             }
         },
         // 关闭24景（展开时）
@@ -1254,7 +1288,7 @@ export default {
                         width: 0,
                         loop: 1,
                         easing: "linear",
-                        duration: 2500,
+                        duration: 2600,
                     });
 
                     // 左卷轴向左移动
@@ -1302,7 +1336,17 @@ export default {
                                     easing: "linear",
                                     duration: 1500,
                                     complete: function () {
+                                        anime({
+                                            targets: ".imgs_container",
+                                            translateX: 0,
+                                            loop: 1,
+                                            easing: "linear",
+                                            duration: 0,
+                                        });
+
+                                        that.current_show_scenery_img_index = 1;
                                         that.allow_close_scenery_container = true;
+                                        that.allow_open_scroll = true;
                                         that.show_scenery_container = false;
                                     },
                                 });
@@ -1326,12 +1370,6 @@ export default {
 
             this.$router.push({ path: "/dataView" });
         },
-    },
-    watch: {
-        // 24节气的选中项下标
-        // solar_terms_index(newIndex) {
-        //     this.PointerRotate(newIndex);
-        // },
     },
 };
 </script>
@@ -2267,7 +2305,7 @@ export default {
             .scenery_container_bg_img {
                 width: 3000px;
                 height: 100%;
-                background-image: url("@/static/images/scenery_container_bg_img.png");
+                background-image: url("@/static/images/scroll_4.png");
                 background-size: 100% 100%;
                 display: flex;
                 align-items: center;

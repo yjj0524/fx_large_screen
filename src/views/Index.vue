@@ -9,9 +9,6 @@
 import SVGComponent from "@/components/Index/SVGComponent.vue";
 import BGComponent from "@/components/Index/BGComponent.vue";
 
-import HelloWorld from "@/components/HelloWorld.vue";
-import HelloWorlds from "@/components/HelloWorld2.vue";
-
 export default {
     name: "IndexView",
     components: {
@@ -30,7 +27,7 @@ export default {
     background-image: url("@/static/images/bg.png");
     background-size: 130% 100%;
     background-repeat: no-repeat;
-    animation: animatedBackground 60s linear infinite reverse;
+    // animation: animatedBackground 60s linear infinite reverse;
 
     @keyframes animatedBackground {
         from {

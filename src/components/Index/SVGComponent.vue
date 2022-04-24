@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import anime from "animejs/lib/anime.js";
+// import anime from "animejs/lib/anime.js";
 
 export default {
     name: "SVGComponent",

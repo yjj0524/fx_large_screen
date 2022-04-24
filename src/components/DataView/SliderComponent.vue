@@ -141,8 +141,8 @@ export default {
                 currentPage: 0, //当前页码
                 // thresholdDistance: 100, //滑动判定距离
                 // thresholdTime: 100, //滑动判定时间
-                // autoplay: 5000, //自动滚动[ms]
-                // loop: true, //循环滚动
+                autoplay: 5000, //自动滚动[ms]
+                loop: true, //循环滚动
                 // direction: "horizontal", //方向设置，垂直滚动
                 // loopedSlides: 1, //无限滚动前后遍历数
                 // slidesToScroll: 1, //每次滑动项数
@@ -153,14 +153,14 @@ export default {
         let that = this;
 
         // 查看详情箭头动画
-        anime.timeline({
-            targets: ".view_details",
-            loop: true,
-            easing: "linear",
-            duration: 1000,
-        }).add({
-            translateX: 8,
-        });
+        // anime.timeline({
+        //     targets: ".view_details",
+        //     loop: true,
+        //     easing: "linear",
+        //     duration: 1000,
+        // }).add({
+        //     translateX: 8,
+        // });
     },
 };
 </script>

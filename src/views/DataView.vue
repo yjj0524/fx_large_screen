@@ -496,7 +496,7 @@ export default {
         // 移动画卷
         MoveScroll() {
             let that = this;
-            let duration = 1500;
+            let duration = 0;
 
             // 展示卷轴
             anime({
@@ -526,8 +526,8 @@ export default {
                             // 卷轴动画完成
                             that.scroll_anime_complete = true;
                             // 运行彩球动画
-                            that.run_colored_ball_animation = true;
-                            that.RunAllAnimation();
+                            // that.run_colored_ball_animation = true;
+                            // that.RunAllAnimation();
 
                             anime({
                                 targets: ".data_view_container .content_box",
@@ -698,7 +698,7 @@ export default {
         position: relative;
         top: 0;
         left: 0;
-        background-image: url("@/static/images/scenery_container_bg_img.png");
+        background-image: url("@/static/images/scroll_4.png");
         background-size: 120% 120%;
         background-position: center center;
         overflow: hidden;

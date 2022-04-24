@@ -833,7 +833,7 @@ export default {
             that.sub_title_selete_index = null;
             that.GetSubTitleDatas();
 
-            setTimeout(() => {
+            that.$nextTick(() => {
                 let sub_item_el = document.querySelectorAll(
                     ".sub_title .sub_item"
                 );
@@ -902,88 +902,94 @@ export default {
                         });
                     }
                 }
-            }, 100);
+            });
 
             that.sub_title_show = true;
         },
         // 打开子标题内容
         OpenSubTitleContent(index) {
             let that = this;
-            let sub_title = document.querySelectorAll(".sub_title .sign");
-            let sub_title_bg_img =
-                document.querySelectorAll(".sub_title_bg_img");
-            let sub_title_description = document.querySelectorAll(
-                ".sub_title_bg_img .description_container"
-            );
 
-            // sign元素复位
-            if (that.sub_title_selete_index != null) {
-                anime({
-                    targets: sub_title[that.sub_title_selete_index],
-                    easing: "linear",
-                    opacity: 0,
-                    duration: 0, // 持续时间
-                    loop: 1,
-                });
-            }
+            if (that.sub_title_selete_index != index) {
+                let sub_title = document.querySelectorAll(".sub_title .sign");
 
-            that.sub_title_selete_index = index;
-
-            // 显示sign元素
-            anime
-                .timeline({
-                    targets: sub_title[index],
-                    easing: "linear",
-                })
-                .add({
-                    opacity: [
-                        {
-                            value: "1",
-                        },
-                    ],
-                    duration: 600, // 持续时间
-                    loop: 1,
-                });
-
-            that.show_sub_title_bg_img = true;
-
-            // 显示二级标题的大背景
-            anime({
-                targets: sub_title_bg_img,
-                opacity: [{ value: "0" }],
-                loop: 1,
-                easing: "linear",
-                duration: 0,
-                complete: function () {
-                    // 显示二级标题的描述信息
+                // sign元素复位
+                if (that.sub_title_selete_index != null) {
                     anime({
-                        targets: sub_title_description,
+                        targets: sub_title[that.sub_title_selete_index],
+                        easing: "linear",
+                        opacity: 0,
+                        duration: 0, // 持续时间
+                        loop: 1,
+                    });
+                }
+
+                that.sub_title_selete_index = index;
+
+                // 显示sign元素
+                anime
+                    .timeline({
+                        targets: sub_title[index],
+                        easing: "linear",
+                    })
+                    .add({
+                        opacity: [
+                            {
+                                value: "1",
+                            },
+                        ],
+                        duration: 600, // 持续时间
+                        loop: 1,
+                    });
+
+                that.show_sub_title_bg_img = true;
+
+                this.$nextTick(() => {
+                    let sub_title_bg_img =
+                        document.querySelectorAll(".sub_title_bg_img");
+                    let sub_title_description = document.querySelectorAll(
+                        ".sub_title_bg_img .description_container"
+                    );
+
+                    // 显示二级标题的大背景
+                    anime({
+                        targets: sub_title_bg_img,
                         opacity: [{ value: "0" }],
                         loop: 1,
                         easing: "linear",
                         duration: 0,
                         complete: function () {
+                            // 显示二级标题的描述信息
                             anime({
-                                targets: sub_title_bg_img,
-                                opacity: "1",
+                                targets: sub_title_description,
+                                opacity: [{ value: "0" }],
                                 loop: 1,
                                 easing: "linear",
-                                duration: 1000,
+                                duration: 0,
                                 complete: function () {
-                                    // 显示二级标题的描述信息
                                     anime({
-                                        targets: sub_title_description,
+                                        targets: sub_title_bg_img,
                                         opacity: "1",
                                         loop: 1,
                                         easing: "linear",
                                         duration: 1000,
+                                        complete: function () {
+                                            // 显示二级标题的描述信息
+                                            anime({
+                                                targets: sub_title_description,
+                                                opacity: "1",
+                                                loop: 1,
+                                                easing: "linear",
+                                                duration: 1000,
+                                            });
+                                        },
                                     });
                                 },
                             });
                         },
                     });
-                },
-            });
+                });
+            }
         },
         // 关闭子标题
         CloseSubTitle() {

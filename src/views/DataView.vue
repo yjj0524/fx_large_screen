@@ -20,7 +20,7 @@
                     }}<span class="current_time">{{ specific_time }}</span>
                 </div>
             </div>
-            <div class="data_container">
+            <div class="data_container" v-if="show_data_container">
                 <div class="data_item_left">
                     <div class="left_top">
                         <div class="left_top_decorate">
@@ -59,7 +59,9 @@
                             <div class="title">产业兴旺</div>
                         </div>
                         <div class="left_bottom_datas">
-                            <IndustryChartComponent />
+                            <IndustryChartComponent
+                                :run_industry_chart="run_industry_chart"
+                            />
                         </div>
                     </div>
                 </div>
@@ -454,6 +456,9 @@ export default {
             scroll_anime_complete: false,
             // 运行彩球动画
             run_colored_ball_animation: false,
+            // 运行柱状图动画
+            run_industry_chart: false,
+            show_data_container: false,
         };
     },
     mounted() {
@@ -496,7 +501,7 @@ export default {
         // 移动画卷
         MoveScroll() {
             let that = this;
-            let duration = 0;
+            let duration = 1500;
 
             // 展示卷轴
             anime({
@@ -504,7 +509,7 @@ export default {
                 opacity: 1,
                 loop: 1,
                 easing: "linear",
-                duration: 100,
+                duration: 500,
                 complete: function () {
                     // 左卷轴向左移动
                     anime({
@@ -525,9 +530,24 @@ export default {
                         complete: function () {
                             // 卷轴动画完成
                             that.scroll_anime_complete = true;
-                            // 运行彩球动画
-                            // that.run_colored_ball_animation = true;
-                            // that.RunAllAnimation();
+                            // 显示数据容器
+                            that.show_data_container = true;
+
+                            that.$nextTick(() => {
+                                // 运行彩球动画
+                                // that.run_colored_ball_animation = true;
+                                // // 运行柱状图动画
+                                that.run_industry_chart = true;
+                                // that.RunAllAnimation();
+
+                                anime({
+                                    targets: ".content_box .data_container",
+                                    opacity: 1,
+                                    loop: 1,
+                                    easing: "linear",
+                                    duration: 200,
+                                });
+                            });
 
                             anime({
                                 targets: ".data_view_container .content_box",
@@ -768,6 +788,7 @@ export default {
             width: 100%;
             height: 90%;
             display: flex;
+            opacity: 0;
             // border: 1px solid red;
             .data_item_left {
                 width: 23.8%;

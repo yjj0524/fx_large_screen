@@ -9,17 +9,11 @@ let industry_chart;
 
 export default {
     name: "IndustryChart",
+    props: ["run_industry_chart"],
     data() {
         return {};
     },
-    mounted() {
-        let that = this;
-        that.Init();
-
-        setInterval(() => {
-            that.Init();
-        }, 5000);
-    },
+    mounted() {},
     methods: {
         Init() {
             let temp_datas = [];
@@ -334,6 +328,18 @@ export default {
             window.addEventListener("resize", function () {
                 industry_chart.resize();
             });
+        },
+    },
+    watch: {
+        run_industry_chart(value) {
+            if (value) {
+                let that = this;
+                that.Init();
+
+                setInterval(() => {
+                    that.Init();
+                }, 5000);
+            }
         },
     },
 };

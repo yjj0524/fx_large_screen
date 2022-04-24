@@ -35,9 +35,7 @@ export default {
             colored_ball_datas: [],
         };
     },
-    mounted() {
-        this.init();
-    },
+    mounted() {},
     methods: {
         init() {
             // width: 180px;
@@ -132,6 +130,7 @@ export default {
     watch: {
         run_colored_ball_animation(value) {
             if (value) {
+                this.init();
                 this.RunAnime();
             }
         },

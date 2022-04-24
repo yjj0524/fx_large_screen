@@ -33,9 +33,7 @@ export default {
             colored_ball_datas: [],
         };
     },
-    mounted() {
-        this.init();
-    },
+    mounted() {},
     methods: {
         init() {
             let that = this;
@@ -56,7 +54,7 @@ export default {
             for (let i = 0; i < 500; i++) {
                 let item = {
                     cx: that.GetRandomNumber(10, 345),
-                    // cx: i % 2 == 0 ? that.GetRandomNumber(10, 50) : that.GetRandomNumber(300, 345),
+                    // cx: i % 2 == 0 ? anime.random(10, 50) : anime.random(300, 345),
                     cy: that.GetRandomNumber(200, 300),
                     // stroke: colors[that.GetRandomNumber(0, that.colors.length)],
                     fill: colors[that.GetRandomNumber(0, colors.length)],
@@ -107,6 +105,7 @@ export default {
     watch: {
         run_colored_ball_animation(value) {
             if (value) {
+                this.init();
                 this.RunAnime();
             }
         },

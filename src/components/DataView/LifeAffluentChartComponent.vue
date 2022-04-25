@@ -10,14 +10,18 @@ let life_affluent_chart;
 
 export default {
     name: "LifeAffluent",
+    props: ["run_life_affluent_chart"],
     data() {
         return {};
     },
-    mounted() {
-        this.Init();
-    },
+    mounted() {},
     methods: {
+        GetRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        },
         Init() {
+            let that = this;
+
             // 销毁
             if (
                 life_affluent_chart != null &&
@@ -31,7 +35,7 @@ export default {
             let option = this.getPie3D([
                 {
                     name: "数据一",
-                    value: 45,
+                    value: that.GetRandomNumber(45, 60),
                     itemStyle: {
                         opacity: 1,
                         color: "#afc8ef",
@@ -39,7 +43,7 @@ export default {
                 },
                 {
                     name: "数据二",
-                    value: 25,
+                    value: that.GetRandomNumber(25, 45),
                     itemStyle: {
                         opacity: 1,
                         color: "#d16649",
@@ -47,7 +51,7 @@ export default {
                 },
                 {
                     name: "数据三",
-                    value: 15,
+                    value: that.GetRandomNumber(10, 25),
                     itemStyle: {
                         opacity: 1,
                         color: "#c7b08e",
@@ -203,8 +207,10 @@ export default {
                         hovered: false,
                         k: k,
                     },
-                    blendMode: "lighter",
                     silent: false,
+                    animation: true,
+                    animationDurationUpdate: 2000,
+                    animationEasingUpdate: "cubicOut"
                 };
 
                 if (typeof pieData[i].itemStyle != "undefined") {
@@ -292,15 +298,20 @@ export default {
                 grid3D: {
                     show: false,
                     boxHeight: 1.5,
-                    top: '-5%',
+                    top: "-5%",
                     left: "-15%",
                     // bottom: "100%",
                     backgroundColor: "transparent",
                     // environment: "white", // 图层背景
                     viewControl: {
-                        autoRotate: true, // 自动旋转
-                        // autoRotateDirection: "ccw",
+                        autoRotate: false, // 自动旋转
+                        // autoRotateDirection: "ccw", // 旋转方向
                         distance: 300,
+                        // maxDistance: 300,
+                        // minDistance: 300,
+                        // rotateSensitivity: 0, //设置为0无法旋转
+                        zoomSensitivity: 0, //设置为0无法缩放
+                        panSensitivity: 0, //设置为0无法平移
                         alpha: 25,
                         beta: 50,
                     },
@@ -309,6 +320,18 @@ export default {
             };
             // console.log(option);
             return option;
+        },
+    },
+    watch: {
+        run_life_affluent_chart(value) {
+            if (value) {
+                let that = this;
+                that.Init();
+
+                setInterval(() => {
+                    that.Init();
+                }, 5000);
+            }
         },
     },
 };

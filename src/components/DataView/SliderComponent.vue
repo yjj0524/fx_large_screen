@@ -153,14 +153,14 @@ export default {
         let that = this;
 
         // 查看详情箭头动画
-        anime.timeline({
-            targets: ".view_details",
-            loop: true,
-            easing: "linear",
-            duration: 1000,
-        }).add({
-            translateX: 8,
-        });
+        // anime.timeline({
+        //     targets: ".view_details",
+        //     loop: true,
+        //     easing: "linear",
+        //     duration: 1000,
+        // }).add({
+        //     translateX: 8,
+        // });
     },
 };
 </script>
@@ -168,6 +168,20 @@ export default {
 .slider_container {
     width: 100%;
     height: 60%;
+    ::v-deep .slider-touch {
+        height: 98%;
+    }
+    ::v-deep .slider-pagination.slider-pagination-bullets {
+        bottom: 6px;
+    }
+    ::v-deep .slider-pagination-bullet {
+        background: #009dff;
+    }
+    ::v-deep .slider-pagination-bullet-active {
+        width: 20px;
+        border-radius: 4px;
+        background: #00acff;
+    }
     .right_top {
         width: 100%;
         height: 100%;
@@ -447,19 +461,5 @@ export default {
             }
         }
     }
-}
-/deep/ .slider-touch {
-    height: 98%;
-}
-/deep/ .slider-pagination.slider-pagination-bullets {
-    bottom: 6px;
-}
-/deep/ .slider-pagination-bullet {
-    background: #009dff;
-}
-/deep/ .slider-pagination-bullet-active {
-    width: 20px;
-    border-radius: 4px;
-    background: #00acff;
 }
 </style>

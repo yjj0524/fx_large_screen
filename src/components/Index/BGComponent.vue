@@ -484,65 +484,65 @@ export default {
             //#region 执行背景动画
             // halo_1动画
             anime({
-                // targets: ".halo_1",
-                // rotate: 360,
-                // duration: 15000,
-                // easing: "linear",
-                // loop: true,
+                targets: ".halo_1",
+                rotate: 360,
+                duration: 15000,
+                easing: "linear",
+                loop: true,
             });
 
             // halo_2动画
             anime({
-                // targets: ".halo_2",
-                // easing: "linear",
-                // rotate: -360,
-                // duration: 15000,
-                // loop: true,
+                targets: ".halo_2",
+                easing: "linear",
+                rotate: -360,
+                duration: 15000,
+                loop: true,
             });
 
             // aperture动画
             anime({
-                // targets: ".aperture",
-                // loop: true,
-                // rotate: 360,
-                // duration: 25000,
-                // easing: "linear",
+                targets: ".aperture",
+                loop: true,
+                rotate: 360,
+                duration: 25000,
+                easing: "linear",
             });
 
             // 逐渐扩大的圈
             anime({
-                // targets: "#circle_line_3",
-                // loop: true,
-                // scale: 1.19,
-                // duration: 3000,
-                // easing: "linear",
+                targets: "#circle_line_3",
+                loop: true,
+                scale: 1.19,
+                duration: 3000,
+                easing: "linear",
             });
 
             // 滚动的圆弧6
             anime({
-                // targets: "#circle_line_6",
-                // loop: true,
-                // rotate: -360,
-                // duration: 10000,
-                // easing: "linear",
+                targets: "#circle_line_6",
+                loop: true,
+                rotate: -360,
+                duration: 10000,
+                easing: "linear",
             });
 
             // 滚动的圆弧7
             anime({
-                // targets: "#circle_line_7",
-                // loop: true,
-                // rotate: 360,
-                // duration: 16000,
-                // easing: "linear",
+                targets: "#circle_line_7",
+                loop: true,
+                rotate: 360,
+                duration: 16000,
+                easing: "linear",
             });
 
             // 滚动的圆弧8
             anime({
-                // targets: "#circle_line_8",
-                // loop: true,
-                // rotate: 360,
-                // duration: 10000,
-                // easing: "linear",
+                targets: "#circle_line_8",
+                loop: true,
+                rotate: 360,
+                duration: 10000,
+                easing: "linear",
             });
 
             // 运行24节气动画
@@ -1221,7 +1221,7 @@ export default {
                         (that.current_show_scenery_img_index - 2) * -2941,
                     loop: 1,
                     easing: "linear",
-                    duration: 1500,
+                    duration: 1000,
                     complete: function () {
                         that.allow_switch_scenery_img = true;
                     },
@@ -1245,7 +1245,7 @@ export default {
                     translateX: that.current_show_scenery_img_index * -2941,
                     loop: 1,
                     easing: "linear",
-                    duration: 1500,
+                    duration: 1000,
                     complete: function () {
                         that.allow_switch_scenery_img = true;
                     },
@@ -1457,7 +1457,7 @@ export default {
             height: 1500px;
             position: absolute;
             top: -206px;
-            left: 0;
+            left: 20px;
             right: 0;
             bottom: 0;
             margin: 0 auto;
@@ -1512,7 +1512,7 @@ export default {
             border-radius: 50%;
             position: absolute;
             top: -50px;
-            left: 0;
+            left: 20px;
             right: 0;
             margin: 0 auto;
         }

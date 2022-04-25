@@ -121,7 +121,7 @@
                                 />
                             </div>
                             <div class="life_affluent_container">
-                                <LifeAffluentChartComponent />
+                                <LifeAffluentChartComponent :run_life_affluent_chart="run_life_affluent_chart" />
                             </div>
                         </div>
                     </div>
@@ -458,6 +458,9 @@ export default {
             run_colored_ball_animation: false,
             // 运行柱状图动画
             run_industry_chart: false,
+            // 运行饼图动画
+            run_life_affluent_chart: false,
+            // 显示数据容器
             show_data_container: false,
         };
     },
@@ -501,7 +504,7 @@ export default {
         // 移动画卷
         MoveScroll() {
             let that = this;
-            let duration = 1500;
+            let duration = 0;
 
             // 展示卷轴
             anime({
@@ -536,8 +539,10 @@ export default {
                             that.$nextTick(() => {
                                 // 运行彩球动画
                                 // that.run_colored_ball_animation = true;
-                                // // 运行柱状图动画
+                                // 运行柱状图动画
                                 that.run_industry_chart = true;
+                                // 运行饼图动画
+                                that.run_life_affluent_chart = true;
                                 // that.RunAllAnimation();
 
                                 anime({

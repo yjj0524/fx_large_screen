@@ -84,7 +84,7 @@
             <!-- 光环2 -->
             <div class="halo_2"></div>
             <!-- 光圈 -->
-            <div class="aperture"></div>
+            <!-- <div class="aperture"></div> -->
         </div>
         <!-- 24节气背景图 -->
         <div class="pointer_img">
@@ -483,67 +483,67 @@ export default {
 
             //#region 执行背景动画
             // halo_1动画
-            anime({
-                targets: ".halo_1",
-                rotate: 360,
-                duration: 15000,
-                easing: "linear",
-                loop: true,
-            });
+            // anime({
+            //     targets: ".halo_1",
+            //     rotate: 360,
+            //     duration: 10000,
+            //     easing: "linear",
+            //     loop: true,
+            // });
 
-            // halo_2动画
-            anime({
-                targets: ".halo_2",
-                easing: "linear",
-                rotate: -360,
-                duration: 15000,
-                loop: true,
-            });
+            // // halo_2动画
+            // anime({
+            //     targets: ".halo_2",
+            //     easing: "linear",
+            //     rotate: -360,
+            //     duration: 10000,
+            //     loop: true,
+            // });
 
-            // aperture动画
-            anime({
-                targets: ".aperture",
-                loop: true,
-                rotate: 360,
-                duration: 25000,
-                easing: "linear",
-            });
+            // // aperture动画
+            // anime({
+            //     targets: ".aperture",
+            //     loop: true,
+            //     rotate: 360,
+            //     duration: 25000,
+            //     easing: "linear",
+            // });
 
-            // 逐渐扩大的圈
-            anime({
-                targets: "#circle_line_3",
-                loop: true,
-                scale: 1.19,
-                duration: 3000,
-                easing: "linear",
-            });
+            // // 逐渐扩大的圈
+            // anime({
+            //     targets: "#circle_line_3",
+            //     loop: true,
+            //     scale: 1.19,
+            //     duration: 3000,
+            //     easing: "linear",
+            // });
 
-            // 滚动的圆弧6
-            anime({
-                targets: "#circle_line_6",
-                loop: true,
-                rotate: -360,
-                duration: 10000,
-                easing: "linear",
-            });
+            // // 滚动的圆弧6
+            // anime({
+            //     targets: "#circle_line_6",
+            //     loop: true,
+            //     rotate: -360,
+            //     duration: 6000,
+            //     easing: "linear",
+            // });
 
-            // 滚动的圆弧7
-            anime({
-                targets: "#circle_line_7",
-                loop: true,
-                rotate: 360,
-                duration: 16000,
-                easing: "linear",
-            });
+            // // 滚动的圆弧7
+            // anime({
+            //     targets: "#circle_line_7",
+            //     loop: true,
+            //     rotate: 360,
+            //     duration: 10000,
+            //     easing: "linear",
+            // });
 
-            // 滚动的圆弧8
-            anime({
-                targets: "#circle_line_8",
-                loop: true,
-                rotate: 360,
-                duration: 10000,
-                easing: "linear",
-            });
+            // // 滚动的圆弧8
+            // anime({
+            //     targets: "#circle_line_8",
+            //     loop: true,
+            //     rotate: 360,
+            //     duration: 6000,
+            //     easing: "linear",
+            // });
 
             // 运行24节气动画
             let solar_terms_el = document.querySelectorAll(
@@ -1456,11 +1456,11 @@ export default {
             width: 1500px;
             height: 1500px;
             position: absolute;
-            top: -206px;
-            left: 20px;
+            top: 0;
+            left: 0;
             right: 0;
             bottom: 0;
-            margin: 0 auto;
+            margin: auto;
             background-image: url("@/static/images/aperture.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -1468,24 +1468,24 @@ export default {
         #circle_line_1 {
             position: absolute;
             top: -320px;
-            left: 1051px;
+            left: 1070px;
         }
         #circle_line_2 {
             position: absolute;
             top: -320px;
-            left: 1051px;
+            left: 1070px;
             opacity: 0.2;
         }
         #circle_line_3 {
             position: absolute;
             top: -10px;
-            left: 1361px;
+            left: 1378px;
             opacity: 0.5;
         }
         #circle_line_4 {
             position: absolute;
             top: -320px;
-            left: 1051px;
+            left: 1070px;
         }
         #circle_line_5 {
             position: absolute;
@@ -1511,7 +1511,7 @@ export default {
             border-left: 20px solid #273f74;
             border-radius: 50%;
             position: absolute;
-            top: -50px;
+            top: -56px;
             left: 20px;
             right: 0;
             margin: 0 auto;
@@ -1524,7 +1524,7 @@ export default {
             border-radius: 50%;
             position: absolute;
             top: -105px;
-            left: -17px;
+            left: 19px;
             right: 0;
             margin: 0 auto;
         }
@@ -1568,7 +1568,7 @@ export default {
         top: 0px;
         left: 0;
         right: 0;
-        margin: 0 auto;
+        margin: auto;
         .img_bg {
             width: 100%;
             height: 100%;
@@ -2014,7 +2014,7 @@ export default {
         width: 521px;
         position: absolute;
         top: 82px;
-        left: 2584px;
+        left: 2603px;
         transform: rotate(1deg);
         -ms-transform: rotate(1deg); /* IE 9 */
         -moz-transform: rotate(1deg); /* Firefox */
@@ -2229,10 +2229,10 @@ export default {
         width: 1050px;
         height: 1050px;
         position: absolute;
-        top: 13px;
-        left: 0;
+        top: 15px;
+        left: 1px;
         right: 0;
-        margin: 0 auto;
+        margin: auto;
         opacity: 0;
         .bg_img {
             width: 1050px;

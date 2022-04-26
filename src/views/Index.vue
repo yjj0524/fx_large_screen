@@ -24,6 +24,7 @@ export default {
     width: 3840px;
     height: 100%;
     position: relative;
+    background: #131c3e;
     background-image: url("@/static/images/bg.png");
     background-size: 130% 100%;
     background-repeat: no-repeat;

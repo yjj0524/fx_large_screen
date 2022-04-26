@@ -7,6 +7,32 @@
                 height="100%"
                 xmlns="http://www.w3.org/2000/svg"
             >
+                <!-- <defs>
+                    <filter
+                        id="f1"
+                        x="-50%"
+                        y="-50%"
+                        width="200%"
+                        height="200%"
+                    >
+                        <feOffset
+                            result="offOut"
+                            in="SourceGraphic"
+                            dx="0"
+                            dy="0"
+                        />
+                        <feGaussianBlur
+                            result="blurOut"
+                            in="offOut"
+                            stdDeviation="3"
+                        />
+                        <feBlend
+                            in="SourceGraphic"
+                            in2="blurOut"
+                            mode="normal"
+                        />
+                    </filter>
+                </defs> -->
                 <g>
                     <!-- 左中线 -->
                     <path
@@ -130,13 +156,12 @@
                     />
                 </g>
             </svg>
-            
         </div>
     </div>
 </template>
 
 <script>
-// import anime from "animejs/lib/anime.js";
+import anime from "animejs/lib/anime.js";
 
 export default {
     name: "SVGComponent",
@@ -155,6 +180,7 @@ export default {
                 complete: function () {},
             });
         }
+
         // 左上圆动画
         anime
             .timeline({

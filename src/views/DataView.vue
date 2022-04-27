@@ -121,7 +121,11 @@
                                 />
                             </div>
                             <div class="life_affluent_container">
-                                <LifeAffluentChartComponent :run_life_affluent_chart="run_life_affluent_chart" />
+                                <LifeAffluentChartComponent
+                                    :run_life_affluent_chart="
+                                        run_life_affluent_chart
+                                    "
+                                />
                             </div>
                         </div>
                     </div>
@@ -504,7 +508,7 @@ export default {
         // 移动画卷
         MoveScroll() {
             let that = this;
-            let duration = 0;
+            let duration = 1500;
 
             // 展示卷轴
             anime({
@@ -538,12 +542,12 @@ export default {
 
                             that.$nextTick(() => {
                                 // 运行彩球动画
-                                // that.run_colored_ball_animation = true;
+                                that.run_colored_ball_animation = true;
                                 // 运行柱状图动画
                                 that.run_industry_chart = true;
                                 // 运行饼图动画
                                 that.run_life_affluent_chart = true;
-                                // that.RunAllAnimation();
+                                that.RunAllAnimation();
 
                                 anime({
                                     targets: ".content_box .data_container",
@@ -701,7 +705,21 @@ export default {
     beforeDestroy() {
         // 清除日期时间定时器
         clearInterval(this.date_timer);
-        this.date_timer = null;
+
+        // 清除动画
+        anime.remove([
+            ".left_top_datas .data_img",
+            ".left_top_datas .item_img",
+            ".btn_group_left .img_8",
+            ".btn_group_right .img_8",
+            ".btn_group_left .img_9",
+            ".btn_group_right .img_9",
+            ".btn_group_left .bird_container",
+            ".btn_group_right .bird_container",
+            ".life_affluent_img_1",
+            ".life_affluent_img_2",
+            ".life_affluent_img_3",
+        ]);
     },
 };
 </script>
@@ -971,7 +989,7 @@ export default {
                             // border: 1px solid red;
                             position: relative;
                             top: 20px;
-                            left: 92px;
+                            left: 70px;
                             transform: rotateX(70deg);
                             .life_affluent_img_4 {
                                 width: 100%;

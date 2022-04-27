@@ -11,7 +11,9 @@ export default {
     name: "IndustryChart",
     props: ["run_industry_chart"],
     data() {
-        return {};
+        return {
+            timer: null,
+        };
     },
     mounted() {},
     methods: {
@@ -335,12 +337,14 @@ export default {
             if (value) {
                 let that = this;
                 that.Init();
-
-                setInterval(() => {
+                that.timer = setInterval(() => {
                     that.Init();
                 }, 5000);
             }
         },
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
 };
 </script>

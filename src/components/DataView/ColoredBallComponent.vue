@@ -38,8 +38,6 @@ export default {
     mounted() {},
     methods: {
         init() {
-            // width: 180px;
-            // height: 200px;
             let that = this;
             let colored_ball_datas = [];
             let colors = [
@@ -135,6 +133,12 @@ export default {
             }
         },
     },
+    beforeDestroy() {
+        // 清除动画
+        anime.remove([
+            `#${this.component_id} circle`,
+        ]);
+    }
 };
 </script>
  

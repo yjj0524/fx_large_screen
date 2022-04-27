@@ -84,7 +84,7 @@
             <!-- 光环2 -->
             <div class="halo_2"></div>
             <!-- 光圈 -->
-            <!-- <div class="aperture"></div> -->
+            <div class="aperture"></div>
         </div>
         <!-- 24节气背景图 -->
         <div class="pointer_img">
@@ -483,67 +483,67 @@ export default {
 
             //#region 执行背景动画
             // halo_1动画
-            // anime({
-            //     targets: ".halo_1",
-            //     rotate: 360,
-            //     duration: 10000,
-            //     easing: "linear",
-            //     loop: true,
-            // });
+            anime({
+                targets: ".halo_1",
+                rotate: 360,
+                duration: 10000,
+                easing: "linear",
+                loop: true,
+            });
 
-            // // halo_2动画
-            // anime({
-            //     targets: ".halo_2",
-            //     easing: "linear",
-            //     rotate: -360,
-            //     duration: 10000,
-            //     loop: true,
-            // });
+            // halo_2动画
+            anime({
+                targets: ".halo_2",
+                easing: "linear",
+                rotate: -360,
+                duration: 10000,
+                loop: true,
+            });
 
-            // // aperture动画
-            // anime({
-            //     targets: ".aperture",
-            //     loop: true,
-            //     rotate: 360,
-            //     duration: 25000,
-            //     easing: "linear",
-            // });
+            // aperture动画
+            anime({
+                targets: ".aperture",
+                loop: true,
+                rotate: 360,
+                duration: 25000,
+                easing: "linear",
+            });
 
-            // // 逐渐扩大的圈
-            // anime({
-            //     targets: "#circle_line_3",
-            //     loop: true,
-            //     scale: 1.19,
-            //     duration: 3000,
-            //     easing: "linear",
-            // });
+            // 逐渐扩大的圈
+            anime({
+                targets: "#circle_line_3",
+                loop: true,
+                scale: 1.19,
+                duration: 3000,
+                easing: "linear",
+            });
 
-            // // 滚动的圆弧6
-            // anime({
-            //     targets: "#circle_line_6",
-            //     loop: true,
-            //     rotate: -360,
-            //     duration: 6000,
-            //     easing: "linear",
-            // });
+            // 滚动的圆弧6
+            anime({
+                targets: "#circle_line_6",
+                loop: true,
+                rotate: -360,
+                duration: 6000,
+                easing: "linear",
+            });
 
-            // // 滚动的圆弧7
-            // anime({
-            //     targets: "#circle_line_7",
-            //     loop: true,
-            //     rotate: 360,
-            //     duration: 10000,
-            //     easing: "linear",
-            // });
+            // 滚动的圆弧7
+            anime({
+                targets: "#circle_line_7",
+                loop: true,
+                rotate: 360,
+                duration: 10000,
+                easing: "linear",
+            });
 
-            // // 滚动的圆弧8
-            // anime({
-            //     targets: "#circle_line_8",
-            //     loop: true,
-            //     rotate: 360,
-            //     duration: 6000,
-            //     easing: "linear",
-            // });
+            // 滚动的圆弧8
+            anime({
+                targets: "#circle_line_8",
+                loop: true,
+                rotate: 360,
+                duration: 6000,
+                easing: "linear",
+            });
 
             // 运行24节气动画
             let solar_terms_el = document.querySelectorAll(
@@ -1363,7 +1363,7 @@ export default {
         },
         // 跳转到数据展示页
         JumpToDataView() {
-            // 暂停动画
+            // 清除动画
             anime.remove([
                 ".halo_1",
                 ".halo_2",
@@ -1468,24 +1468,24 @@ export default {
         #circle_line_1 {
             position: absolute;
             top: -320px;
-            left: 1070px;
+            left: 1059px;
         }
         #circle_line_2 {
             position: absolute;
             top: -320px;
-            left: 1070px;
+            left: 1059px;
             opacity: 0.2;
         }
         #circle_line_3 {
             position: absolute;
             top: -10px;
-            left: 1378px;
+            left: 1369px;
             opacity: 0.5;
         }
         #circle_line_4 {
             position: absolute;
             top: -320px;
-            left: 1070px;
+            left: 1059px;
         }
         #circle_line_5 {
             position: absolute;
@@ -1512,7 +1512,7 @@ export default {
             border-radius: 50%;
             position: absolute;
             top: -56px;
-            left: 20px;
+            left: -1px;
             right: 0;
             margin: 0 auto;
         }
@@ -1524,7 +1524,7 @@ export default {
             border-radius: 50%;
             position: absolute;
             top: -105px;
-            left: 19px;
+            left: 0;
             right: 0;
             margin: 0 auto;
         }

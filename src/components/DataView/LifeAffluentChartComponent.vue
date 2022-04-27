@@ -1,5 +1,12 @@
 <template>
-    <div id="life_affluent"></div>
+    <div class="life_affluent_chart_container">
+        <div id="life_affluent"></div>
+        <div class="datas_container">
+            <div class="data_item" v-for="(item, index) in datas" :key="index">
+                {{ item }}
+            </div>
+        </div>
+    </div>
 </template>
  
 <script>
@@ -12,7 +19,10 @@ export default {
     name: "LifeAffluent",
     props: ["run_life_affluent_chart"],
     data() {
-        return {};
+        return {
+            datas: [],
+            timer: null,
+        };
     },
     mounted() {},
     methods: {
@@ -32,9 +42,9 @@ export default {
             }
             let chart = document.getElementById("life_affluent");
             life_affluent_chart = echarts.init(chart);
-            let option = this.getPie3D([
+            let pie_datas = [
                 {
-                    name: "数据一",
+                    name: "数据一 :",
                     value: that.GetRandomNumber(45, 60),
                     itemStyle: {
                         opacity: 1,
@@ -42,7 +52,7 @@ export default {
                     },
                 },
                 {
-                    name: "数据二",
+                    name: "数据二 :",
                     value: that.GetRandomNumber(25, 45),
                     itemStyle: {
                         opacity: 1,
@@ -50,14 +60,30 @@ export default {
                     },
                 },
                 {
-                    name: "数据三",
+                    name: "数据三 :",
                     value: that.GetRandomNumber(10, 25),
                     itemStyle: {
                         opacity: 1,
                         color: "#c7b08e",
                     },
                 },
-            ]);
+            ];
+
+            that.datas = [];
+
+            let value_sum = 0;
+
+            for (let i = 0; i < pie_datas.length; i++) {
+                value_sum += pie_datas[i].value;
+            }
+
+            for (let i = 0; i < pie_datas.length; i++) {
+                let value = pie_datas[i].value;
+                let ratio = `${((value / value_sum) * 100).toFixed(0)}%`;
+                that.datas.push(ratio);
+            }
+
+            let option = that.getPie3D(pie_datas);
             life_affluent_chart.setOption(option);
 
             window.addEventListener("resize", function () {
@@ -210,7 +236,7 @@ export default {
                     silent: false,
                     animation: true,
                     animationDurationUpdate: 2000,
-                    animationEasingUpdate: "cubicOut"
+                    animationEasingUpdate: "cubicOut",
                 };
 
                 if (typeof pieData[i].itemStyle != "undefined") {
@@ -273,11 +299,11 @@ export default {
                     selectedMode: false, // 禁止点击
                     data: legendData,
                     top: "center",
-                    right: "20%",
+                    right: "22%",
                     width: 100,
                     textStyle: {
                         color: "#93d5f6",
-                        fontSize: 15,
+                        fontSize: 20,
                         padding: [0, 0, 0, 35],
                     },
                     itemGap: 35,
@@ -299,7 +325,7 @@ export default {
                     show: false,
                     boxHeight: 1.5,
                     top: "-5%",
-                    left: "-15%",
+                    left: "-18%",
                     // bottom: "100%",
                     backgroundColor: "transparent",
                     // environment: "white", // 图层背景
@@ -327,19 +353,41 @@ export default {
             if (value) {
                 let that = this;
                 that.Init();
-
-                setInterval(() => {
+                that.timer = setInterval(() => {
                     that.Init();
                 }, 5000);
             }
         },
     },
+    beforeDestroy() {
+        clearInterval(this.timer);
+    },
 };
 </script>
  
 <style scoped lang="less">
-#life_affluent {
+.life_affluent_chart_container {
     width: 100%;
     height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    #life_affluent {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .datas_container {
+        width: 100px;
+        margin-right: 50px;
+        .data_item {
+            font-size: 2.5rem;
+            color: #ffc47f;
+            margin: 8px 0 15px;
+        }
+    }
 }
 </style>

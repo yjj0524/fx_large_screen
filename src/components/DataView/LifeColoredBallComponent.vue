@@ -110,6 +110,12 @@ export default {
             }
         },
     },
+    beforeDestroy() {
+        // 清除动画
+        anime.remove([
+            "#life_colored_svg circle",
+        ]);
+    }
 };
 </script>
  

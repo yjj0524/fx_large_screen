@@ -153,14 +153,14 @@ export default {
         let that = this;
 
         // 查看详情箭头动画
-        anime.timeline({
-            targets: ".view_details",
-            loop: true,
-            easing: "linear",
-            duration: 1000,
-        }).add({
-            translateX: 8,
-        });
+        // anime.timeline({
+        //     targets: ".view_details",
+        //     loop: true,
+        //     easing: "linear",
+        //     duration: 1000,
+        // }).add({
+        //     translateX: 8,
+        // });
     },
 };
 </script>

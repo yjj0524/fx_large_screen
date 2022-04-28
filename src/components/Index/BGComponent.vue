@@ -210,7 +210,6 @@
         <div
             class="scenery_container"
             v-show="show_scenery_container"
-            @click.self="CloseSceneryContainer"
         >
             <div class="covering_layer" v-if="show_scenery_container">
                 <div class="scenery_container_bg_img">
@@ -260,7 +259,6 @@
             </div>
             <div
                 class="scroll_container"
-                @click.stop="OpenScroll"
                 v-if="show_scenery_container"
             >
                 <div class="scroll_1">
@@ -1085,8 +1083,9 @@ export default {
         },
         // 打开24景容器
         OpenSceneryContainer() {
-            if (this.allow_close_scenery_container) {
-                this.show_scenery_container = true;
+            let that = this;
+            if (that.allow_close_scenery_container) {
+                that.show_scenery_container = true;
                 let scenery_container =
                     document.querySelector(".scenery_container");
 
@@ -1096,29 +1095,32 @@ export default {
                     loop: 1,
                     easing: "linear",
                     duration: 1500,
+                    complete: function() {
+                        that.OpenScroll();
+                    }
                 });
             }
         },
         // 关闭24景（未展开时）
-        CloseSceneryContainer() {
-            let that = this;
+        // CloseSceneryContainer() {
+        //     let that = this;
 
-            if (that.allow_close_scenery_container) {
-                let scenery_container =
-                    document.querySelector(".scenery_container");
+        //     if (that.allow_close_scenery_container) {
+        //         let scenery_container =
+        //             document.querySelector(".scenery_container");
 
-                anime({
-                    targets: scenery_container,
-                    opacity: "0",
-                    loop: 1,
-                    easing: "linear",
-                    duration: 1500,
-                    complete: function () {
-                        that.show_scenery_container = false;
-                    },
-                });
-            }
-        },
+        //         anime({
+        //             targets: scenery_container,
+        //             opacity: "0",
+        //             loop: 1,
+        //             easing: "linear",
+        //             duration: 1500,
+        //             complete: function () {
+        //                 that.show_scenery_container = false;
+        //             },
+        //         });
+        //     }
+        // },
         // 展开24景卷轴
         OpenScroll() {
             let that = this;
@@ -1126,29 +1128,11 @@ export default {
             if (that.allow_open_scroll) {
                 // 防止重复展开
                 that.allow_open_scroll = false;
-                let scroll_1 = document.querySelector(".scroll_1");
-                let scroll_2 = document.querySelector(".scroll_2");
-                let scroll_img_1 = document.querySelector(
-                    ".scroll_1 .scroll_img_1"
-                );
-                let scroll_img_2 = document.querySelector(
-                    ".scroll_2 .scroll_img_2"
-                );
-                let covering_layer = document.querySelector(
-                    ".scenery_container .covering_layer"
-                );
-                let title_container = document.querySelector(
-                    ".scenery_container .title_container"
-                );
-                let btn_container = document.querySelector(
-                    ".scenery_container .btn_container"
-                );
-
                 that.allow_close_scenery_container = false;
 
                 // 背景移动
                 anime({
-                    targets: covering_layer,
+                    targets: ".scenery_container .covering_layer",
                     translateX: -1500,
                     width: 3000,
                     loop: 1,
@@ -1159,7 +1143,7 @@ export default {
                         that.show_title_and_btns = true;
 
                         anime({
-                            targets: [title_container, btn_container],
+                            targets: [".scenery_container .title_container", ".scenery_container .btn_container"],
                             opacity: "1",
                             loop: 1,
                             easing: "linear",
@@ -1170,7 +1154,7 @@ export default {
 
                 // 左卷轴向左移动
                 anime({
-                    targets: scroll_1,
+                    targets: ".scroll_1",
                     translateX: -1494,
                     loop: 1,
                     easing: "linear",
@@ -1179,7 +1163,7 @@ export default {
 
                 // 左卷轴里的图片向左移动
                 anime({
-                    targets: scroll_img_1,
+                    targets: ".scroll_1 .scroll_img_1",
                     translateX: -1100,
                     loop: 1,
                     easing: "linear",
@@ -1188,7 +1172,7 @@ export default {
 
                 // 右卷轴向右移动
                 anime({
-                    targets: scroll_2,
+                    targets: ".scroll_2",
                     translateX: 1494,
                     loop: 1,
                     easing: "linear",
@@ -1197,7 +1181,7 @@ export default {
 
                 // 右卷轴里的图片向右移动
                 anime({
-                    targets: scroll_img_2,
+                    targets: ".scroll_2 .scroll_img_2",
                     loop: 1,
                     easing: "linear",
                     translateX: 1200,
@@ -1257,29 +1241,10 @@ export default {
         // 关闭24景（展开时）
         CloseScroll() {
             let that = this;
-            let scroll_1 = document.querySelector(".scroll_1");
-            let scroll_2 = document.querySelector(".scroll_2");
-            let scroll_img_1 = document.querySelector(
-                ".scroll_1 .scroll_img_1"
-            );
-            let scroll_img_2 = document.querySelector(
-                ".scroll_2 .scroll_img_2"
-            );
-            let scenery_container =
-                document.querySelector(".scenery_container");
-            let covering_layer = document.querySelector(
-                ".scenery_container .covering_layer"
-            );
-            let title_container = document.querySelector(
-                ".scenery_container .title_container"
-            );
-            let btn_container = document.querySelector(
-                ".scenery_container .btn_container"
-            );
 
             // 隐藏标题和按钮
             anime({
-                targets: [title_container, btn_container],
+                targets: [".scenery_container .title_container", ".scenery_container .btn_container"],
                 opacity: "0",
                 loop: 1,
                 easing: "linear",
@@ -1289,7 +1254,7 @@ export default {
 
                     // 背景移动
                     anime({
-                        targets: covering_layer,
+                        targets: ".scenery_container .covering_layer",
                         translateX: 0,
                         width: 0,
                         loop: 1,
@@ -1299,7 +1264,7 @@ export default {
 
                     // 左卷轴向左移动
                     anime({
-                        targets: scroll_1,
+                        targets: ".scroll_1",
                         translateX: 0,
                         loop: 1,
                         easing: "linear",
@@ -1308,7 +1273,7 @@ export default {
 
                     // 左卷轴里的图片向左移动
                     anime({
-                        targets: scroll_img_1,
+                        targets: ".scroll_1 .scroll_img_1",
                         translateX: 0,
                         loop: 1,
                         easing: "linear",
@@ -1317,7 +1282,7 @@ export default {
 
                     // 右卷轴向右移动
                     anime({
-                        targets: scroll_2,
+                        targets: ".scroll_2",
                         translateX: 0,
                         loop: 1,
                         easing: "linear",
@@ -1327,7 +1292,7 @@ export default {
                     // 右卷轴里的图片向右移动
                     anime
                         .timeline({
-                            targets: scroll_img_2,
+                            targets: ".scroll_2 .scroll_img_2",
                             loop: 1,
                             easing: "linear",
                         })
@@ -1336,7 +1301,7 @@ export default {
                             duration: 2500,
                             complete: function () {
                                 anime({
-                                    targets: scenery_container,
+                                    targets: ".scenery_container",
                                     opacity: "0",
                                     loop: 1,
                                     easing: "linear",

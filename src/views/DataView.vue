@@ -542,12 +542,12 @@ export default {
 
                             that.$nextTick(() => {
                                 // 运行彩球动画
-                                that.run_colored_ball_animation = true;
+                                // that.run_colored_ball_animation = true;
                                 // 运行柱状图动画
                                 that.run_industry_chart = true;
                                 // 运行饼图动画
                                 that.run_life_affluent_chart = true;
-                                that.RunAllAnimation();
+                                // that.RunAllAnimation();
 
                                 anime({
                                     targets: ".content_box .data_container",
@@ -1310,7 +1310,7 @@ export default {
     }
     .cover_cloth_left {
         position: absolute;
-        background: #eeeeee;
+        background: #1b2641;
         width: 1708px;
         height: 100%;
         top: 0;
@@ -1319,7 +1319,7 @@ export default {
     }
     .cover_cloth_right {
         position: absolute;
-        background: #eeeeee;
+        background: #1b2641;
         width: 1731px;
         height: 100%;
         top: 0;
